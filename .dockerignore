@@ -1,0 +1,17 @@
+node_modules
+dist
+tmp
+out-tsc
+.git
+.gitignore
+.editorconfig
+.idea
+.vscode
+*.log
+npm-debug.log*
+chrome-profiler-events.json
+speed-measure-plugin.json
+Dockerfile
+.dockerignore
+docker-compose.yml
+README.md

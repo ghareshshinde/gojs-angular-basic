@@ -26,6 +26,32 @@ Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
 
 The page will reload if you make edits.<br>
 
+## LinkedIn Email Extractor
+
+This project also includes a small **LinkedIn Email Extractor** panel at the top
+of the app. Paste the text or HTML of your LinkedIn homepage (Select-All + copy,
+or "View Page Source") into the box and it extracts email addresses by searching
+for `mailto:` links (`"mailto:" + "@" + "."`) plus any bare addresses in the
+text. Results are de-duplicated and can be copied or downloaded as CSV. All
+processing happens locally in the browser — nothing is uploaded.
+
+## Running with Docker (Docker Desktop)
+
+The app ships with a multi-stage `Dockerfile` (Node 14 build → nginx runtime)
+and a `docker-compose.yml`. With **Docker Desktop** running:
+
+```sh
+# Build and start (serves on http://localhost:8080)
+docker compose up --build
+
+# ...or without compose:
+docker build -t gojs-angular-basic .
+docker run --rm -p 8080:80 gojs-angular-basic
+```
+
+Then open [http://localhost:8080](http://localhost:8080). Stop with
+`docker compose down` (or Ctrl-C).
+
 ## Learn More
 
 To learn Angular, check out the [Angular's official site](https://angular.io/).
