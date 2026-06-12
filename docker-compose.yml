@@ -1,4 +1,6 @@
 services:
+  # Production-style build served by nginx. Run with:
+  #   docker compose up --build web
   web:
     build:
       context: .
@@ -8,3 +10,23 @@ services:
     ports:
       - "8080:80"
     restart: unless-stopped
+
+  # Development server with live reload. Run with:
+  #   docker compose up dev
+  # Then edit files on the host and the browser reloads automatically.
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: gojs-angular-basic-dev:latest
+    container_name: linkedin-email-extractor-dev
+    ports:
+      - "4200:4200"
+    volumes:
+      # Bind-mount the source for live reload...
+      - .:/app
+      # ...but keep the container's installed node_modules (don't let the
+      # host directory shadow it).
+      - /app/node_modules
+    profiles:
+      - dev

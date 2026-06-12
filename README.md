@@ -52,6 +52,18 @@ docker run --rm -p 8080:80 gojs-angular-basic
 Then open [http://localhost:8080](http://localhost:8080). Stop with
 `docker compose down` (or Ctrl-C).
 
+### Development inside Docker (live reload)
+
+To develop in a container with `ng serve` and automatic reload on file
+changes (uses `Dockerfile.dev` and bind-mounts your source):
+
+```sh
+docker compose up dev
+```
+
+Open [http://localhost:4200](http://localhost:4200) and edit files on the
+host — the browser reloads automatically.
+
 ## Learn More
 
 To learn Angular, check out the [Angular's official site](https://angular.io/).
