@@ -1,0 +1,37 @@
+<div class="extractor">
+  <h2>LinkedIn Email Extractor</h2>
+  <p class="hint">
+    Open your LinkedIn homepage, select the page (or view its source) and paste
+    the text/HTML below. Addresses are pulled from <code>mailto:</code> links
+    (<code>"mailto:" + "@" + "."</code>) and any bare emails in the text.
+  </p>
+
+  <textarea
+    [(ngModel)]="sourceText"
+    rows="10"
+    placeholder="Paste LinkedIn homepage text or HTML here..."></textarea>
+
+  <div class="actions">
+    <button type="button" (click)="extract()" [disabled]="!sourceText.trim()">
+      Extract emails
+    </button>
+    <button type="button" class="secondary" (click)="clear()">Clear</button>
+    <button type="button" class="secondary" (click)="copyAll()"
+            [disabled]="!emails.length">Copy all</button>
+    <button type="button" class="secondary" (click)="downloadCsv()"
+            [disabled]="!emails.length">Download CSV</button>
+  </div>
+
+  <p class="status" *ngIf="status">{{ status }}</p>
+
+  <div class="results" *ngIf="hasExtracted">
+    <h3 *ngIf="emails.length">Found {{ emails.length }} email(s)</h3>
+    <p *ngIf="!emails.length" class="empty">No email addresses found.</p>
+    <ul>
+      <li *ngFor="let e of emails">
+        <a [href]="'mailto:' + e.email">{{ e.email }}</a>
+        <span class="badge" *ngIf="e.fromMailto" title="Found in a mailto: link">mailto</span>
+      </li>
+    </ul>
+  </div>
+</div>

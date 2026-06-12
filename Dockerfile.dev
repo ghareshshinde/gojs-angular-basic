@@ -1,0 +1,18 @@
+# Development image: runs `ng serve` with live reload inside the container.
+# Node 14 matches the Angular 9 toolchain and avoids the OpenSSL
+# "digital envelope routines::unsupported" error seen on newer Node.
+FROM node:14-alpine
+
+WORKDIR /app
+
+# Install dependencies first for layer caching. Source is bind-mounted at
+# runtime (see docker-compose.yml), so we only need package files here.
+COPY package.json package-lock.json ./
+RUN npm ci
+
+EXPOSE 4200
+
+# --host 0.0.0.0 makes the dev server reachable from outside the container.
+# --poll enables polling-based file watching, which is required for reliable
+# live reload over bind mounts on Docker Desktop (macOS/Windows).
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--poll", "2000", "--disable-host-check"]

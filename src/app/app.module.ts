@@ -5,12 +5,14 @@ import { GojsAngularModule } from 'gojs-angular';
 import { AppComponent } from './app.component';
 
 import { InspectorComponent } from './inspector/inspector.component';
+import { EmailExtractorComponent } from './email-extractor/email-extractor.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    InspectorComponent
+    InspectorComponent,
+    EmailExtractorComponent
   ],
   imports: [
     BrowserModule,

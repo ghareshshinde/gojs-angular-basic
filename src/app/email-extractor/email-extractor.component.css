@@ -1,0 +1,100 @@
+.extractor {
+  max-width: 760px;
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  background: #fafafa;
+  font-family: sans-serif;
+}
+
+.extractor h2 {
+  margin-top: 0;
+}
+
+.hint {
+  color: #555;
+  font-size: 0.9em;
+}
+
+.hint code {
+  background: #eee;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: monospace;
+  font-size: 0.9em;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.actions {
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  background: #0a66c2;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+button:disabled {
+  background: #b0b0b0;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: #e1e9f0;
+  color: #0a66c2;
+}
+
+button.secondary:disabled {
+  background: #eee;
+  color: #aaa;
+}
+
+.status {
+  color: #0a7d33;
+  font-size: 0.9em;
+  margin: 4px 0;
+}
+
+.results ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+
+.results li {
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.results .empty {
+  color: #888;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 6px;
+  font-size: 0.75em;
+  line-height: 1.6;
+  color: #0a66c2;
+  background: #e1e9f0;
+  border-radius: 3px;
+  vertical-align: middle;
+}
