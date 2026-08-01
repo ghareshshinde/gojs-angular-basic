@@ -236,6 +236,7 @@
       <a href="#fdt">01 · Digital Twin</a>
       <a href="#workflow">02 · Workflows</a>
       <a href="#connector">03 · Connectors</a>
+      <a href="#ai">AI &amp; Assurance</a>
     </nav>
     <button class="theme-toggle" id="tt" aria-label="Toggle light and dark theme" title="Toggle theme">◑</button>
   </div>
@@ -423,6 +424,63 @@
         <div class="card"><span class="tag">Consent architecture</span><h4 class="serif">DPDP is the umbrella</h4><p>DEPA/AA for finance, ABDM for health, DigiLocker for documents — each pull maps to a DPDP purpose and writes a <span class="mono">consent_ref</span> into the Twin. Revocation tombstones dependent data.</p></div>
         <div class="card"><span class="tag">Designed to retire</span><h4 class="serif">Ready for Bima Sugam</h4><p>Insurance is portal-heavy today; per-insurer and per-TPA connectors are modelled so emerging rails — Bima Sugam, ONDC, OCEN — can subsume the scraping fallbacks without touching workflows.</p></div>
       </div>
+    </div>
+  </section>
+
+  <!-- AI & Assurance -->
+  <section class="block" id="ai">
+    <div class="wrap">
+      <div class="sec-head"><span class="idx">+</span><h2 class="serif">AI Architecture &amp; Assurance</h2></div>
+      <p class="sec-sub">For a system that moves money, files with governments and touches health, "usually right" is not a bar. Accuracy is primarily an <em>architecture</em> property, not a model property — AI is deliberately contained, and deterministic systems carry the guarantees. A hallucination degrades to a suggestion a human declines, never a wrong transfer.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="big">5</div><div class="lbl">models behind one router — no lock-in</div></div>
+        <div class="stat"><div class="big">12+1</div><div class="lbl">domain agents coordinated by a planner</div></div>
+        <div class="stat"><div class="big">0</div><div class="lbl">target hallucination rate for P0 workflows</div></div>
+        <div class="stat"><div class="big">100%</div><div class="lbl">numeric exactness — math is code, not LLM</div></div>
+      </div>
+
+      <div class="grid g2" style="margin-bottom:24px;">
+        <div class="card">
+          <span class="tag">How it's powered</span>
+          <h4 class="serif">Router · agents · grounded memory</h4>
+          <p style="margin-bottom:10px;">A LiteLLM gateway routes each task to GLM / Qwen / Llama / DeepSeek / Gemma with automatic fallback; regulated data runs on self-hosted vLLM in-region. A planner decomposes each responsibility to ~12 domain specialists on a checkpointed graph.</p>
+          <p>Memory is separate from the model: working &amp; long memory → the Digital Twin → vector search → knowledge graph. <b>GraphRAG grounds every answer</b> in the family's actual entities — the model retrieves facts, it never recalls them from weights.</p>
+        </div>
+        <div class="card">
+          <span class="tag">The containment model</span>
+          <h4 class="serif">Five layers, boxing the LLM</h4>
+          <div class="gradient" style="grid-template-columns:1fr;gap:6px;margin-top:8px;">
+            <div class="lvl"><div class="n" style="color:var(--accent);">1 · Execution boundary</div><p>engine executes, LLM only proposes; approval gate on every mutating step</p></div>
+            <div class="lvl"><div class="n" style="color:var(--accent);">2 · Structured output</div><p>typed, schema-validated against the Twin; malformed → reject &amp; retry</p></div>
+            <div class="lvl"><div class="n" style="color:var(--teal);">3 · Grounding + provenance</div><p>facts cite a Twin entity + consent_ref; ungroundable claims flagged</p></div>
+            <div class="lvl"><div class="n" style="color:var(--teal);">4 · Determinism</div><p>tax, EMI, capital-gains, premiums in code — never LLM arithmetic</p></div>
+            <div class="lvl"><div class="n" style="color:var(--teal);">5 · Abstention</div><p>below a confidence threshold, escalate to a human — don't guess</p></div>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="serif" style="margin:0 0 8px;font-size:1.05rem;">How we prove it — golden-set evaluation, in CI</h4>
+      <p style="font-size:.9rem;color:var(--muted);margin:0 0 14px;">Each workflow ships a labeled dataset of real-shaped cases with known-correct outcomes — that's why the catalog specifies inputs and outcomes so precisely. Every prompt, model or router change runs the affected sets in CI; a regression blocks merge. Targets are tier-dependent:</p>
+      <div class="tablewrap" style="margin-bottom:22px;">
+        <table>
+          <thead><tr><th>Action class</th><th>Task accuracy</th><th>Hallucination</th><th>Numeric</th><th>Autonomy ceiling</th></tr></thead>
+          <tbody>
+            <tr><td>Money movement / gov filing</td><td>≥ 99% <span style="color:var(--faint);">+ always approved</span></td><td class="num-cell">0</td><td class="num-cell">100%</td><td>never fully auto</td></tr>
+            <tr><td>Renewal / bill pay (bounded ₹)</td><td>≥ 98%</td><td class="num-cell">0</td><td class="num-cell">100%</td><td>auto ≤ limit</td></tr>
+            <tr><td>Advisory / recommendation</td><td>≥ 95%</td><td class="num-cell">≤ 0.5%</td><td class="num-cell">100%</td><td>suggest / assist</td></tr>
+            <tr><td>Extraction / classification</td><td>≥ 97% field</td><td class="num-cell">—</td><td class="num-cell">—</td><td>assist (human confirms)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid g3">
+        <div class="card"><span class="tag">Before production</span><h4 class="serif">Shadow, then canary</h4><p>New capability runs in <em>observe</em> mode — predict, don't act — against live traffic, compared to what humans did; domain experts sign off on high-stakes lanes before any autonomy.</p></div>
+        <div class="card"><span class="tag">In production</span><h4 class="serif">Traced &amp; drift-watched</h4><p>Langfuse / Phoenix trace every step; live accuracy is a metric. Drift demotes a workflow's automation level automatically, and the router fails over to a known-good model.</p></div>
+        <div class="card"><span class="tag">The closing loop</span><h4 class="serif">Trust gates automation</h4><p>The <em>observe → auto</em> gradient is driven by measured accuracy, per workflow and per family — autonomy is earned on the golden set and in shadow, and can be lost.</p></div>
+      </div>
+
+      <div class="callout" style="margin-top:20px;"><b>Content is data, not instructions.</b> Bill PDFs, connector responses, portal and OCR text are untrusted input — agents can't be redirected by injected content, and any content-driven attempt to escalate access or take an unexpected action is refused or escalated. Credentials never enter a prompt or the graph.</div>
     </div>
   </section>
 

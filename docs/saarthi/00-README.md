@@ -13,6 +13,7 @@ implements against.
 | 1 | [Family Digital Twin Specification](./01-family-digital-twin-spec.md) | Every entity, attribute, relationship, lifecycle state, and event in the single source of truth | Data platform, Knowledge Graph, all services |
 | 2 | [Workflow Catalog](./02-workflow-catalog.md) | The real family workflows Saarthi executes — inputs, approvals, integrations, outcomes | Workflow Engine, Planner, AI agents |
 | 3 | [Connector Registry](./03-connector-registry.md) | Every planned integration — API availability, consent model, regulatory constraints, auth, fallback | Connector Platform, Consent Engine, Security |
+| + | [AI Architecture & Assurance](./04-ai-architecture-and-assurance.md) | How the AI features are powered, and how accuracy is guaranteed — containment model, evaluation program, guardrails, trust-gated automation | AI platform, ML/eval, QA |
 
 ## Why these three, in this order
 
