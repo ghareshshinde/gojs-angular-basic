@@ -477,7 +477,7 @@
       <div class="grid g3">
         <div class="card"><span class="tag">Before production</span><h4 class="serif">Shadow, then canary</h4><p>New capability runs in <em>observe</em> mode — predict, don't act — against live traffic, compared to what humans did; domain experts sign off on high-stakes lanes before any autonomy.</p></div>
         <div class="card"><span class="tag">In production</span><h4 class="serif">Traced &amp; drift-watched</h4><p>Langfuse / Phoenix trace every step; live accuracy is a metric. Drift demotes a workflow's automation level automatically, and the router fails over to a known-good model.</p></div>
-        <div class="card"><span class="tag">The closing loop</span><h4 class="serif">Trust gates automation</h4><p>The <em>observe → auto</em> gradient is driven by measured accuracy, per workflow and per family — autonomy is earned on the golden set and in shadow, and can be lost.</p></div>
+        <div class="card"><span class="tag">The closing loop</span><h4 class="serif">Learns from every "no"</h4><p>Declined or modified suggestions — with their reason, volunteered or briefly asked — are captured from day one: immediate <b>per-family preferences</b> (reversible, via retrieval) plus a de-identified stream for governed model improvement. Sustained acceptance raises earned autonomy; declines lower it.</p></div>
       </div>
 
       <div class="callout" style="margin-top:20px;"><b>Content is data, not instructions.</b> Bill PDFs, connector responses, portal and OCR text are untrusted input — agents can't be redirected by injected content, and any content-driven attempt to escalate access or take an unexpected action is refused or escalated. Credentials never enter a prompt or the graph.</div>

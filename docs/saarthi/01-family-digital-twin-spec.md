@@ -267,6 +267,28 @@ GrievanceRaised`.
   ConsentExpired`.
 - `Policy` (governance rule): `scope`, `condition`, `effect` (allow/deny/require_approval),
   `approver_role`, `monetary_limit`, `rationale`.
+- `Suggestion`: a recommendation the AI presented and the human's response to it — the atomic unit
+  of the learning loop. `agent`, `workflow_ref`/`responsibility_ref`, `recommended_action`,
+  `rationale`, `confidence`, `alternatives[]`, `presented_at`, `status`
+  (`pending → accepted | accepted_modified | declined | ignored | expired | superseded`),
+  `decided_at`, `decided_by (ref<Person>)`, `modification` (what the user changed, if any). Every
+  decision/approval step in a workflow produces one. **Events:** `SuggestionMade,
+  SuggestionAccepted, SuggestionModified, SuggestionDeclined, SuggestionIgnored`.
+- `DecisionFeedback`: why a suggestion was declined or modified (or, occasionally, why accepted).
+  `suggestion_ref`, `reason_text`, `reason_code` (taxonomy: `not_now · already_handled · disagree ·
+  too_costly · low_trust · privacy · wrong_context · prefer_alternative · other`),
+  `reason_source` (`volunteered · prompted · inferred`), `sentiment`, `captured_at`. When a
+  decline/modify has no volunteered reason, the system may **request lightweight feedback** (see
+  WF-FAM-013) — sparingly, honouring Principle 6. **Events:** `FeedbackRequested, FeedbackProvided,
+  FeedbackDeclined`.
+- `Preference`: a *derived*, reversible statement of how this family/person wants Saarthi to behave,
+  learned from `Suggestion`+`DecisionFeedback` history from the very first interaction. `subject`
+  (family/person), `scope` (domain/workflow/counterparty/action-class), `statement`
+  (e.g. "always review before any payment > ₹5,000", "declines insurer-X upsells"), `strength`
+  (dec, grows with corroborating signals), `derived_from[] (ref<Suggestion>)`, `valid_time`,
+  `revocable` (always true — a preference is applied via retrieval, never baked into a model).
+  **Events:** `PreferenceLearned, PreferenceStrengthened, PreferenceApplied, PreferenceOverridden,
+  PreferenceExpired`.
 
 ## 4. Relationship model
 
@@ -315,7 +337,13 @@ Relationships are typed edges; the graph is the substrate for GraphRAG and the P
 `Lifecycle.*` (state transitions) · `Temporal.*` (DueSoon / Expiring / Maturing) ·
 `Financial.*` (Credited / Debited / BalanceChanged) · `Compliance.*` (FilingWindow / NoticeReceived) ·
 `Risk.*` (CoverageGap / NomineeMissing / Overdue) · `Consent.*` · `Connector.*` (Fetched / Failed /
-AuthExpired) · `Workflow.*` (Started / StepCompleted / ApprovalRequested / Completed / Failed).
+AuthExpired) · `Workflow.*` (Started / StepCompleted / ApprovalRequested / Completed / Failed) ·
+`Decision.*` (SuggestionMade / Accepted / Modified / Declined / Ignored) · `Learning.*`
+(FeedbackRequested / FeedbackProvided / PreferenceLearned / PreferenceApplied).
+
+The `Decision.*` and `Learning.*` streams are the substrate of the continuous-learning loop
+(`04 §6`): declined and modified suggestions — with their reasons — are ground-truth signal from
+the first interaction onward.
 
 The **event log is the system of record**; the property graph (Neo4j/Memgraph) and relational
 store (PostgreSQL) are projections rebuildable from it. Kafka/Redpanda is the transport.

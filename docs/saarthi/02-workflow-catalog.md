@@ -343,7 +343,39 @@ outcomes: no missed EMIs, optimised interest cost, refinance opportunities surfa
 regulatory: RBI fair-practice; no auto-prepay without explicit approval
 ```
 
-> **12 exemplars specified.** The same schema is applied to every index entry below on activation.
+### ★ WF-FAM-013 — Decision-Feedback Capture & Preference Learning
+```yaml
+domain: FAM | lifecycle: event-triggered/recurring | priority: P0 | frequency: continuous | automation: auto
+trigger: any Decision.* event (SuggestionDeclined / SuggestionModified / SuggestionIgnored) OR periodic consolidation
+actors: [any Person who decides, Planner, all domain agents (as suggesters)]
+inputs: the Suggestion + the user's response; optionally a volunteered reason
+preconditions: a Suggestion exists with a non-accepted outcome
+steps:
+  1. record_outcome(agent: twin)                 # write Suggestion.status + Decision.* event
+  2. capture_reason_if_present(agent: twin)       # volunteered text/quick-reply → DecisionFeedback(reason_source: volunteered)
+  3. infer_reason(agent: planner)                 # from context/timing; low-confidence → mark inferred, do NOT overweight
+  4. maybe_request_feedback(agent: planner, approval: user-optional)
+       # ONLY if: high-value/repeated decline, ambiguous, and within feedback-budget. One tap, dismissible. Principle 6.
+  5. consolidate_into_preference(agent: planner)  # ≥N corroborating signals → PreferenceLearned/Strengthened
+  6. apply_preference(agent: planner)             # future suggestions retrieved-through preferences (immediate, per-family)
+  7. enqueue_for_aggregate_learning(agent: eval)  # de-identified signal → golden sets / DSPy / thresholds (governed, offline)
+fdt_reads: [Suggestion, DecisionFeedback, Preference, related workflow context]
+fdt_writes: [DecisionFeedback, PreferenceLearned/Strengthened/Applied, TrustScore recompute]
+connectors: []   # internal; no external system
+approvals: feedback request is always optional and dismissible
+outcomes: every non-accepted suggestion becomes signal; personalisation improves immediately;
+          aggregate model improvement is fed a governed, de-identified stream
+failure_modes:
+  - no reason available & not worth asking → store outcome only, learn from the behaviour signal
+  - feedback fatigue → hard budget on how often we ask (per family, per period)
+  - one-off decline → do not overfit; preferences need corroboration
+sla: outcome recorded synchronously; preference consolidation near-real-time; aggregate learning batched
+regulatory: DPDP — feedback is personal data under consent; aggregate learning uses de-identified signal;
+            preferences are always reversible (applied via retrieval, never fine-tuned into weights)
+automation: fully automatic capture; asking for feedback is throttled and optional
+```
+
+> **13 exemplars specified.** The same schema is applied to every index entry below on activation.
 
 ---
 
@@ -570,6 +602,7 @@ cross-referenced (★). This index is the backlog the schema in §1 is applied t
 | WF-FAM-010 | NRI family setup & compliance | On | P2 | bank_api | NRI-compliant ops |
 | WF-FAM-011 | Trusted-contact & delegation setup | Ev | P1 | — | delegates configured |
 | WF-FAM-012 | Data-export / account-portability (DPDP) | Ev | P1 | — | user owns their data |
+| WF-FAM-013 | Decision-feedback capture & preference learning | Ev/Rc | P0 | — | AI learns from declined/modified suggestions |
 
 ---
 
@@ -597,6 +630,15 @@ Automation level per workflow rises with **trust** (Principle: *automation follo
 The Policy Engine enforces monetary limits, mandatory-approval categories (government filings,
 money movement above threshold, health decisions), and per-family automation ceilings.
 
+**Every decision is a learning signal (global rule).** Each workflow's decision/approval step
+emits a `Suggestion` and records the outcome — accepted, modified, declined, or ignored — plus a
+reason when one is available (volunteered, or requested via WF-FAM-013, or cautiously inferred).
+Declines and modifications are first-class ground truth from the very first interaction: they feed
+per-family `Preference`s applied immediately through retrieval, and a de-identified aggregate stream
+that improves the models under evaluation governance (`04 §6`). A suggestion the user rejects "with
+reason" teaches Saarthi faster than one silently accepted — so the loop is designed to make
+declining cheap and, where valuable, to ask why.
+
 ## 7. Failure, fallback & escalation (global rules)
 
 1. **No API → fallback ladder:** official API → partner/aggregator → authorised portal automation →
@@ -623,10 +665,10 @@ money movement above threshold, health decisions), and per-family automation cei
 | TRVL | 9 | 0 | 30–50 |
 | HOME | 9 | 1 | 30–60 |
 | LIFE | 11 | 1 | 40–70 |
-| FAM | 12 | 1 | 30–60 |
-| **Total** | **170** | **14** | **540–900** |
+| FAM | 13 | 2 | 30–60 |
+| **Total** | **171** | **15** | **540–900** |
 
-The 170 indexed entries + the schema in §1 constitute the backlog; each is elaborated to
+The 171 indexed entries + the schema in §1 constitute the backlog; each is elaborated to
 exemplar depth on prioritisation. The taxonomy (12 domains × 5 lifecycle lanes × per-member
 instantiation across a family of 4–6) comfortably yields the 500–1,000 distinct runnable
 workflows in the North-Star target without inventing filler — variants (per-member, per-asset,

@@ -72,6 +72,7 @@ Newest first. Each entry: the decision and the document(s) it lives in.
 
 | Date | Decision | Landed in |
 |------|----------|-----------|
+| 2026-08-01 | **Continuous learning from decisions**: capture every suggestion's outcome + reason (volunteered / asked / inferred) from day one; two-speed learning — immediate reversible per-family preferences via retrieval + governed de-identified aggregate model improvement (no live per-user fine-tuning) | `01` (Suggestion/DecisionFeedback/Preference + Decision.*/Learning.* events), `02` (WF-FAM-013 + global rule), `04 §6` |
 | 2026-08-01 | Captured founder-vision / product context (vision, principles, personas, scope, roadmap, business model) as durable base truth; established this maintenance protocol + decision log | `05`, `00` |
 | 2026-08-01 | AI is **contained**, not trusted: five-layer containment model, golden-set evaluation in CI, per-action-class accuracy targets, trust-gated automation | `04` |
 | 2026-08-01 | AI stack: LiteLLM router over GLM/Qwen/Llama/DeepSeek/Gemma, self-hosted vLLM in-region for regulated data; Planner + ~12 domain agents; grounded memory + GraphRAG | `04 §2` |

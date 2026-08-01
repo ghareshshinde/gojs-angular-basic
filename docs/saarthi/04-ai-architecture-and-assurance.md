@@ -157,21 +157,83 @@ tier:           P0
 
 ---
 
-## 6. Observability & operations
+## 6. Continuous learning from decisions
+
+Saarthi learns from the very first interaction — primarily from the suggestions a user **does not
+take**. A declined or modified recommendation, with its reason, is the richest signal we get; the
+loop is designed to make declining cheap and, where valuable, to ask why. Every workflow's
+decision step emits a `Suggestion` and records the outcome (`accepted · modified · declined ·
+ignored`) as `Decision.*` events (FDT `01 §3.7, §5.2`), orchestrated by **WF-FAM-013**.
+
+### 6.1 The signal — capture on every decision
+- **Outcome** is always recorded, synchronously.
+- **Reason** is captured when available, by three sources in priority order:
+  1. **Volunteered** — the user typed or quick-replied a reason (highest trust).
+  2. **Prompted** — for a high-value or repeated non-acceptance, WF-FAM-013 asks *one* optional,
+     dismissible question ("Skipping this because it's already handled, or not right?"). Governed by
+     a **feedback budget** per family/period so we never nag — Principle 6, *never make life more
+     complicated*.
+  3. **Inferred** — from context/timing, marked low-confidence and **never overweighted**.
+- Reasons are coded to a taxonomy (`not_now · already_handled · disagree · too_costly · low_trust ·
+  privacy · wrong_context · prefer_alternative · other`) so they aggregate.
+- **A silent decline still teaches** (behavioural signal) even with no reason.
+
+### 6.2 Two-speed learning (the key architectural choice)
+We separate *personalisation* from *model improvement* — they have different speeds, blast radii,
+and privacy properties:
+
+| | Immediate personalisation | Aggregate model improvement |
+|---|---------------------------|-----------------------------|
+| **Mechanism** | Learned `Preference` entities applied **through retrieval** at suggestion time | Golden-set augmentation + DSPy/offline optimization + threshold tuning |
+| **Speed** | Near-real-time, from the first corroborated signal | Batched, governed release cycle |
+| **Scope** | This family only | De-identified, across families |
+| **Reversibility** | Fully reversible — a preference is retrieved, never baked in | Gated by the §4 eval suite before any rollout |
+| **Privacy** | Personal data under the family's consent | De-identified signal only; no per-user weights |
+
+**We do not live-fine-tune models on one family's declines.** That would be a privacy hazard, invite
+catastrophic forgetting, and create runaway feedback loops. Personalisation is memory, not weights;
+model improvement is aggregate, de-identified, and eval-gated.
+
+### 6.3 Cold start — learning from day one
+Before any history exists: (a) **heuristic priors** per workflow/domain seed sensible defaults;
+(b) the family's onboarding choices (WF-FAM-001) and early declines are captured aggressively;
+(c) a preference forms after **≥ N corroborating signals** (not one), so we personalise quickly
+without overfitting to a single click.
+
+### 6.4 Where the signal goes
+`Decision.*` + `DecisionFeedback` →
+- **Preferences** (immediate, per-family) — future suggestions retrieved through them.
+- **Golden sets** (§4) — real declines become labeled cases, especially "the AI was wrong" ones.
+- **DSPy / prompt optimization** and **router/threshold tuning** — offline, eval-gated.
+- **Trust Score & the automation gradient** (§8) — sustained "accepted as suggested" raises
+  earned autonomy; a pattern of declines lowers it.
+
+### 6.5 Guardrails on learning
+- **Corroboration before commit** — no preference from a single decline; strength grows with signal.
+- **Distinguish "wrong" from "not now"** via the reason taxonomy — a `not_now` decline must not
+  train the model to stop suggesting a valid action.
+- **Feedback-loop hygiene** — de-bias so the model doesn't simply learn to suggest less; track
+  precision *and* recall of suggestions, not just acceptance rate.
+- **Consent & de-identification** — feedback is personal data (DPDP); aggregate learning uses
+  de-identified signal; the family can view, correct, and revoke learned preferences.
+
+---
+
+## 7. Observability & operations
 
 - **Full tracing (Langfuse / Phoenix + OpenTelemetry):** every agent step, tool call, retrieval,
   and token is traced; per-workflow accuracy, latency, cost, and grounding-failure are live metrics.
 - **Online evaluation:** sampled live runs scored continuously against the same metric definitions.
 - **Drift detection:** alert when a model/provider's live accuracy on a workflow slips; the router
   fails over to a known-good pinned model automatically.
-- **Feedback as ground truth:** every human approval, edit, or rejection becomes a label that flows
-  back into golden sets and DSPy optimization — the trust loop closes on real usage.
+- **Feedback as ground truth:** the §6 decision loop is the primary online signal source — approvals,
+  edits, and declines flow back into golden sets, preferences, and DSPy optimization.
 - **Incident path:** an accuracy-regression alert can demote a workflow's automation level
   (e.g. `auto` → `suggest`) automatically pending investigation.
 
 ---
 
-## 7. Trust → automation gating (the closing loop)
+## 8. Trust → automation gating (the closing loop)
 
 The Workflow Catalog's gradient (`observe → suggest → assist → auto_with_approval → auto`) is not a
 user setting — it is **driven by measured accuracy**, evaluated per workflow *and* per family:
