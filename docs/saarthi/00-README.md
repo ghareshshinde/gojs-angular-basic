@@ -34,6 +34,15 @@ implements against — the artifacts that had to exist *before* a line of featur
 are the **operational contract**: how the platform is delivered, run, secured, and paid for, with
 `06` as the hub that tracks what's still missing.
 
+### ▶ Where to start building
+
+| # | Document | What it gives you |
+|---|----------|-------------------|
+| 11 | [v0 — Gmail "Actionable Inbox"](./11-v0-gmail-actionable-inbox.md) | **The first buildable slice.** Read-only Gmail → surface the few things that need action, hide the thousands that don't. Grounded in a real-inbox exploration; a thin vertical slice of `01`–`10` with no throwaway. |
+
+Everything above is the destination; **`11` is the starting line.** Build v0 first, then widen along
+the lanes and connectors the rest of the docs already specify.
+
 ## Why this order — the governing stance
 
 Saarthi is **workflow-first, AI-enhanced**: deterministic systems deliver reliability and
@@ -83,6 +92,7 @@ Newest first. Each entry: the decision and the document(s) it lives in.
 
 | Date | Decision | Landed in |
 |------|----------|-----------|
+| 2026-08-01 | **v0 = Gmail "Actionable Inbox"** chosen as the first buildable slice (read-only, suggest-only, single-user). Grounded in a real-inbox exploration: classify by **sender + Gmail category, not keywords**; **dedup mandatory**; de-noising job/newsletter volume *is* the product. Lanes: renewals/subscriptions, trials-ending, failed-payments, deadlines (generalising to bills/insurance/gov/travel) | `11` |
 | 2026-08-01 | **Money super-app scope (INDmoney-inspired, extended)**: email/SMS as the *primary* net-worth discovery channel; Net Worth as a headline projection; new instruments (ETF/SIF/US equity/bonds/gold) + in-app account opening; lending (quick loan/LAMF); advisory & consultation marketplace (new **SVC** domain); warranty/refund/rewards tracking. Regulated-entity **licensing posture = partner-first** (RIA·ARN·broker·NBFC/LSP·IRDAI·LRS) flagged as an open structural business decision | `01 §3.9`, `02` (SVC + WF-FIN/INV/HOME/SVC-*), `03 §6A–6E`, `05 §1a,§11`, `10 §8`, `06 §4` |
 | 2026-08-01 | **Operational contract added** so no major structural change is forced later: delivery phases + gap register + 12 structural-lock-now decisions; K8s-native platform, multi-tenancy & residency; persona-wise identity/access; billing (trial→lock→pre-scheduled autopay, single-point entitlement gating); security & compliance program (DPDP/RBI/IRDAI/ABDM/PCI) | `06`, `07`, `08`, `09`, `10`; FDT `01 §3.8`; catalog WF-FAM-014…018 |
 | 2026-08-01 | **Continuous learning from decisions**: capture every suggestion's outcome + reason (volunteered / asked / inferred) from day one; two-speed learning — immediate reversible per-family preferences via retrieval + governed de-identified aggregate model improvement (no live per-user fine-tuning) | `01` (Suggestion/DecisionFeedback/Preference + Decision.*/Learning.* events), `02` (WF-FAM-013 + global rule), `04 §6` |

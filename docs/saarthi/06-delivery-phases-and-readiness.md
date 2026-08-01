@@ -14,7 +14,7 @@ Access (`08`), Billing & Monetization (`09`), Security & Compliance (`10`).
 
 | Phase | Goal | Scope | Users | Data |
 |-------|------|-------|-------|------|
-| **P-0 Prototype** | Prove the loop: Twin → workflow → connector → suggestion → decision | 1–2 P0 workflows end-to-end (e.g. health renewal), mocked connectors, single-tenant | Internal / design partners | Synthetic + own data |
+| **P-0 Prototype** | Prove the loop: Twin → workflow → connector → suggestion → decision. **First slice = v0 Gmail "Actionable Inbox" (`11`).** | v0: read-only Gmail → classify→dedup→rank actionable items, suggest-only, single-user | Internal / design partners | Real Gmail (consented), own data |
 | **P-1 MVP** | Deliver real value on the Phase-1 spine | P0 workflow set, real AA/DigiLocker/BBPS/UPI, onboarding, persona login, free tier | Closed beta families | Real, consented, small scale |
 | **P-2 Beta / GA** | Monetise & harden | Paid plans + trial→lock + autopay, more workflows, support console, SLAs | Paying families | Real, regulated, growing |
 | **P-3 Production scale** | Scale, resilience, breadth | Multi-region readiness, full catalog expansion, marketplace, high automation tiers | Public | Real, at scale |
