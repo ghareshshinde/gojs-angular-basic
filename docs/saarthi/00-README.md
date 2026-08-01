@@ -1,57 +1,94 @@
 # Saarthi — Foundational Engineering Contract
 
-> **Saarthi** is an AI-native **Family Operating System**: it orchestrates every financial,
-> legal, administrative, healthcare, educational, governmental, and lifestyle responsibility
-> across a family's lifetime, so the human stops being the integration layer.
+> **Saarthi** is an AI-native **Family Operating System**: it orchestrates every financial, legal,
+> administrative, healthcare, educational, governmental, and lifestyle responsibility across a
+> family's lifetime, so the human stops being the integration layer.
 
-This folder contains the **three artifacts that must exist before a line of feature code is
-written**. Together they form the engineering contract that every service, agent, and connector
-implements against.
+This folder is the **maintained source of truth** for Saarthi. It is written so that a new
+session — or a new engineer — can reconstruct full context from these documents *without reading
+any chat history*. If you are here cold, read in the order below.
 
-| # | Document | What it defines | Primary consumers |
-|---|----------|-----------------|-------------------|
-| 1 | [Family Digital Twin Specification](./01-family-digital-twin-spec.md) | Every entity, attribute, relationship, lifecycle state, and event in the single source of truth | Data platform, Knowledge Graph, all services |
-| 2 | [Workflow Catalog](./02-workflow-catalog.md) | The real family workflows Saarthi executes — inputs, approvals, integrations, outcomes | Workflow Engine, Planner, AI agents |
-| 3 | [Connector Registry](./03-connector-registry.md) | Every planned integration — API availability, consent model, regulatory constraints, auth, fallback | Connector Platform, Consent Engine, Security |
-| + | [AI Architecture & Assurance](./04-ai-architecture-and-assurance.md) | How the AI features are powered, and how accuracy is guaranteed — containment model, evaluation program, guardrails, trust-gated automation | AI platform, ML/eval, QA |
+## Reading order
 
-## Why these three, in this order
+| Read | Document | What it gives you |
+|------|----------|-------------------|
+| **1st** | [Product Context (Volume 0)](./05-product-context.md) | The why/what: vision, principles, north-star, personas, scope, roadmap, business model, the workflow-first stance |
+| 2nd | [Family Digital Twin Specification](./01-family-digital-twin-spec.md) | Every entity, attribute, relationship, lifecycle state, and event in the single source of truth |
+| 3rd | [Workflow Catalog](./02-workflow-catalog.md) | The real family workflows Saarthi runs — inputs, approvals, integrations, outcomes |
+| 4th | [Connector Registry](./03-connector-registry.md) | Every planned integration — API availability, consent model, regulatory constraints, auth, fallback |
+| 5th | [AI Architecture & Assurance](./04-ai-architecture-and-assurance.md) | How the AI is powered and how accuracy is guaranteed — containment, evaluation, guardrails, trust-gated automation |
+| — | [`index.html`](./index.html) | Self-contained, theme-aware **stakeholder overview** distilling all of the above |
 
-Saarthi is **workflow-first, AI-enhanced** — deterministic systems deliver reliability and
-governance; AI enhances them, it does not replace them. The dependency order is:
+`05` is the framing; `01`–`04` are the engineering contract every service, agent, and connector
+implements against. `01`–`04` are the three (now four) artifacts that had to exist *before* a line
+of feature code.
+
+## Why this order — the governing stance
+
+Saarthi is **workflow-first, AI-enhanced**: deterministic systems deliver reliability and
+governance; AI enhances them, it does not replace them. Dependency order:
 
 ```
 Family Digital Twin  →  Policy Engine  →  Workflow Engine  →  Connector Platform
         →  Event Bus  →  Knowledge Graph  →  AI Reasoning  →  User Experience
 ```
 
-- The **FDT Spec** gives every workflow and connector a shared vocabulary of entities and events.
-- The **Workflow Catalog** gives the Workflow Engine and Planner their unit of work, and tells us
-  *which* connectors and *which* FDT entities each responsibility touches.
-- The **Connector Registry** grounds every workflow step in a real, consent-governed integration —
-  or an explicit fallback when no API exists.
+The documents interlock: a Workflow Catalog entry names the **FDT entities** it reads/writes and
+the **Connectors** it calls; a Connector Registry entry names the **FDT entities** it populates;
+the FDT Spec is the schema both agree on; the AI Assurance spec governs how the reasoning layer
+stays correct.
 
-Read them together: a Workflow Catalog entry names FDT entities it reads/writes and Connectors it
-calls; a Connector Registry entry names the FDT entities it populates; the FDT Spec is the schema
-both sides agree on.
-
-## Conventions used across all three documents
+## Conventions used across all documents
 
 - **Identifiers.** Every canonical object has a stable `saarthi:<type>:<uuid>` URN. External
   identifiers (Aadhaar, PAN, policy numbers) are *attributes*, never primary keys.
 - **Sensitivity classes.** `PUBLIC` · `INTERNAL` · `PII` · `SENSITIVE_PII` · `FINANCIAL` ·
   `HEALTH` · `CREDENTIAL`. Drives encryption, masking, residency, and consent scope.
-- **Consent-linked.** Any attribute sourced from a regulated connector carries a `consent_ref`
-  back to the DEPA/AA/DPDP consent artifact that authorised its collection.
-- **Temporal model.** The Twin is **bitemporal**: every fact has a `valid_time` (when it was true
-  in the world) and a `system_time` (when Saarthi learned it). Nothing is hard-deleted.
-- **Human-in-the-loop.** Where a step mutates the real world (money movement, a government filing,
-  an address change) the workflow carries an explicit `approval` gate. *AI should think; humans
-  should decide.*
+- **Consent-linked.** Any attribute from a regulated connector carries a `consent_ref` back to the
+  DEPA/AA/ABDM/DigiLocker/DPDP consent artifact that authorised its collection.
+- **Temporal model.** The Twin is **bitemporal**: every fact has `valid_time` (true in the world)
+  and `system_time` (when Saarthi learned it). Nothing is hard-deleted.
+- **Human-in-the-loop.** Every step that mutates the real world (money, a government filing, an
+  address change) carries an explicit `approval` gate. *AI thinks; humans decide.*
+
+## Maintenance protocol (base-truth discipline)
+
+**These documents are kept current as decisions are made, so context lives here, not in chat.**
+
+1. When a product/architecture decision is made or refined in any session, **fold it into the
+   relevant spec** (and Volume 0 if it changes framing) in the *same* change — don't leave it in
+   conversation only.
+2. **Record it in the Decision Log below** (one line: what was decided and where it landed).
+3. Prefer **cross-reference over duplication** — state a fact once, in its home document, and link
+   to it. This prevents drift.
+4. Keep each document's **"Open questions / v1.1 candidates"** section honest — move items out as
+   they're resolved.
+5. The `index.html` overview is a *distillation*; refresh it when a change alters the headline
+   story, and republish (same file path keeps the artifact URL).
+
+## Decision Log
+
+Newest first. Each entry: the decision and the document(s) it lives in.
+
+| Date | Decision | Landed in |
+|------|----------|-----------|
+| 2026-08-01 | Captured founder-vision / product context (vision, principles, personas, scope, roadmap, business model) as durable base truth; established this maintenance protocol + decision log | `05`, `00` |
+| 2026-08-01 | AI is **contained**, not trusted: five-layer containment model, golden-set evaluation in CI, per-action-class accuracy targets, trust-gated automation | `04` |
+| 2026-08-01 | AI stack: LiteLLM router over GLM/Qwen/Llama/DeepSeek/Gemma, self-hosted vLLM in-region for regulated data; Planner + ~12 domain agents; grounded memory + GraphRAG | `04 §2` |
+| 2026-08-01 | Governing stance set to **workflow-first, AI-enhanced** (revised from AI-first) | `05 §3`, all |
+| 2026-08-01 | Deliverable = the three (now four) foundational specs as Markdown + a shareable web overview; committed to `claude/saarthi-prd-yocfkj`, draft PR #2 | this folder |
+| 2026-08-01 | North-star metric = **Responsibilities Successfully Managed**, not DAU | `05 §1` |
 
 ## Status & coverage
 
 These are v1.0 living specifications. The Workflow Catalog ships a fully-specified representative
-set plus an indexed enumeration that scales to the 500–1,000 target; the Connector Registry
-covers the India Stack and the highest-priority private integrations. Coverage notes and
-open questions are called out inline in each document.
+set plus an indexed enumeration scaling to the 500–1,000 target; the Connector Registry covers the
+India Stack and highest-priority private integrations. Coverage notes and open questions are called
+out inline in each document.
+
+## Roadmap for these docs (the wider Bible)
+
+This set is the engineering-contract core of a larger intended **Product Requirements Bible**
+(Volumes 0–15). Additional volumes — Policy Engine, Knowledge Graph, Memory System, Marketplace,
+Mobile/Web, Security & Compliance, DevOps, Analytics, Admin Console — are elaborated on demand and
+join this folder and the reading order above when they are. See `05 §12`.
