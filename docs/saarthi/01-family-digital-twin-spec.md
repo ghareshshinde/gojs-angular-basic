@@ -290,6 +290,47 @@ GrievanceRaised`.
   **Events:** `PreferenceLearned, PreferenceStrengthened, PreferenceApplied, PreferenceOverridden,
   PreferenceExpired`.
 
+### 3.8 Platform, access & commerce entities
+
+These make the platform operable, secure, and monetisable. They are part of the Twin but governed
+by their own specs — access (`08`), billing (`09`), security (`10`).
+
+**Identity & access**
+- `UserAccount`: an authentication principal — *distinct from `Person`*. A `Person` may have zero
+  logins (a dependent child/parent tracked but not logging in) or one `UserAccount`. Attributes:
+  `person_ref`, `login_identifiers` (mobile/email/passkey), `auth_factors[]`, `status`
+  (`invited → active → locked → suspended → closed`), `last_login`, `persona` (drives the
+  persona-wise experience — see `08`). Events: `AccountInvited, AccountActivated, LoginSucceeded,
+  LoginFailed, StepUpChallenged, AccountLocked`.
+- `Role`: named capability bundle (`family_admin · adult_member · caregiver · dependent_view ·
+  delegate · advisor · support_agent · system`). `Permission`/`Grant`: subject → action → resource
+  scope (ABAC predicate over FDT entities), with `condition` and `expires_at`.
+- `Delegation`: time-bounded transfer of specific capabilities (POA, break-glass, caregiver access)
+  — `from`, `to`, `scope`, `reason`, `valid_time`, `revocable`. Ties to `POA_FOR` relationship.
+- `Session`: `account_ref`, `device`, `started_at`, `expires_at`, `auth_level` (aal1/aal2/step-up),
+  `risk_score`. `Credential` material lives only in the secrets vault, never here.
+
+**Commerce & entitlement** (note: distinct from the family's *external* `Subscription` entity in
+§3.4 — that models Netflix-style third-party subscriptions; the entities below model the family's
+paid relationship *with Saarthi*).
+- `Plan`: a Saarthi offering — `tier` (`free · premium_family · …`), `billing_cycle`
+  (`monthly · annual`), `price`, `features[]`, `trial_length`, `region`. Catalog-versioned.
+- `Membership`: the family's active plan state — `family_ref`, `plan_ref`, `status`
+  (`trialing → active → past_due → grace → locked → cancelled → expired`), `trial_ends_at`,
+  `current_period_end`, `payment_mandate_ref`, `renewal_mode`. Events: `TrialStarted,
+  TrialEndingSoon, TrialConverted, TrialExpiredLocked, Renewed, PaymentFailed, EnteredGrace,
+  MembershipLocked, Cancelled`.
+- `Entitlement`: the resolved, cached answer to "can this family use feature X right now?" —
+  `family_ref`, `feature`, `state` (`granted · trial · gated · revoked`), `source_membership`,
+  `valid_time`. The single point feature-gating reads (see `09`).
+- `PaymentMandate`: a pre-authorised autopay instrument — `type` (`upi_autopay · e_nach ·
+  card_recurring`), `provider`, `max_amount`, `frequency`, `mandate_ref`, `status`
+  (`pending → active → paused → revoked`), `set_up_at`. Enables scheduling autopay *before* the
+  trial ends. **Sensitivity:** `FINANCIAL`; card PAN is never stored (tokenised via a PCI-scoped
+  provider — see `10`). Events: `MandateRequested, MandateActive, MandateDebited, MandateFailed,
+  MandateRevoked`.
+- `Invoice` / `Payment`: `membership_ref`, `amount`, `tax (GST)`, `period`, `status`, `receipt_ref`.
+
 ## 4. Relationship model
 
 Relationships are typed edges; the graph is the substrate for GraphRAG and the Planner's reasoning.

@@ -237,6 +237,7 @@
       <a href="#workflow">02 · Workflows</a>
       <a href="#connector">03 · Connectors</a>
       <a href="#ai">AI &amp; Assurance</a>
+      <a href="#scale">Delivery</a>
     </nav>
     <button class="theme-toggle" id="tt" aria-label="Toggle light and dark theme" title="Toggle theme">◑</button>
   </div>
@@ -481,6 +482,31 @@
       </div>
 
       <div class="callout" style="margin-top:20px;"><b>Content is data, not instructions.</b> Bill PDFs, connector responses, portal and OCR text are untrusted input — agents can't be redirected by injected content, and any content-driven attempt to escalate access or take an unexpected action is refused or escalated. Credentials never enter a prompt or the graph.</div>
+    </div>
+  </section>
+
+  <!-- Delivery / scale -->
+  <section class="block" id="scale">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="serif">Built so scale is additive, not a rewrite</h2></div>
+      <p class="sec-sub">The operational contract exists so no phase forces a structural change. Twelve decisions are locked from the first prototype; everything after is additive — new workflows, connectors, plans and personas slot into existing structure.</p>
+
+      <div class="stack" style="margin-bottom:10px;">
+        <div class="node">Prototype<br><span style="font-weight:400;color:var(--faint);font-size:.78rem;">prove the loop</span></div><span class="arrow">→</span>
+        <div class="node">MVP<br><span style="font-weight:400;color:var(--faint);font-size:.78rem;">Phase-1 spine, real connectors</span></div><span class="arrow">→</span>
+        <div class="node">Beta / GA<br><span style="font-weight:400;color:var(--faint);font-size:.78rem;">monetise &amp; harden</span></div><span class="arrow">→</span>
+        <div class="node on">Production scale<br><span style="font-weight:400;color:var(--faint);font-size:.78rem;">multi-region, resilient</span></div>
+      </div>
+      <p class="stack-note">Automation ceiling rises with phase: <b>observe/suggest → assist → auto-with-approval → auto</b> within Policy-Engine limits.</p>
+
+      <div class="grid g2" style="margin-top:22px;">
+        <div class="card"><span class="tag">Platform · 07</span><h4 class="serif">Kubernetes-native, multi-tenant</h4><p>Stateless services on K8s; <code class="mono">family_id</code> as a hard partition from day one; India-region storage for regulated data; autoscaling, HA, tested DR with per-phase RPO/RTO targets.</p></div>
+        <div class="card"><span class="tag">Identity · 08</span><h4 class="serif">Persona-wise login</h4><p>Identity plane separate from Person; passkeys/MFA with step-up before any money movement or filing; ABAC over the Twin at one enforcement point; delegation &amp; audited break-glass for caregivers.</p></div>
+        <div class="card"><span class="tag">Billing · 09</span><h4 class="serif">Trial → autopay → lock</h4><p>Monthly/annual plans; autopay (UPI AutoPay / e-NACH / card) set up and <b>pre-scheduled before the trial ends</b>; single-point entitlement gating; locking never holds a family's own data hostage.</p></div>
+        <div class="card"><span class="tag">Security · 10</span><h4 class="serif">Zero-trust &amp; compliant</h4><p>Encryption + per-tenant keys, secrets vault, card data never stored (PCI-scoped); DPDP rights, RBI/AA, IRDAI, ABDM mapped to engineered controls with an immutable audit log.</p></div>
+      </div>
+
+      <div class="callout" style="margin-top:20px;"><b>What's still open is tracked, not hidden.</b> A living gap register (doc 06) names every unspecified area — notification service, mobile/web architecture, analytics, admin console, and the Preparedness/Trust score formulas — with the document that will own each.</div>
     </div>
   </section>
 

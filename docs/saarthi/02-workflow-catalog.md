@@ -603,6 +603,11 @@ cross-referenced (★). This index is the backlog the schema in §1 is applied t
 | WF-FAM-011 | Trusted-contact & delegation setup | Ev | P1 | — | delegates configured |
 | WF-FAM-012 | Data-export / account-portability (DPDP) | Ev | P1 | — | user owns their data |
 | WF-FAM-013 | Decision-feedback capture & preference learning | Ev/Rc | P0 | — | AI learns from declined/modified suggestions |
+| WF-FAM-014 | Trial start & autopay mandate setup | Ev | P0 | upi_mandate, enach, card_recurring | autopay scheduled before trial ends (`09 §3`) |
+| WF-FAM-015 | Trial-end conversion / feature lock | Ev | P0 | mandate | auto-charge or gate paid features (`09 §3,§6`) |
+| WF-FAM-016 | Plan change (upgrade/downgrade, proration) | Ev | P1 | mandate | plan switched, entitlements updated |
+| WF-FAM-017 | Payment-failure dunning & recovery | Ev | P1 | mandate | involuntary churn recovered (`09 §4`) |
+| WF-FAM-018 | Cancellation & win-back | Ev | P1 | — | clean exit, data retained (`09`,`10 §5`) |
 
 ---
 
@@ -665,10 +670,10 @@ declining cheap and, where valuable, to ask why.
 | TRVL | 9 | 0 | 30–50 |
 | HOME | 9 | 1 | 30–60 |
 | LIFE | 11 | 1 | 40–70 |
-| FAM | 13 | 2 | 30–60 |
-| **Total** | **171** | **15** | **540–900** |
+| FAM | 18 | 2 | 30–60 |
+| **Total** | **176** | **15** | **540–900** |
 
-The 171 indexed entries + the schema in §1 constitute the backlog; each is elaborated to
+The 176 indexed entries + the schema in §1 constitute the backlog; each is elaborated to
 exemplar depth on prioritisation. The taxonomy (12 domains × 5 lifecycle lanes × per-member
 instantiation across a family of 4–6) comfortably yields the 500–1,000 distinct runnable
 workflows in the North-Star target without inventing filler — variants (per-member, per-asset,

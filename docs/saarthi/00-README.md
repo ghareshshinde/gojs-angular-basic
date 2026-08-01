@@ -19,9 +19,20 @@ any chat history*. If you are here cold, read in the order below.
 | 5th | [AI Architecture & Assurance](./04-ai-architecture-and-assurance.md) | How the AI is powered and how accuracy is guaranteed — containment, evaluation, guardrails, trust-gated automation |
 | — | [`index.html`](./index.html) | Self-contained, theme-aware **stakeholder overview** distilling all of the above |
 
+**Operating the platform** (how it's built, secured, and monetised — read when planning delivery):
+
+| # | Document | What it gives you |
+|---|----------|-------------------|
+| 06 | [Delivery Phases, Readiness & Gap Register](./06-delivery-phases-and-readiness.md) | Phases (prototype→MVP→beta→scale), the **structural decisions to lock now**, NFR/SLO targets, and the live **gap register** of what's not yet specified |
+| 07 | [Platform & Infrastructure](./07-platform-infrastructure.md) | Kubernetes-native, multi-tenancy, data residency, scaling, DR/BCP, shared platform services |
+| 08 | [Identity & Access](./08-identity-access.md) | Persona-wise login, AuthN (passkeys/MFA/step-up), ABAC authorisation, delegation, break-glass |
+| 09 | [Billing & Monetization](./09-billing-monetization.md) | Plans (monthly/annual), free trial → lock, **autopay scheduled ahead**, entitlement gating, dunning |
+| 10 | [Security & Compliance Program](./10-security-compliance.md) | Zero-trust controls, threat model, DPDP/RBI/IRDAI/ABDM/PCI mapping, SDLC, incident response |
+
 `05` is the framing; `01`–`04` are the engineering contract every service, agent, and connector
-implements against. `01`–`04` are the three (now four) artifacts that had to exist *before* a line
-of feature code.
+implements against — the artifacts that had to exist *before* a line of feature code. `06`–`10`
+are the **operational contract**: how the platform is delivered, run, secured, and paid for, with
+`06` as the hub that tracks what's still missing.
 
 ## Why this order — the governing stance
 
@@ -72,6 +83,7 @@ Newest first. Each entry: the decision and the document(s) it lives in.
 
 | Date | Decision | Landed in |
 |------|----------|-----------|
+| 2026-08-01 | **Operational contract added** so no major structural change is forced later: delivery phases + gap register + 12 structural-lock-now decisions; K8s-native platform, multi-tenancy & residency; persona-wise identity/access; billing (trial→lock→pre-scheduled autopay, single-point entitlement gating); security & compliance program (DPDP/RBI/IRDAI/ABDM/PCI) | `06`, `07`, `08`, `09`, `10`; FDT `01 §3.8`; catalog WF-FAM-014…018 |
 | 2026-08-01 | **Continuous learning from decisions**: capture every suggestion's outcome + reason (volunteered / asked / inferred) from day one; two-speed learning — immediate reversible per-family preferences via retrieval + governed de-identified aggregate model improvement (no live per-user fine-tuning) | `01` (Suggestion/DecisionFeedback/Preference + Decision.*/Learning.* events), `02` (WF-FAM-013 + global rule), `04 §6` |
 | 2026-08-01 | Captured founder-vision / product context (vision, principles, personas, scope, roadmap, business model) as durable base truth; established this maintenance protocol + decision log | `05`, `00` |
 | 2026-08-01 | AI is **contained**, not trusted: five-layer containment model, golden-set evaluation in CI, per-action-class accuracy targets, trust-gated automation | `04` |
@@ -90,6 +102,9 @@ out inline in each document.
 ## Roadmap for these docs (the wider Bible)
 
 This set is the engineering-contract core of a larger intended **Product Requirements Bible**
-(Volumes 0–15). Additional volumes — Policy Engine, Knowledge Graph, Memory System, Marketplace,
-Mobile/Web, Security & Compliance, DevOps, Analytics, Admin Console — are elaborated on demand and
-join this folder and the reading order above when they are. See `05 §12`.
+(Volumes 0–15). Now covered here: Product Context (`05`), FDT, Workflow, Connector, AI Assurance,
+Platform/Infra & DevOps (`07`), Identity & Access (`08`), Billing (`09`), Security & Compliance
+(`10`). Still to elaborate on demand — tracked in the gap register (`06 §4`): **Notification
+service**, **Mobile & Web app architecture** (both P-1 blockers), **Analytics platform**,
+**Admin/Support console**, **Marketplace & Developer APIs**, and the **Preparedness Index / Trust
+Score** computation. See `05 §12`.
