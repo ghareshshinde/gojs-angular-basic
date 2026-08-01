@@ -5,7 +5,7 @@
 > Planner's unit of work. Each entry names the **FDT entities** it reads/writes and the
 > **Connectors** it calls, so the three foundational documents interlock.
 
-**Coverage.** This v1.0 ships (a) the canonical **workflow schema**, (b) a **12-domain taxonomy**
+**Coverage.** This v1.0 ships (a) the canonical **workflow schema**, (b) a **13-domain taxonomy**
 with lifecycle staging, (c) **fully-specified exemplars** for the highest-value workflows, and
 (d) an **enumerated index** that scales to the 500–1,000 target. Fully-specified entries are marked
 ★; index rows carry enough metadata (trigger, connectors, outcome, priority) to be specified on
@@ -20,7 +20,7 @@ Every workflow — specified or indexed — conforms to this schema:
 ```yaml
 id:            WF-<DOMAIN>-<nnn>          # stable identifier
 name:          human-readable title
-domain:        one of the 12 domains
+domain:        one of the 13 domains
 lifecycle:     onboarding | recurring | event-triggered | crisis | seasonal
 trigger:       what starts it (event / schedule / user-initiated / detected-risk)
 actors:        [family roles + agents involved]
@@ -62,6 +62,7 @@ files with government, or mutates an external record of truth — *AI thinks, hu
 | **HOME** | Home & lifestyle | utilities, subscriptions, maintenance, staff |
 | **LIFE** | Life events & legal | marriage, birth, death, will, estate, POA |
 | **FAM** | Family ops & meta | onboarding, digital twin hygiene, preparedness |
+| **SVC** | Services & advisory marketplace | live doctor / CA / advisor consults, health checkups, expert-in-the-loop |
 
 ### Lifecycle lanes (orthogonal to domain)
 - **Onboarding** — first-time capture into the Twin.
@@ -408,6 +409,12 @@ cross-referenced (★). This index is the backlog the schema in §1 is applied t
 | WF-FIN-018 | Forex/NRE-NRO management (NRI) | Rc | P2 | bank_api | compliant NRI banking |
 | WF-FIN-019 | Cash-flow forecast (30/60/90d) | Rc | P1 | AA | shortfalls predicted |
 | WF-FIN-020 | Emergency-fund adequacy check | Rc | P1 | AA | 6-month buffer maintained |
+| WF-FIN-021 | Net-worth realisation (self + family) | Rc | P0 | email_ingest, sms_ingest, AA, cas_parse | single family net-worth number, live |
+| WF-FIN-022 | Email/SMS discovery & auto-population | Rc | P0 | email_ingest, sms_ingest | accounts/txns/bills/warranties found automatically |
+| WF-FIN-023 | Spending analytics & budgeting | Rc | P1 | AA, email_ingest, sms_ingest | categorised spends, budgets, alerts |
+| WF-FIN-024 | Quick loan / credit-line eligibility & apply | Ev | P2 | lending_lsp | instant credit when needed, compliant |
+| WF-FIN-025 | Loan against MF/securities (LAMF) | Ev | P2 | lamf | liquidity without selling investments |
+| WF-FIN-026 | Rewards / cashback aggregation | Rc | P3 | email_ingest | rewards tracked, none expire unused |
 
 ### 4.2 INV — Investments & wealth
 | ID | Name | L | P | Connectors | Outcome |
@@ -432,6 +439,13 @@ cross-referenced (★). This index is the backlog the schema in §1 is applied t
 | WF-INV-018 | ESOP/RSU tracking & tax | Ev | P3 | — | equity comp managed |
 | WF-INV-019 | Unclaimed investments (IEPF) search | On | P2 | iepf | lost money recovered |
 | WF-INV-020 | Risk-profiling & rebalance trigger | On | P1 | — | portfolio fits risk |
+| WF-INV-021 | MF/demat account opening (in-app) | Ev | P1 | mf_onboarding, broker_onboarding | invest without leaving Saarthi |
+| WF-INV-022 | ETF investing | Ev | P2 | broker_onboarding | low-cost index exposure |
+| WF-INV-023 | US / international equity (LRS) | Ev | P2 | us_stocks_custodian | global investing, LRS + Schedule-FA compliant |
+| WF-INV-024 | SIF (Specialized Investment Fund) subscribe | Ev | P2 | sif_amc | access new SEBI instrument class |
+| WF-INV-025 | Bonds / SGB / digital gold | Ev | P2 | bonds_sgb_gold | diversified fixed-income & gold |
+| WF-INV-026 | Goal-based instrument suggestion | Ev | P1 | financial_advisor | right instrument per goal (advice/distribution split) |
+| WF-INV-027 | Foreign-asset tax reporting (Schedule FA) | Se | P2 | us_stocks_custodian, income_tax_eportal | overseas holdings declared correctly |
 
 ### 4.3 INS — Insurance & protection
 | ID | Name | L | P | Connectors | Outcome |
@@ -571,6 +585,9 @@ cross-referenced (★). This index is the backlog the schema in §1 is applied t
 | WF-HOME-007 | Home-services scheduling | Ev | P3 | vendors | maintenance done |
 | WF-HOME-008 | Grocery/essentials replenishment | Rc | P3 | — | household stocked |
 | WF-HOME-009 | Pet care schedule (vet/vaccine) | Rc | P3 | — | pet health tracked |
+| WF-HOME-010 | Warranty & guarantee tracking | Rc | P2 | email_ingest | never miss a warranty claim window |
+| WF-HOME-011 | Refund & reimbursement tracking | Rc | P2 | email_ingest, AA | every owed refund followed to receipt |
+| WF-HOME-012 | Order & delivery tracking | Rc | P3 | email_ingest | purchases tracked from receipts |
 
 ### 4.11 LIFE — Life events & legal
 | ID | Name | L | P | Connectors | Outcome |
@@ -608,6 +625,16 @@ cross-referenced (★). This index is the backlog the schema in §1 is applied t
 | WF-FAM-016 | Plan change (upgrade/downgrade, proration) | Ev | P1 | mandate | plan switched, entitlements updated |
 | WF-FAM-017 | Payment-failure dunning & recovery | Ev | P1 | mandate | involuntary churn recovered (`09 §4`) |
 | WF-FAM-018 | Cancellation & win-back | Ev | P1 | — | clean exit, data retained (`09`,`10 §5`) |
+
+### 4.13 SVC — Services & advisory marketplace
+| ID | Name | L | P | Connectors | Outcome |
+|----|------|---|---|-----------|---------|
+| WF-SVC-001 | Live doctor consultation | Ev | P2 | telemedicine, abdm | expert care, e-prescription to records |
+| WF-SVC-002 | CA / tax-expert consultation | Ev | P2 | ca_advisor_network | complex tax handled by a human |
+| WF-SVC-003 | Financial-advisor (RIA) session | Ev | P2 | financial_advisor | fiduciary advice, plan created |
+| WF-SVC-004 | Preventive health checkup booking | Rc | P2 | health_checkup, abdm | checkups done, reports in Twin |
+| WF-SVC-005 | Legal consultation (will/POA/dispute) | Ev | P3 | ca_advisor_network | legal matters guided |
+| WF-SVC-006 | Expert escalation from any workflow | Ev | P2 | telemedicine, ca_advisor_network | AI hands off to a human when needed |
 
 ---
 
@@ -659,8 +686,8 @@ declining cheap and, where valuable, to ask why.
 
 | Domain | Indexed in v1.0 | Fully-specified ★ | Target range |
 |--------|-----------------|-------------------|--------------|
-| FIN | 20 | 1 | 60–90 |
-| INV | 20 | 1 | 60–90 |
+| FIN | 26 | 1 | 60–90 |
+| INV | 27 | 1 | 60–90 |
 | INS | 24 | 3 | 70–110 |
 | TAX | 12 | 1 | 40–60 |
 | GOV | 22 | 3 | 70–110 |
@@ -668,13 +695,14 @@ declining cheap and, where valuable, to ask why.
 | HLTH | 10 | 0 | 40–70 |
 | EDU | 9 | 1 | 30–60 |
 | TRVL | 9 | 0 | 30–50 |
-| HOME | 9 | 1 | 30–60 |
+| HOME | 12 | 1 | 30–60 |
 | LIFE | 11 | 1 | 40–70 |
 | FAM | 18 | 2 | 30–60 |
-| **Total** | **176** | **15** | **540–900** |
+| SVC | 6 | 0 | 30–60 |
+| **Total** | **198** | **15** | **560–950** |
 
-The 176 indexed entries + the schema in §1 constitute the backlog; each is elaborated to
-exemplar depth on prioritisation. The taxonomy (12 domains × 5 lifecycle lanes × per-member
+The 198 indexed entries + the schema in §1 constitute the backlog; each is elaborated to
+exemplar depth on prioritisation. The taxonomy (13 domains × 5 lifecycle lanes × per-member
 instantiation across a family of 4–6) comfortably yields the 500–1,000 distinct runnable
 workflows in the North-Star target without inventing filler — variants (per-member, per-asset,
 per-institution) multiply the base catalog naturally.

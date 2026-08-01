@@ -23,6 +23,22 @@ executing a catalog of real family workflows through consent-governed connectors
   automation, and orchestration.
 - **North-star metric.** **Responsibilities Successfully Managed** — *not* daily active users.
 
+### 1a. Relationship to INDmoney (inspired by, extended beyond)
+
+Saarthi's **money layer is inspired by INDmoney**: realise your (and your family's) **net worth** by
+syncing **email & SMS**, processing bank statements, and Account Aggregator feeds; goal-based
+investment suggestions; MF/stock/US-equity/ETF/SIF **account opening and import**; tax-filing
+support; insurance; quick loans; refund and rewards tracking. Where INDmoney is a *money super-app*,
+**Saarthi extends the same "one dashboard for everything, discovered automatically" pattern to the
+whole family's non-financial life** — government & identity, health & life, education, property &
+vehicles, warranties, and human-expert consultations — orchestrated by the workflow + AI layer.
+The money super-app is the **wedge**; the Family Operating System is the destination.
+
+Notable capabilities carried in from that inspiration and specified across the docs:
+email/SMS discovery (`03 §6A`), net-worth realisation (`WF-FIN-021`), in-app investing incl. ETF /
+SIF / US equity (`03 §6B`, `WF-INV-021…027`), quick loan / LAMF (`03 §6C`), and a doctor / CA /
+advisor consultation marketplace (`03 §6D`, `WF-SVC-*`).
+
 ## 2. Product principles (the six commitments)
 
 1. **AI should think. Humans should decide.**
@@ -131,8 +147,13 @@ connector layer (`03 §8`), and in the AI loop (`04 §5`).
 ## 11. Business model
 
 Freemium → Premium Family → Embedded Finance → Insurance → Travel → Enterprise → Marketplace →
-Developer APIs. Principle 3 governs: **family trust outranks revenue, always** — monetization never
-compromises the trust relationship or consent boundaries.
+Developer APIs. Distribution/advisory/lending revenue (MF & insurance distribution, RIA advice,
+loan origination, consultation marketplace) layers on top — but each such stream **requires a
+licence or partnership** (SEBI RIA / AMFI ARN / stock-broker, RBI NBFC or OCEN-LSP, IRDAI
+intermediary, RBI-LRS partner for US investing). Default posture is **partner-first**, acquiring
+own licences where economics justify — see `03 §6E` and `10 §8`. Principle 3 governs throughout:
+**family trust outranks revenue, always** — monetization never compromises the trust relationship,
+consent boundaries, or the advice-vs-distribution separation.
 
 ## 12. The broader documentation vision (context)
 

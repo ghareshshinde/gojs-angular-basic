@@ -168,6 +168,12 @@ Common: `institution (ref<Institution>)`, `account_number (masked)`, `holders[] 
 | `FixedDeposit` | `principal`, `rate`, `maturity_date`, `auto_renew`, `payout_mode` |
 | `PPFAccount`/`EPFAccount` | `uan`/`ppf_no`, `contributions[]`, `maturity/withdrawal_eligible_on` |
 | `NPSAccount` | `pran`, `tier`, `scheme_preference`, `annuity_choice` |
+| `ETFHolding` | held in `DematAccount`; `isin`, `units`, `nav/ltp`, `underlying_index` |
+| `USEquity` / `InternationalEquity` | `custodian`, `ticker`, `qty`, `avg_cost_usd`, `ltp`, `lrs_year`, `fx_rate` — carries **LRS** + foreign-asset (Schedule FA) tax linkage |
+| `SIFInvestment` | SEBI **Specialized Investment Fund** — `amc`, `strategy`, `units`, `nav`, `min_investment`, `risk_band` |
+| `Bond` / `GSec` | `isin`, `type` (corp/g-sec/SGB), `face_value`, `coupon`, `maturity`, `ytm` |
+| `DigitalGold` / `SGB` | `grams`, `purchase_rate`, `provider`, `vault_ref` |
+| `FixedDepositPlatform` | FD booked via Saarthi partners; issuer, rate, maturity, auto-renew |
 
 **Lifecycle:** `active → dormant → matured → closed → frozen`.
 **Events:** `AccountLinked, BalanceRefreshed, MaturityApproaching{days}, NomineeMissing,
@@ -330,6 +336,39 @@ paid relationship *with Saarthi*).
   provider — see `10`). Events: `MandateRequested, MandateActive, MandateDebited, MandateFailed,
   MandateRevoked`.
 - `Invoice` / `Payment`: `membership_ref`, `amount`, `tax (GST)`, `period`, `status`, `receipt_ref`.
+
+### 3.9 Aggregate, discovery & marketplace entities
+
+Inspired by the INDmoney "realise your net worth" model, extended family-wide.
+
+- `NetWorth` (derived projection): the headline number, per person and per family. `subject`,
+  `as_of`, `assets_total`, `liabilities_total`, `net`, `breakdown_by_class{}`, `trend[]`,
+  `visibility` (who may see it — ties to `08` personas). Recomputed on any asset/liability event.
+  **Events:** `NetWorthRecomputed, MilestoneCrossed`.
+- `IngestedMessage`: a parsed **email or SMS** from the discovery channel (`03`) — `source`
+  (`email · sms`), `sender`, `received_at`, `category` (txn / bill / statement-CAS / warranty /
+  order / OTP-ignored), `extracted{}`, `linked_entity`, `confidence`. The raw discovery signal
+  behind auto-populated accounts, transactions, bills, and warranties. **Sensitivity:** `PII`+;
+  strict scope & consent (`10 §3`). **Events:** `MessageIngested, EntityDiscovered, DiscoveryReviewNeeded`.
+- `Transaction`: a normalized money movement (from AA / email / SMS / statement) — `account_ref`,
+  `amount`, `direction`, `counterparty`, `category`, `occurred_at`, `source`, `is_recurring`.
+  Feeds spending analytics & budgets. **Events:** `TransactionIngested, AnomalyDetected, BudgetThresholdCrossed`.
+- `Warranty`: product warranty/guarantee, usually discovered from a receipt email. `product`,
+  `purchased_on`, `expires_on`, `serial`, `retailer`, `document_ref`, `claim_contact`.
+  **Events:** `WarrantyDetected, WarrantyExpiringSoon, WarrantyClaimStarted`.
+- `Refund`: generalized refund/reimbursement tracking — `type` (tax / purchase-return / insurance /
+  cashback / deposit), `source`, `expected_amount`, `status`, `received_on`. **Events:**
+  `RefundExpected, RefundReceived, RefundDelayed`.
+- `CreditOffer` / `LoanApplication`: lending origination — `type` (personal / LAMF / credit-line /
+  BNPL), `lender/LSP`, `eligible_amount`, `rate`, `collateral_ref` (e.g. pledged MF units),
+  `status` (`offered → applied → sanctioned → disbursed → declined`). **Events:** `OfferAvailable,
+  ApplicationSubmitted, Sanctioned, Disbursed`.
+- `Consultation`: a human-expert session (doctor / CA / financial advisor / lawyer) — `provider`,
+  `expertise`, `subject_person`, `mode` (video / chat / in-person), `scheduled_at`, `status`,
+  `notes_ref`, `linked_context[]` (the Twin entities shared, with consent). **Events:**
+  `ConsultationBooked, ConsultationCompleted, FollowUpCreated`.
+- `Reward` / `Cashback`: aggregated loyalty/rewards across cards and platforms — `source`, `type`,
+  `value`, `expires_on`. **Events:** `RewardEarned, RewardExpiringSoon`.
 
 ## 4. Relationship model
 

@@ -81,6 +81,10 @@
 | Health data | **ABDM / NHA**, health-data rules | ABHA consent-manager, in-region storage (`03 §2`) |
 | Insurance | **IRDAI** | product/claim/free-look rules in workflows (`02`, `03 §5`) |
 | Securities/KYC | **SEBI / CKYC / PMLA** | KRA/CKYC connectors, KYC handling (`03`) |
+| Investment advice vs distribution | **SEBI RIA vs AMFI ARN** | strict separation; fee-only advice isolated from distribution (`03 §6E`) |
+| Lending origination | **RBI Digital Lending; NBFC / OCEN-LSP** | partner LSP or own NBFC; KFS, cooling-off, no dark patterns (`03 §6C`) |
+| US / international investing | **RBI LRS; Income-Tax Schedule FA** | LRS limits, partner custodian, foreign-asset tax reporting (`03 §6B`) |
+| Email/SMS discovery | **Google API restricted scopes (CASA); DPDP** | minimal-read, no OTP capture, purpose-bound, on-device SMS where possible (`03 §6A`) |
 | Org security posture | **SOC 2 / ISO 27001 (track)** | controls program, audits (phase-gated, `06 §5`) |
 
 Compliance is treated as **engineered controls with evidence**, not documentation — each maps to a

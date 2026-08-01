@@ -37,7 +37,7 @@ These are the "get-it-right-once" choices. Each is cheap to honour from P-0 and 
 | 5 | **Identity plane separate from Person**; AuthN/AuthZ as a service; ABAC over FDT | Persona login, delegation, break-glass all depend on it | `08` |
 | 6 | **Entitlement check as a single enforcement point** (API gateway / policy layer), not scattered `if plan==` | Feature-gating sprawl is the classic monetisation rewrite | `09 §4` |
 | 7 | **Money-movement & card data isolated** in a PCI-minimised service; tokenise, never store PAN | PCI scope explosion + regulatory risk if mixed in | `09 §5`, `10 §4` |
-| 8 | **Consent as a first-class service** with `consent_ref` on every regulated datum | DEPA/ABDM/DPDP are non-negotiable and cross-cutting | `03 §1`, `10 §3` |
+| 8 | **Consent as a first-class service** with `consent_ref` on every regulated datum — incl. email/SMS discovery scopes | DEPA/ABDM/DPDP + Google restricted-scope rules are non-negotiable and cross-cutting | `03 §1,§6A`, `10 §3` |
 | 9 | **Connector SDK contract + fallback ladder** so integrations are pluggable | Avoids per-integration bespoke rewrites | `03 §1` |
 | 10 | **Async, idempotent, checkpointed workflows** (Temporal/Camunda) | Long-running real-world workflows can't be synchronous | `02 §7` |
 | 11 | **Secrets in a vault, never in the graph/repo/env**; per-tenant encryption keys | Key/secret model is foundational to security posture | `10 §4` |
@@ -88,6 +88,14 @@ Status: ✅ specified · 🟡 partial/stub · 🔴 named-only. Each row points t
 | Marketplace & Developer APIs | 🔴 | Bible Vol 9 | P-3 |
 | Preparedness Index / Trust Score computation | 🔴 | own spec | referenced by 3 subsystems |
 | Data lifecycle: retention, archival, erasure (DPDP), export/portability | 🟡 | `10 §5` | partial in FDT §7 |
+| **Email/SMS discovery ingestion** (primary net-worth discovery) | 🟡 → specified | `03 §6A` | pipeline detail + Google CASA assessment pending |
+| **Net-worth realisation** (self + family) | ✅ | `01 §3.9`, `WF-FIN-021` | headline capability |
+| **In-app investing** — account opening, ETF/SIF/US equity, bonds/gold | 🟡 | `03 §6B`, `WF-INV-021…027` | needs partner + licence |
+| **Lending / quick loan / LAMF** | 🟡 | `03 §6C`, `WF-FIN-024…025` | needs NBFC/LSP partner |
+| **Advisory & consultation marketplace** (doctor/CA/RIA) | 🟡 | `03 §6D`, `WF-SVC-*` | provider integrations |
+| **Warranty / refund / order tracking** | 🟡 | `WF-HOME-010…012` | depends on email ingestion |
+| **Regulated-entity / licensing strategy** (RIA·ARN·broker·NBFC·IRDAI·LRS) | 🔴 open decision | `03 §6E`, `10 §8` | **structural business decision — gates half the money features** |
+| Spending analytics & budgeting; rewards aggregation | 🟡 | `WF-FIN-023, WF-FIN-026` | on ingestion + AA |
 | Localization / i18n / multi-language (India-first, many languages) | 🔴 | Bible Vol 10/11 | UX-critical |
 | Accessibility (WCAG), esp. for seniors | 🔴 | Bible Vol 10/11 | persona-driven |
 | Cost model / FinOps (inference + infra unit economics) | 🔴 | `07 §7` (stub) | margin discipline |

@@ -155,6 +155,72 @@ much insurer-specific scraping). Design connectors so these can subsume private 
 
 ---
 
+## 6A. Discovery ingestion channels (email & SMS) — *primary net-worth discovery*
+
+The INDmoney-style magic: auto-discover accounts, transactions, bills, CAS statements, warranties,
+and orders by parsing the user's inbox and messages. This is a **primary channel**, complementary
+to Account Aggregator — it finds what AA/DigiLocker don't, and bootstraps net worth fast.
+
+| ID | Source | Capabilities | API avail. | Auth | Consent | Regulatory / privacy | Fallback | Pri |
+|----|--------|--------------|-----------|------|---------|----------------------|----------|-----|
+| `email_ingest` | Gmail / Outlook / IMAP | read + classify txn/bill/CAS/warranty/order mail | official (Gmail/Graph API) | oauth2 (**restricted scopes**) | explicit_user | Google **CASA security assessment** for restricted scopes; DPDP purpose-limit; read-minimal, no full-mailbox retention | forward-to-address / manual upload | **P0** |
+| `sms_ingest` | on-device SMS (mobile app) | read financial/OTP-excluded SMS on-device | OS permission | device consent | explicit_user | on-device parsing preferred; **no OTP capture**; DPDP | manual entry | **P0** |
+| `cas_parse` | CAMS/KFin/NSDL/CDSL **CAS** via email | parse consolidated account statements | file/email | user-forwarded | explicit_user | — | AA / portal | P1 |
+
+> **Privacy stance.** Email/SMS are `SENSITIVE`-adjacent. We parse for financial signal only,
+> minimise retention (store extracted facts + provenance, not whole mailboxes), never read OTPs, and
+> bind processing to an explicit purpose — see `10 §3`. On-device SMS parsing avoids server-side
+> message storage entirely where possible.
+
+## 6B. Investing — account opening & new instruments
+
+Beyond *import*: open accounts and transact. This makes Saarthi a **distributor/intermediary** —
+see the licensing posture in `6E` and `10 §8`.
+
+| ID | Category | Capabilities | API avail. | Auth | Regulatory | Pri |
+|----|----------|--------------|-----------|------|-----------|-----|
+| `mf_onboarding` | MF account opening & transact | eKYC, folio creation, purchase/redeem/SIP | partner_gated | ekyc/oauth2 | **AMFI ARN** distributor / SEBI RIA (advice) | P1 |
+| `broker_onboarding` | Demat+trading account opening | KYC, account open, order routing | partner_gated | ekyc | SEBI stock-broker or intro/partner | P2 |
+| `us_stocks_custodian` | US/international equity | account, LRS remittance, trade, tax docs | partner_gated | oauth2 | **RBI LRS**, foreign-asset (Schedule FA) tax | P2 |
+| `sif_amc` | Specialized Investment Fund | eligibility, subscribe/redeem | partner_gated | ekyc | SEBI SIF framework | P2 |
+| `bonds_sgb_gold` | bonds / SGB / digital gold | buy/sell, holdings | partner_gated | oauth2 | SEBI/RBI | P2 |
+| `fd_platform` | FDs via partners | book/close FD | partner_gated | oauth2 | RBI/DICGC | P2 |
+
+## 6C. Lending & credit
+
+| ID | Category | Capabilities | API avail. | Auth | Regulatory | Pri |
+|----|----------|--------------|-----------|------|-----------|-----|
+| `lending_lsp` | quick personal loan / credit line | eligibility, apply, disburse | partner_gated | oauth2+consent | **RBI Digital Lending**; NBFC or **OCEN LSP** role | P2 |
+| `lamf` | loan against MF/securities | pledge units, sanction, disburse | partner_gated | ekyc | RBI; depository pledge | P2 |
+| `credit_line_bnpl` | short-term credit | offer, draw, repay | partner_gated | oauth2 | RBI | P3 |
+
+## 6D. Advisory & consultation marketplace
+
+Human experts in the loop — the "live doctor / CA / advisor" surface.
+
+| ID | Category | Capabilities | API avail. | Auth | Regulatory | Pri |
+|----|----------|--------------|-----------|------|-----------|-----|
+| `telemedicine` | live doctor consult | booking, video, e-prescription | partner_gated | oauth2 | Telemedicine Practice Guidelines; ABDM link | P2 |
+| `ca_advisor_network` | CA / tax expert consult | booking, doc share, filing assist | partner_gated | oauth2 | ICAI norms; consent for doc share | P2 |
+| `financial_advisor` | SEBI RIA advice | risk-profiling, advice, plans | partner_gated | oauth2 | **SEBI RIA** (advice vs distribution boundary) | P2 |
+| `health_checkup` | preventive checkup booking | slots, home-collection, reports→ABDM | partner_gated | oauth2 | lab norms; ABDM consent | P2 |
+
+## 6E. Regulated-entity / licensing posture *(structural decision — see `10 §8`, `05 §11`)*
+
+Offering the above turns Saarthi from a *read-only aggregator* into a *regulated intermediary*.
+The registry flags, per capability, the licence/partnership required so this is a deliberate
+business decision, not an accident:
+
+- **Advice** → **SEBI RIA** (fee-only advice) — kept separate from distribution to avoid conflict.
+- **MF distribution** → **AMFI ARN**; **broking** → SEBI stock-broker or a partner-broker model.
+- **Lending** → own **NBFC** or act as an **OCEN LSP / DLG partner** under RBI Digital Lending rules.
+- **Insurance** → **IRDAI** corporate agent / broker / POSP.
+- **US investing** → RBI **LRS** compliance + partner custodian.
+- **Account Aggregator / payments** → operate via licensed AAs / PA-PG partners (already in `§2–3`).
+
+Default posture: **partner-first** (integrate licensed partners) and acquire own licences where
+economics/control justify it. This keeps the platform lawful at every phase (`06 §5`).
+
 ## 7. AI, infra & internal connectors
 
 Not external integrations but the platform substrate the connectors run on (from the AI-architecture
