@@ -1,0 +1,464 @@
+<title>Saarthi — Foundational Engineering Contract</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --ink: #12162A;
+    --ground: #F4F5FB;
+    --surface: #FFFFFF;
+    --surface-2: #EEF0F8;
+    --line: #DDE0EE;
+    --muted: #5A6079;
+    --faint: #8A90A8;
+    --accent: #D98A2B;        /* marigold */
+    --accent-soft: #F6E7CE;
+    --teal: #157F6E;          /* systems signal */
+    --teal-soft: #D9EDE8;
+    --shadow: 0 1px 2px rgba(18,22,42,.06), 0 8px 30px rgba(18,22,42,.06);
+    --maxw: 1080px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #EEF0FA;
+      --ground: #0C0F1E;
+      --surface: #141833;
+      --surface-2: #1B2043;
+      --line: #2A3057;
+      --muted: #A6ACC8;
+      --faint: #737A9C;
+      --accent: #E8A33D;
+      --accent-soft: #33280F;
+      --teal: #3FB8A2;
+      --teal-soft: #12312B;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --ink: #12162A; --ground: #F4F5FB; --surface: #FFFFFF; --surface-2: #EEF0F8;
+    --line: #DDE0EE; --muted: #5A6079; --faint: #8A90A8; --accent: #D98A2B;
+    --accent-soft: #F6E7CE; --teal: #157F6E; --teal-soft: #D9EDE8;
+    --shadow: 0 1px 2px rgba(18,22,42,.06), 0 8px 30px rgba(18,22,42,.06);
+  }
+  :root[data-theme="dark"] {
+    --ink: #EEF0FA; --ground: #0C0F1E; --surface: #141833; --surface-2: #1B2043;
+    --line: #2A3057; --muted: #A6ACC8; --faint: #737A9C; --accent: #E8A33D;
+    --accent-soft: #33280F; --teal: #3FB8A2; --teal-soft: #12312B;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "kern" 1;
+  }
+  .serif { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif; }
+  .mono { font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace; }
+
+  a { color: var(--teal); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---- top bar ---- */
+  header.bar {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
+  .brand { display: flex; align-items: baseline; gap: 10px; font-weight: 600; letter-spacing: .01em; }
+  .brand .glyph { font-size: 1.15rem; color: var(--accent); }
+  .brand .sub { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+  nav.jump { margin-left: auto; display: flex; gap: 4px; }
+  nav.jump a {
+    font-size: .8rem; color: var(--muted); text-decoration: none;
+    padding: 6px 12px; border-radius: 999px; font-weight: 500;
+  }
+  nav.jump a:hover { color: var(--ink); background: var(--surface-2); }
+  .theme-toggle {
+    border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+    width: 34px; height: 34px; border-radius: 999px; cursor: pointer; font-size: .95rem;
+    display: grid; place-items: center; flex: none;
+  }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--accent); }
+  @media (max-width: 720px){ nav.jump { display:none; } }
+
+  /* ---- hero ---- */
+  .hero { padding: 88px 0 56px; position: relative; overflow: hidden; }
+  .eyebrow {
+    font-size: .74rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.1rem); line-height: 1.04; margin: 0 0 24px;
+    font-weight: 600; letter-spacing: -.01em; text-wrap: balance; max-width: 15ch;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .lede { font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--muted); max-width: 60ch; margin: 0 0 36px; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+  .northstar {
+    display: inline-flex; flex-direction: column; gap: 2px; padding: 14px 20px;
+    border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 10px 10px 0;
+    box-shadow: var(--shadow);
+  }
+  .northstar .k { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); font-weight: 700; }
+  .northstar .v { font-size: 1.05rem; font-weight: 600; }
+  .northstar .v span { color: var(--faint); font-weight: 400; }
+  .fade { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+  .fade.d1 { animation-delay: .06s; } .fade.d2 { animation-delay: .14s; } .fade.d3 { animation-delay: .22s; } .fade.d4 { animation-delay: .3s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ---- the three artifacts strip ---- */
+  .artifacts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 52px; }
+  @media (max-width: 780px){ .artifacts { grid-template-columns: 1fr; } }
+  .art-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px; box-shadow: var(--shadow); text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 8px; transition: transform .2s, border-color .2s;
+  }
+  .art-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .art-card .num { font-size: .78rem; font-weight: 700; color: var(--accent); letter-spacing: .08em; }
+  .art-card h3 { margin: 0; font-size: 1.15rem; font-weight: 600; }
+  .art-card p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+  /* ---- sections ---- */
+  section.block { padding: 64px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 10px; }
+  .sec-head .idx { font-size: .95rem; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+  .sec-head h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); margin: 0; font-weight: 600; letter-spacing: -.01em; }
+  .sec-sub { color: var(--muted); max-width: 66ch; margin: 0 0 34px; font-size: 1.02rem; }
+
+  /* dependency stack */
+  .stack { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin: 6px 0 4px; }
+  .node {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 16px; font-size: .9rem; font-weight: 600; display: flex; align-items: center; gap: 8px;
+    box-shadow: var(--shadow); flex: 1 1 auto; justify-content: center; min-width: 130px;
+  }
+  .node.hot { border-color: var(--accent); color: var(--accent); }
+  .node.on { border-color: var(--teal); color: var(--teal); }
+  .arrow { align-self: center; color: var(--faint); font-weight: 700; }
+  .stack-note { font-size: .85rem; color: var(--faint); margin-top: 14px; }
+  .stack-note b { color: var(--ink); font-weight: 600; }
+
+  /* generic card grid */
+  .grid { display: grid; gap: 14px; }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 820px){ .g3, .g2 { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  .card h4 { margin: 0 0 6px; font-size: 1rem; font-weight: 600; }
+  .card p { margin: 0; color: var(--muted); font-size: .88rem; }
+  .card .tag { font-size: .72rem; color: var(--teal); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+
+  /* domain chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .chip {
+    font-size: .82rem; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--surface); display: inline-flex; gap: 7px; align-items: center;
+  }
+  .chip b { color: var(--accent); font-family: ui-monospace, monospace; font-size: .74rem; }
+
+  /* code / schema block */
+  pre {
+    background: var(--ink); color: #E9ECF6; border-radius: 12px; padding: 20px 22px;
+    overflow-x: auto; font-size: .82rem; line-height: 1.65; margin: 0;
+    box-shadow: var(--shadow);
+  }
+  :root[data-theme="light"] pre, :root:not([data-theme="dark"]) pre { background: #171B33; }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) pre { background: #05070F; border: 1px solid var(--line); } }
+  :root[data-theme="dark"] pre { background: #05070F; border: 1px solid var(--line); }
+  pre .k { color: #E8A33D; } pre .s { color: #6FD0BE; } pre .c { color: #737A9C; font-style: italic; }
+
+  /* tables */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; font-size: .86rem; background: var(--surface); }
+  th, td { text-align: left; padding: 11px 15px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  thead th { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); font-weight: 700; background: var(--surface-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td.mono, th.mono { font-family: ui-monospace, monospace; font-size: .8rem; }
+  .num-cell { font-variant-numeric: tabular-nums; text-align: right; }
+  .pill { font-size: .7rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; letter-spacing: .03em; }
+  .p0 { background: var(--accent-soft); color: var(--accent); }
+  .p1 { background: var(--teal-soft); color: var(--teal); }
+
+  /* stat row */
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 32px; }
+  @media (max-width: 640px){ .stats { grid-template-columns: repeat(2,1fr); } }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; box-shadow: var(--shadow); }
+  .stat .big { font-size: 2rem; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat .lbl { font-size: .76rem; color: var(--muted); }
+
+  /* automation gradient */
+  .gradient { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-top: 8px; }
+  @media (max-width: 720px){ .gradient { grid-template-columns: 1fr 1fr; } }
+  .lvl { padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
+  .lvl .n { font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; }
+  .lvl:nth-child(1) .n { color: var(--faint); }
+  .lvl:nth-child(2) .n { color: var(--teal); }
+  .lvl:nth-child(3) .n { color: var(--teal); }
+  .lvl:nth-child(4) .n { color: var(--accent); }
+  .lvl:nth-child(5) .n { color: var(--accent); }
+  .lvl p { margin: 0; font-size: .78rem; color: var(--muted); }
+
+  /* principles */
+  .principles { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  @media (max-width: 820px){ .principles { grid-template-columns: 1fr; } }
+  .pr { padding: 16px 18px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 10px 10px 0; box-shadow: var(--shadow); }
+  .pr .serif { font-size: 1.05rem; font-weight: 600; display: block; }
+  .pr span.n { font-size: .72rem; color: var(--faint); font-weight: 700; letter-spacing: .1em; }
+
+  footer { padding: 48px 0 64px; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: baseline; justify-content: space-between; }
+  .callout { background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; font-size: .9rem; color: var(--muted); margin-top: 8px; }
+  .callout b { color: var(--ink); }
+  h2, h3 { text-wrap: balance; }
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="brand serif">
+      <span class="glyph">◆</span> Saarthi
+      <span class="sub">Engineering Contract · v1.0</span>
+    </div>
+    <nav class="jump">
+      <a href="#stack">Architecture</a>
+      <a href="#fdt">01 · Digital Twin</a>
+      <a href="#workflow">02 · Workflows</a>
+      <a href="#connector">03 · Connectors</a>
+    </nav>
+    <button class="theme-toggle" id="tt" aria-label="Toggle light and dark theme" title="Toggle theme">◑</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow fade">Product Requirements · Foundational Artifacts</div>
+      <h1 class="serif fade d1">The three documents to write <em>before</em> the code.</h1>
+      <p class="lede fade d2"><strong>Saarthi</strong> is an AI-native Family Operating System — it orchestrates every financial, legal, administrative, healthcare, educational and governmental responsibility across a family's lifetime, so the human stops being the integration layer. This is its engineering contract.</p>
+      <div class="northstar fade d3">
+        <span class="k">North-star metric</span>
+        <span class="v">Responsibilities Successfully Managed <span>— not daily active users</span></span>
+      </div>
+
+      <div class="artifacts">
+        <a class="art-card fade d2" href="#fdt">
+          <span class="num">01</span>
+          <h3 class="serif">Family Digital Twin</h3>
+          <p>Every entity, attribute, relationship, lifecycle state and event in the single source of truth.</p>
+        </a>
+        <a class="art-card fade d3" href="#workflow">
+          <span class="num">02</span>
+          <h3 class="serif">Workflow Catalog</h3>
+          <p>The real family workflows Saarthi runs — inputs, approvals, integrations, outcomes.</p>
+        </a>
+        <a class="art-card fade d4" href="#connector">
+          <span class="num">03</span>
+          <h3 class="serif">Connector Registry</h3>
+          <p>Every integration — API availability, consent model, regulatory constraints, auth, fallback.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="stack">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="serif">Workflow-first, AI-enhanced</h2></div>
+      <p class="sec-sub">One deliberate stance: deterministic systems deliver reliability and governance; AI enhances them, it does not replace them. That fixes the dependency order — and the order is why these three artifacts come first.</p>
+      <div class="stack">
+        <div class="node hot">Family Digital Twin</div><span class="arrow">→</span>
+        <div class="node">Policy Engine</div><span class="arrow">→</span>
+        <div class="node">Workflow Engine</div><span class="arrow">→</span>
+        <div class="node on">Connector Platform</div>
+      </div>
+      <div class="stack" style="margin-top:8px;">
+        <div class="node">Event Bus</div><span class="arrow">→</span>
+        <div class="node">Knowledge Graph</div><span class="arrow">→</span>
+        <div class="node">AI Reasoning</div><span class="arrow">→</span>
+        <div class="node">User Experience</div>
+      </div>
+      <p class="stack-note"><b>Workflows</b> deliver reliability · <b>Policies</b> deliver governance · <b>The Twin</b> delivers context · <b>AI</b> delivers intelligence. Each catalog workflow names the Twin entities it touches and the connectors it calls — the three documents interlock.</p>
+    </div>
+  </section>
+
+  <!-- 01 FDT -->
+  <section class="block" id="fdt">
+    <div class="wrap">
+      <div class="sec-head"><span class="idx">01</span><h2 class="serif">Family Digital Twin Specification</h2></div>
+      <p class="sec-sub">A bitemporal property graph of typed entities, relationships and an append-only event log. Every service reads the Twin; no service owns a private copy of a family's reality.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="big">40+</div><div class="lbl">entity types across 7 domains</div></div>
+        <div class="stat"><div class="big">15</div><div class="lbl">relationship kinds in the graph</div></div>
+        <div class="stat"><div class="big">7</div><div class="lbl">sensitivity classes drive access</div></div>
+        <div class="stat"><div class="big">bi</div><div class="lbl">temporal — valid-time + system-time, nothing hard-deleted</div></div>
+      </div>
+
+      <div class="grid g2" style="margin-bottom:14px;">
+        <div>
+          <p style="font-size:.9rem;color:var(--muted);margin:0 0 10px;">Entities group by domain. Each carries a stable URN, per-attribute sensitivity &amp; consent linkage, a lifecycle state machine, and the events it emits.</p>
+          <div class="chips">
+            <span class="chip"><b>People</b> Person · Family · Relationship</span>
+            <span class="chip"><b>Identity</b> Identity · Document · Address</span>
+            <span class="chip"><b>Assets</b> Bank · MF · Demat · FD · PPF · NPS</span>
+            <span class="chip"><b>Liabilities</b> Loan · Card · Bill · Subscription</span>
+            <span class="chip"><b>Protection</b> Policy · Claim · Nominee</span>
+            <span class="chip"><b>Life</b> Health · Education · Benefit · Travel</span>
+            <span class="chip"><b>Orchestration</b> Responsibility · Goal · Consent · Policy</span>
+          </div>
+        </div>
+        <div>
+<pre class="mono"><span class="c">// every entity carries this envelope</span>
+{
+  <span class="k">"id"</span>: <span class="s">"saarthi:policy:health:44"</span>,
+  <span class="k">"type"</span>: <span class="s">"HealthPolicy"</span>,
+  <span class="k">"family_id"</span>: <span class="s">"saarthi:family:9a…"</span>,
+  <span class="k">"lifecycle_state"</span>: <span class="s">"renewal_due"</span>,
+  <span class="k">"provenance"</span>: {
+    <span class="k">"source"</span>: <span class="s">"connector:cams"</span>,
+    <span class="k">"consent_ref"</span>: <span class="s">"saarthi:consent:12…"</span>,
+    <span class="k">"confidence"</span>: 0.98 },
+  <span class="k">"valid_time"</span>: { <span class="k">"from"</span>: <span class="s">"2025-08-21"</span> },
+  <span class="k">"system_time"</span>: { <span class="k">"from"</span>: <span class="s">"2026-07-31T…"</span> },
+  <span class="k">"sensitivity"</span>: <span class="s">"FINANCIAL"</span>
+}</pre>
+        </div>
+      </div>
+
+      <div class="callout"><b>State changes are events.</b> The append-only event log is the system of record; the graph (Neo4j/Memgraph) and relational store (PostgreSQL) are projections rebuildable from it. Derived metrics — <span class="mono">preparedness_index</span>, <span class="mono">trust_score</span> — are projections over that log.</div>
+    </div>
+  </section>
+
+  <!-- 02 Workflows -->
+  <section class="block" id="workflow">
+    <div class="wrap">
+      <div class="sec-head"><span class="idx">02</span><h2 class="serif">Workflow Catalog</h2></div>
+      <p class="sec-sub">A workflow is a real family responsibility executed end-to-end — a marriage, a house move, a nominee update, a passport renewal, a bereavement. Each entry names the Twin entities it reads/writes and the connectors it calls.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="big">12</div><div class="lbl">domains × 5 lifecycle lanes</div></div>
+        <div class="stat"><div class="big">170</div><div class="lbl">workflows enumerated in v1.0</div></div>
+        <div class="stat"><div class="big">14</div><div class="lbl">specified at implementation depth</div></div>
+        <div class="stat"><div class="big">540–900</div><div class="lbl">target once per-member variants expand</div></div>
+      </div>
+
+      <div class="chips" style="margin-bottom:22px;">
+        <span class="chip"><b>FIN</b> Finance</span><span class="chip"><b>INV</b> Investments</span>
+        <span class="chip"><b>INS</b> Insurance</span><span class="chip"><b>TAX</b> Tax</span>
+        <span class="chip"><b>GOV</b> Government</span><span class="chip"><b>PROP</b> Property</span>
+        <span class="chip"><b>HLTH</b> Health</span><span class="chip"><b>EDU</b> Education</span>
+        <span class="chip"><b>TRVL</b> Travel</span><span class="chip"><b>HOME</b> Home</span>
+        <span class="chip"><b>LIFE</b> Life events</span><span class="chip"><b>FAM</b> Family ops</span>
+      </div>
+
+      <h4 class="serif" style="margin:0 0 12px;font-size:1.05rem;">Coverage ledger — toward the 500–1,000 North-star</h4>
+      <div class="tablewrap" style="margin-bottom:28px;">
+        <table>
+          <thead><tr><th>Domain</th><th class="num-cell">Indexed</th><th class="num-cell">Specified ★</th><th class="num-cell">Target</th><th>Flagship exemplar</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">INS</td><td class="num-cell">24</td><td class="num-cell">3</td><td class="num-cell">70–110</td><td>Cashless hospitalisation · floater renewal</td></tr>
+            <tr><td class="mono">GOV</td><td class="num-cell">22</td><td class="num-cell">3</td><td class="num-cell">70–110</td><td>Passport renewal · address propagation</td></tr>
+            <tr><td class="mono">FIN</td><td class="num-cell">20</td><td class="num-cell">1</td><td class="num-cell">60–90</td><td>EMI health &amp; prepayment</td></tr>
+            <tr><td class="mono">INV</td><td class="num-cell">20</td><td class="num-cell">1</td><td class="num-cell">60–90</td><td>Nominee update across assets</td></tr>
+            <tr><td class="mono">LIFE</td><td class="num-cell">11</td><td class="num-cell">1</td><td class="num-cell">40–70</td><td>Bereavement &amp; estate settlement</td></tr>
+            <tr><td class="mono">FAM</td><td class="num-cell">12</td><td class="num-cell">1</td><td class="num-cell">30–60</td><td>Family onboarding &amp; twin bootstrap</td></tr>
+            <tr><td class="mono">TAX</td><td class="num-cell">12</td><td class="num-cell">1</td><td class="num-cell">40–60</td><td>Annual ITR filing</td></tr>
+            <tr><td class="mono">… +5 domains</td><td class="num-cell">49</td><td class="num-cell">3</td><td class="num-cell">200+</td><td>Property · Health · Education · Travel · Home</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 class="serif" style="margin:0 0 8px;font-size:1.05rem;">Automation follows trust</h4>
+      <p style="font-size:.9rem;color:var(--muted);margin:0 0 6px;">Every workflow starts at <em>observe</em> and earns its way rightward. The Policy Engine enforces monetary limits and mandatory-approval categories — <em>AI thinks, humans decide.</em></p>
+      <div class="gradient">
+        <div class="lvl"><div class="n">Observe</div><p>watch &amp; record</p></div>
+        <div class="lvl"><div class="n">Suggest</div><p>recommend, human executes</p></div>
+        <div class="lvl"><div class="n">Assist</div><p>co-execute step by step</p></div>
+        <div class="lvl"><div class="n">Auto + approval</div><p>agent acts, human approves the mutating step</p></div>
+        <div class="lvl"><div class="n">Auto</div><p>within Policy-Engine limits</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Connectors -->
+  <section class="block" id="connector">
+    <div class="wrap">
+      <div class="sec-head"><span class="idx">03</span><h2 class="serif">Connector Registry</h2></div>
+      <p class="sec-sub">Every workflow step touches an external system. The registry grounds each in reality — its API availability, consent rail, auth and regulatory constraints — and prescribes a fallback ladder wherever no API exists. <em>Integrate, don't recreate.</em></p>
+
+      <div class="callout" style="margin-bottom:22px;">
+        <b>Global fallback ladder.</b> official API → partner/aggregator API → authorised-portal automation → pre-filled forms + guided manual → document upload + OCR → reminder-only. <b>A workflow is never blocked because an API is missing</b> — every rung is logged, and the family always sees what remains manual.
+      </div>
+
+      <h4 class="serif" style="margin:0 0 12px;font-size:1.05rem;">India Stack &amp; national infrastructure — selected P0 rails</h4>
+      <div class="tablewrap" style="margin-bottom:24px;">
+        <table>
+          <thead><tr><th>Connector</th><th>Consent rail</th><th>API</th><th>Fallback</th><th class="num-cell">Pri</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">account_aggregator</td><td>DEPA / AA artifact</td><td>aggregator</td><td>statement + OCR</td><td class="num-cell"><span class="pill p0">P0</span></td></tr>
+            <tr><td class="mono">digilocker</td><td>DigiLocker consent</td><td>official</td><td>document upload</td><td class="num-cell"><span class="pill p0">P0</span></td></tr>
+            <tr><td class="mono">upi · bbps</td><td>mandate / explicit</td><td>partner-gated</td><td>net-banking · biller portal</td><td class="num-cell"><span class="pill p0">P0</span></td></tr>
+            <tr><td class="mono">income_tax_eportal</td><td>explicit (no auto-file)</td><td>portal-only</td><td>guided-manual</td><td class="num-cell"><span class="pill p0">P0</span></td></tr>
+            <tr><td class="mono">passport_seva</td><td>explicit user</td><td>portal-only</td><td>guided-manual</td><td class="num-cell"><span class="pill p0">P0</span></td></tr>
+            <tr><td class="mono">cams · kfintech</td><td>explicit / AA</td><td>partner-gated</td><td>CAS email + AA</td><td class="num-cell"><span class="pill p0">P0</span></td></tr>
+            <tr><td class="mono">abdm (ABHA)</td><td>ABDM consent-manager</td><td>official</td><td>manual record upload</td><td class="num-cell"><span class="pill p1">P1</span></td></tr>
+            <tr><td class="mono">epfo · parivahan</td><td>explicit user</td><td>portal-only</td><td>UMANG · guided-manual</td><td class="num-cell"><span class="pill p1">P1</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid g3">
+        <div class="card"><span class="tag">Reality note</span><h4 class="serif">No universal write API</h4><p>India has no open-banking write rail. Saarthi <b>reads via AA</b> and <b>writes via NPCI mandates</b> (UPI / e-NACH) and BBPS. Direct per-bank APIs are opportunistic partnerships.</p></div>
+        <div class="card"><span class="tag">Consent architecture</span><h4 class="serif">DPDP is the umbrella</h4><p>DEPA/AA for finance, ABDM for health, DigiLocker for documents — each pull maps to a DPDP purpose and writes a <span class="mono">consent_ref</span> into the Twin. Revocation tombstones dependent data.</p></div>
+        <div class="card"><span class="tag">Designed to retire</span><h4 class="serif">Ready for Bima Sugam</h4><p>Insurance is portal-heavy today; per-insurer and per-TPA connectors are modelled so emerging rails — Bima Sugam, ONDC, OCEN — can subsume the scraping fallbacks without touching workflows.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="serif">The principles underneath</h2></div>
+      <p class="sec-sub">Six commitments the contract encodes into every entity, workflow and connector.</p>
+      <div class="principles">
+        <div class="pr"><span class="n">01</span><span class="serif">AI should think. Humans should decide.</span></div>
+        <div class="pr"><span class="n">02</span><span class="serif">Integrate. Don't recreate.</span></div>
+        <div class="pr"><span class="n">03</span><span class="serif">Family trust &gt; revenue. Always.</span></div>
+        <div class="pr"><span class="n">04</span><span class="serif">One source of truth — the Family Digital Twin.</span></div>
+        <div class="pr"><span class="n">05</span><span class="serif">Automation follows trust.</span></div>
+        <div class="pr"><span class="n">06</span><span class="serif">Never make life more complicated.</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><span class="serif" style="font-size:1.05rem;font-weight:600;">Saarthi</span> — Foundational Engineering Contract · v1.0</div>
+    <div>Family Digital Twin · Workflow Catalog · Connector Registry — the artifacts that drive every downstream decision.</div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var btn = document.getElementById('tt');
+    var root = document.documentElement;
+    btn.addEventListener('click', function () {
+      var current = root.getAttribute('data-theme');
+      if (!current) {
+        current = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      root.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
