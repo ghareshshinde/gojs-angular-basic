@@ -1,0 +1,16 @@
+{
+  "name": "saarthi-v0-actionable-inbox",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Saarthi v0 — read-only Gmail 'Actionable Inbox': surface the few emails that need action, hide the rest.",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "demo": "node src/demo.ts",
+    "real": "node src/demo.ts --real",
+    "test": "node eval/eval.ts"
+  },
+  "optionalDependencies": {
+    "googleapis": "^144.0.0"
+  }
+}

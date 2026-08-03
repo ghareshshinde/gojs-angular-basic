@@ -119,7 +119,16 @@ specified in `01`–`10`.
 - Measured on a small **golden set** of hand-labeled threads (the `04 §4` discipline, in miniature):
   precision/recall per lane, dedup correctness.
 
-## 9. Build plan (next step after this scope is confirmed)
+## 9. Status: runnable prototype built
+
+A working prototype lives in [`apps/v0-actionable-inbox/`](../../apps/v0-actionable-inbox/) —
+read-only, zero-dependency (Node ≥ 22.18 runs the TypeScript directly), with a fixture demo and a
+golden-set eval (`npm run demo` / `npm test`). It classifies → dedups → ranks and renders both a
+console list and an HTML view. The eval passes 100% on the sample inbox; the "insurance/policy"
+job-spam trap is correctly suppressed by sender-first classification. Real Gmail is one documented
+OAuth step away (`gmail.readonly`).
+
+## 9a. Build plan
 1. Gmail read-only OAuth + fetch (windowed + incremental).
 2. Sender/category rules map + classifier with confidence; dedup; rank.
 3. Minimal store + a simple "Actionable Inbox" view (one ranked list, grouped by lane, with

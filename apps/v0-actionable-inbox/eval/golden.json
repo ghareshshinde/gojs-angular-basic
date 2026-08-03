@@ -1,0 +1,18 @@
+{
+  "labels": {
+    "f01": "renewal", "f02": "renewal", "f03": "renewal", "f04": "renewal",
+    "f05": "trial_ending", "f06": "trial_ending", "f07": "trial_ending", "f08": "trial_ending", "f09": "trial_ending",
+    "f10": "trial_ending", "f11": "trial_ending", "f12": "trial_ending", "f13": "trial_ending",
+    "f14": "noise",
+    "f15": "payment_failed",
+    "f16": "money_in", "f17": "money_in",
+    "f18": "deadline",
+    "f19": "job", "f20": "job", "f21": "job", "f22": "job", "f23": "job", "f24": "job",
+    "f25": "noise", "f26": "noise"
+  },
+  "expect": {
+    "actionItems": 5,
+    "moneyInItems": 2,
+    "minAccuracy": 0.95
+  }
+}
