@@ -1,32 +1,64 @@
-# gojs-angular-basic
+# Agent Map — an AI company, mapped
 
-### By Northwoods Software for [GoJS 2.1](https://gojs.net)
+A live, interactive map of an AI-run company: **7 departments, 33 runnable skills and 137 agents**
+radiating from a shared **Company Brain** (the knowledge base every agent reads from and writes to).
 
-This project provides a basic example of using GoJS in an Angular app.
-Check out the [Intro page on using GoJS with Angular](https://gojs.net/latest/intro/angular.html) for more information.
+Inspired by the "137 AI agents run an entire company" concept, this is not just a diagram — every
+node opens. Click a department to focus its tree, click a skill to see what it replaces / where it
+sits on the autonomy ladder / which agents make it up, and click an individual agent for its detail.
 
-It makes use of the [gojs-angular](https://github.com/NorthwoodsSoftware/gojs-angular) package to handle some boilerplate for setting up Diagram, Palette and Overview components.
+Built with **[GoJS](https://gojs.net)** for the radial constellation and **Angular** for the shell,
+detail panels, dashboards and chart.
 
-When running the sample, try moving around nodes, adding / deleting nodes, editing text in the inspector, relinking, undoing (Ctrl-Z), etc. within the diagram
-and you'll notice the changes are reflected in app-level data. You'll also notice that changes
-made in the inspector are reflected in the diagram.
+![The map](docs/map.png)
+
+## What's in it
+
+- **MAP** — the constellation. A glowing Company Brain at the centre, 7 department hubs around it,
+  each branching into skills and then into the individual agents that do the work. Click to focus &
+  zoom a department; click any node to open its detail panel; drag to pan, scroll to zoom.
+- **DASHBOARDS** — the whole company counted: agents / skills / departments, deployment status
+  (live · in development · planned), the autonomy ladder (human-led · assisted · autonomous), and a
+  card per department.
+- **CHART** — agents per department, each bar broken down by deployment status.
+
+Every department, skill and agent lives in a single source of truth: [`src/app/company-data.ts`](src/app/company-data.ts).
+Add a department, skill or agent there and it flows through the map, the dashboards and the chart
+automatically — the radial layout is computed from the data.
+
+## Architecture
+
+| File | Responsibility |
+| --- | --- |
+| `src/app/company-data.ts` | The company model (departments → skills → agents), the radial graph builder and the stats used by the dashboards/chart. |
+| `src/app/app.component.ts` | GoJS diagram (node/link templates, selection, department focus + zoom) and the view/tab state. |
+| `src/app/app.component.html` / `.css` | The product shell: header, tabs, detail panel, dashboards and chart. |
 
 ## Installation
 
-Start by running npm install to install all necessary dependencies.
+```
+npm install
+```
 
 ## Running the project
 
-In the project directory, run:
+Because this uses the Angular 9 toolchain, run under Node 17+ with the legacy OpenSSL provider:
 
-### `ng serve`
+```
+NODE_OPTIONS=--openssl-legacy-provider npm start
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
+Then open [http://localhost:4200](http://localhost:4200).
 
-The page will reload if you make edits.<br>
+To build:
 
-## Learn More
+```
+NODE_OPTIONS=--openssl-legacy-provider npm run build
+```
 
-To learn Angular, check out the [Angular's official site](https://angular.io/).
-To learn GoJS, check out [gojs.net](https://gojs.net).
+## Notes
+
+- The GoJS evaluation watermark shown in the corner is part of the unlicensed GoJS library used by
+  this sample; it is not part of the app UI.
+
+Originally scaffolded from Northwoods Software's `gojs-angular-basic` sample.

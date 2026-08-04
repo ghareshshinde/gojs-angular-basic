@@ -4,13 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { GojsAngularModule } from 'gojs-angular';
 import { AppComponent } from './app.component';
 
-import { InspectorComponent } from './inspector/inspector.component';
-
-
 @NgModule({
   declarations: [
-    AppComponent,
-    InspectorComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

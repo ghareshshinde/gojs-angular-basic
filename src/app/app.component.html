@@ -1,62 +1,258 @@
-<h1>GoJS / Angular - Components Sample</h1>
+<div class="app-shell">
 
-<div class="left">
-  Palette
-  <gojs-palette #myPalette [initPalette]='initPalette' [divClassName]='paletteDivClassName' [nodeDataArray]='paletteNodeData'
-    [linkDataArray]='paletteLinkData' [modelData]='paletteModelData' (modelChange)='paletteModelChange($event)'></gojs-palette>
-</div>
+  <!-- ===================== HEADER ===================== -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◇</span>
+      <div class="brand-text">
+        <span class="brand-title">AGENT MAP</span>
+        <span class="brand-sub">an AI company, mapped</span>
+      </div>
+    </div>
 
+    <nav class="tabs">
+      <button [class.active]="activeTab==='map'"        (click)="setTab('map')">MAP</button>
+      <button [class.active]="activeTab==='dashboards'" (click)="setTab('dashboards')">DASHBOARDS</button>
+      <button [class.active]="activeTab==='chart'"      (click)="setTab('chart')">CHART</button>
+    </nav>
 
+    <div class="head-metrics">
+      <div class="hm"><b>{{ stats.totalAgents }}</b><span>agents</span></div>
+      <div class="hm"><b>{{ stats.totalDepartments }}</b><span>departments</span></div>
+      <div class="hm"><b>{{ stats.totalSkills }}</b><span>skills</span></div>
+    </div>
+  </header>
 
-<div class="left">
-  Diagram
-  <gojs-diagram #myDiagram [initDiagram]='initDiagram' [nodeDataArray]='diagramNodeData' [linkDataArray]='diagramLinkData'
-    [divClassName]='diagramDivClassName' [modelData]='diagramModelData' [skipsDiagramUpdate]='skipsDiagramUpdate'
-    (modelChange)='diagramModelChange($event)'>
-  </gojs-diagram>
-</div>
+  <!-- ===================== STAGE ===================== -->
+  <div class="stage">
 
-<div class="left">
-  Overview
-  <gojs-overview #myOverview [initOverview]='initOverview' [divClassName]='oDivClassName' [observedDiagram]='observedDiagram'></gojs-overview>
-</div>
+    <!-- The GoJS constellation is always mounted so it never loses its size -->
+    <gojs-diagram #myDiagram
+      [initDiagram]='initDiagram'
+      [nodeDataArray]='diagramNodeData'
+      [linkDataArray]='diagramLinkData'
+      [divClassName]='diagramDivClassName'
+      [modelData]='diagramModelData'
+      [skipsDiagramUpdate]='skipsDiagramUpdate'
+      (modelChange)='diagramModelChange($event)'>
+    </gojs-diagram>
 
+    <!-- floating helper on the map -->
+    <div class="map-hint" *ngIf="activeTab==='map'">
+      <span>Click any node to open it · drag to pan · scroll to zoom</span>
+      <button class="ghost" (click)="resetView()">Reset view</button>
+    </div>
 
-<div class="left">
-  <app-inspector [selectedNode]='selectedNode' (onFormChange)='handleInspectorChange($event)'></app-inspector>
-</div>
+    <!-- =============== DETAIL PANEL (map view) =============== -->
+    <aside class="panel" *ngIf="activeTab==='map'">
 
+      <!-- BRAIN -->
+      <ng-container *ngIf="selectedKind==='brain'">
+        <div class="tagpill before">{{ brain.tag }}</div>
+        <h2 class="panel-title">{{ brain.name }}</h2>
+        <p class="lede">{{ brain.blurb }}</p>
+        <p class="body">{{ brain.body }}</p>
 
-<div class="clear left box">
-  <h3>Links in app data</h3>
-  <ul>
-    <li *ngFor="let ld of diagramLinkData">
-      Link Key: {{ld.key}}, To: {{ld.to}}, From: {{ ld.from }}
-    </li>
-  </ul>
-</div>
+        <div class="section-label">WHAT LIVES IN IT</div>
+        <div class="chips">
+          <span class="chip" *ngFor="let f of brain.files">{{ f }}</span>
+        </div>
 
-<div class="left box">
-  <h3>Nodes in app data</h3>
-  <ul>
-    <li *ngFor="let nd of diagramNodeData">
-      Node Key: {{nd.key}}, Color: {{nd.color}}
-    </li>
-  </ul>
-</div>
+        <div class="section-label">WHAT IT REPLACES</div>
+        <p class="replaces">{{ brain.replaces }}</p>
 
-<div class="clear left">
-  <p>
-    This Angular-GoJS sample demonstrates how to use the Diagram, Palette, and Overview Angular-GoJS components, made
-    and
-    maintained by <a href="http://www.nwoods.com/">Northwoods Software</a>.
-  </p>
-  <p>
-    Notice how when a Node or Link is removed or added to the Diagram, the Nodes and Links the top-level App Component
-    has update accordingly.
-  </p>
-  <p>
-    For more information on how to use Angular with GoJS, see the <a href="#">GoJS with Angular intro page</a>.
-  </p>
+        <div class="section-label">THE LADDER</div>
+        <div class="ladder">
+          <div class="rung" *ngFor="let r of brain.ladder">
+            <div class="rung-name">{{ r.level }}</div>
+            <div class="rung-text">{{ r.text }}</div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- DEPARTMENT -->
+      <ng-container *ngIf="selectedKind==='dept' && selectedDept">
+        <div class="crumb">DEPARTMENT</div>
+        <h2 class="panel-title" [style.color]="selectedDept.color">
+          <span class="pt-icon">{{ selectedDept.icon }}</span> {{ selectedDept.name }}
+        </h2>
+        <p class="lede">{{ selectedDept.blurb }}</p>
+        <div class="mini-metrics">
+          <div><b>{{ selectedDept.skills.length }}</b><span>skills</span></div>
+          <div><b>{{ deptAgentCount(selectedDept) }}</b><span>agents</span></div>
+        </div>
+
+        <div class="section-label">SKILLS IN THIS TREE</div>
+        <div class="skill-list">
+          <button class="skill-row" *ngFor="let s of selectedDept.skills; let i = index"
+                  (click)="pickSkill(selectedDept.key, i)">
+            <span class="sr-icon">{{ s.icon }}</span>
+            <span class="sr-name">{{ s.name }}</span>
+            <span class="sr-status" [style.background]="statusColor(s.status)"></span>
+            <span class="sr-count">{{ s.agents.length }}</span>
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- SKILL -->
+      <ng-container *ngIf="selectedKind==='skill' && selectedSkill && selectedDept">
+        <div class="crumb">
+          <span [style.color]="selectedDept.color">{{ selectedDept.name }}</span> · SKILL
+        </div>
+        <h2 class="panel-title">
+          <span class="pt-icon">{{ selectedSkill.icon }}</span> {{ selectedSkill.name }}
+        </h2>
+        <div class="status-line">
+          <span class="status-pill" [style.background]="statusColor(selectedSkill.status)">
+            {{ statusLabel(selectedSkill.status) }}
+          </span>
+          <span class="auton">{{ autonomyLabel(selectedSkill.autonomy) }}</span>
+        </div>
+        <p class="lede">{{ selectedSkill.desc }}</p>
+
+        <div class="section-label">WHAT IT REPLACES</div>
+        <p class="replaces">{{ selectedSkill.replaces }}</p>
+
+        <div class="section-label">THE LADDER</div>
+        <div class="ladder">
+          <div class="rung" *ngFor="let r of ladder" [class.current]="r.key===selectedSkill.autonomy">
+            <div class="rung-name">{{ r.name }}
+              <span class="youarehere" *ngIf="r.key===selectedSkill.autonomy">you are here</span>
+            </div>
+            <div class="rung-text">{{ r.text }}</div>
+          </div>
+        </div>
+
+        <div class="section-label">AGENTS ({{ selectedSkill.agents.length }})</div>
+        <div class="agent-grid">
+          <span class="agent-tag" *ngFor="let a of selectedSkill.agents"
+                [style.borderColor]="rgbaBorder(selectedDept.color)">{{ a }}</span>
+        </div>
+      </ng-container>
+
+      <!-- AGENT -->
+      <ng-container *ngIf="selectedKind==='agent' && selectedAgent">
+        <div class="crumb">
+          <span [style.color]="selectedAgent.dept.color">{{ selectedAgent.dept.name }}</span>
+          · {{ selectedAgent.skill.name }} · AGENT
+        </div>
+        <h2 class="panel-title">{{ selectedAgent.name }}</h2>
+        <div class="status-line">
+          <span class="status-pill" [style.background]="statusColor(selectedAgent.skill.status)">
+            {{ statusLabel(selectedAgent.skill.status) }}
+          </span>
+          <span class="auton">{{ autonomyLabel(selectedAgent.skill.autonomy) }}</span>
+        </div>
+        <p class="body">
+          A single agent inside the <b>{{ selectedAgent.skill.name }}</b> skill. It runs one concrete
+          task and writes its result back to the Company Brain so the rest of the tree can build on it.
+        </p>
+        <button class="link-btn" (click)="pickSkill(selectedAgent.dept.key, selectedAgent.skill===null?0:skillIndexOf(selectedAgent.dept, selectedAgent.skill))">
+          ← open the full “{{ selectedAgent.skill.name }}” skill
+        </button>
+      </ng-container>
+
+    </aside>
+  </div>
+
+  <!-- ===================== DASHBOARDS ===================== -->
+  <section class="overlay" *ngIf="activeTab==='dashboards'">
+    <div class="overlay-inner">
+      <h1 class="ov-title">Company dashboard</h1>
+      <p class="ov-sub">Everything the map contains, counted.</p>
+
+      <div class="stat-row">
+        <div class="stat-card big">
+          <div class="stat-num">{{ stats.totalAgents }}</div>
+          <div class="stat-lbl">AI agents</div>
+        </div>
+        <div class="stat-card big">
+          <div class="stat-num">{{ stats.totalSkills }}</div>
+          <div class="stat-lbl">runnable skills</div>
+        </div>
+        <div class="stat-card big">
+          <div class="stat-num">{{ stats.totalDepartments }}</div>
+          <div class="stat-lbl">departments</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="ov-card">
+          <div class="ov-card-title">Deployment status</div>
+          <div class="bar-block" *ngFor="let s of ['live','dev','planned']">
+            <div class="bar-head">
+              <span><i class="dot" [style.background]="statusColor(s)"></i>{{ statusLabel(s) }}</span>
+              <span>{{ statusOf(s) }} · {{ pct(statusOf(s), stats.totalAgents) }}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" [style.width.%]="pct(statusOf(s), stats.totalAgents)"
+                   [style.background]="statusColor(s)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ov-card">
+          <div class="ov-card-title">Autonomy ladder</div>
+          <div class="bar-block" *ngFor="let a of ['manual','assisted','autonomous']">
+            <div class="bar-head">
+              <span>{{ autonomyLabel(a) }}</span>
+              <span>{{ autonomyOf(a) }} · {{ pct(autonomyOf(a), stats.totalAgents) }}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill grad" [style.width.%]="pct(autonomyOf(a), stats.totalAgents)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ov-card-title solo">Departments</div>
+      <div class="dept-grid">
+        <button class="dept-card" *ngFor="let d of stats.departments"
+                (click)="pickDepartment(d.key)"
+                [style.borderColor]="rgbaBorder(d.color)">
+          <div class="dc-top">
+            <span class="dc-icon">{{ d.icon }}</span>
+            <span class="dc-name" [style.color]="d.color">{{ d.name }}</span>
+          </div>
+          <div class="dc-num">{{ d.agents }}<span> agents</span></div>
+          <div class="dc-mini">
+            <span class="mini-seg" [style.width.%]="pct(d.live,d.agents)"   [style.background]="statusColor('live')"></span>
+            <span class="mini-seg" [style.width.%]="pct(d.dev,d.agents)"    [style.background]="statusColor('dev')"></span>
+            <span class="mini-seg" [style.width.%]="pct(d.planned,d.agents)"[style.background]="statusColor('planned')"></span>
+          </div>
+          <div class="dc-foot">{{ d.skills }} skills · {{ d.live }} live</div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHART ===================== -->
+  <section class="overlay" *ngIf="activeTab==='chart'">
+    <div class="overlay-inner">
+      <h1 class="ov-title">Agents per department</h1>
+      <p class="ov-sub">Each bar breaks down into live / in&nbsp;development / planned.</p>
+
+      <div class="chart">
+        <div class="chart-row" *ngFor="let d of stats.departments">
+          <button class="chart-label" (click)="pickDepartment(d.key)">
+            <span class="dc-icon">{{ d.icon }}</span>{{ d.name }}
+          </button>
+          <div class="chart-bar">
+            <div class="seg" [style.flex]="d.live"    [style.background]="statusColor('live')"    title="live"></div>
+            <div class="seg" [style.flex]="d.dev"     [style.background]="statusColor('dev')"     title="in development"></div>
+            <div class="seg" [style.flex]="d.planned" [style.background]="statusColor('planned')" title="planned"></div>
+            <div class="seg empty" [style.flex]="maxDeptAgents() - d.agents"></div>
+          </div>
+          <div class="chart-val">{{ d.agents }}</div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span><i class="dot" [style.background]="statusColor('live')"></i>Live</span>
+        <span><i class="dot" [style.background]="statusColor('dev')"></i>In development</span>
+        <span><i class="dot" [style.background]="statusColor('planned')"></i>Planned</span>
+      </div>
+    </div>
+  </section>
 
 </div>
