@@ -1,0 +1,7 @@
+services:
+  founders-agentic-team:
+    build: .
+    container_name: founders-agentic-team
+    ports:
+      - "4200:80"
+    restart: unless-stopped
