@@ -1,0 +1,42 @@
+# Dev stack for the Phase 1 foundation. The API and worker share the source;
+# the queue is a real Redis here (eager disabled) so submission is truly async.
+services:
+  api:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    environment:
+      APP_CELERY_TASK_ALWAYS_EAGER: "false"
+      APP_CELERY_BROKER_URL: redis://redis:6379/0
+      APP_CELERY_RESULT_BACKEND: redis://redis:6379/1
+    ports:
+      - "8000:8000"
+    depends_on: [redis, postgres, minio]
+
+  worker:
+    build: .
+    command: celery -A app.queue.tasks.celery_app worker --loglevel=info
+    environment:
+      APP_CELERY_TASK_ALWAYS_EAGER: "false"
+      APP_CELERY_BROKER_URL: redis://redis:6379/0
+      APP_CELERY_RESULT_BACKEND: redis://redis:6379/1
+    depends_on: [redis]
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: avatar
+      POSTGRES_PASSWORD: avatar
+      POSTGRES_DB: avatar
+    ports: ["5432:5432"]
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: avatar
+      MINIO_ROOT_PASSWORD: avataravatar
+    ports: ["9000:9000", "9001:9001"]
