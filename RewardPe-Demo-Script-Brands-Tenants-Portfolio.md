@@ -1,214 +1,236 @@
-# RewardPe — Live Demo Narration Script *(Enterprise cut)*
-### Positioned as: an **Autonomous Customer Decision Intelligence Platform**
+# RewardPe — Final Live Demo Script (≈15 minutes)
+### First‑person · Autonomous Customer Decision Intelligence Platform
 
-> **Source build:** `RewardPe-3.1` @ `b11120e` (5 Aug 2026).
-> **Format:** Word‑for‑word spoken narration. `[Bracketed italics]` = stage directions (what to click/point at).
-> **Structure:** three **business questions**, not a UI tour. Runtime ~8–9 min.
-> **Category to own:** *Autonomous Customer Decision Intelligence* — not "churn prediction," not "campaign tool."
-
-> **Say‑this / not‑that (keep this in your head the whole time):**
-> - "predicts churn" → **"identifies the next best customer action"**
-> - "launches campaigns" → **"executes AI‑approved customer interventions"**
-> - "measures campaign success" → **"measures business outcomes and continuously improves future decisions"**
-> - Avoid: *operator console, brain, magic, loading, spinner, thinks.* Use: **decision engine, decision intelligence, decision layer, policy engine, AI orchestration, customer intelligence.**
+> **Flow:** Opening & Onboarding → Portfolio Intelligence → Trust & Governance → RewardPe in Action → Close.
+> **Stage directions** are in `[brackets]`. Everything else is spoken, first person.
+> **Source build:** RewardPe‑3.1 @ latest. Every screen referenced exists in the product.
 
 ---
 
-## 0 · Opening (~20 sec)
+# PART 1 — The Problem & Enterprise Onboarding *(≈2.5 min)*
 
-> *[Start on the Overview / landing page.]*
+> *[Start on the Overview page. Pause 2–3 seconds before speaking.]*
 
-"RewardPe is an **AI‑native Customer Decision Intelligence Platform**. It continuously identifies the customers most at risk, determines the best intervention for each one, executes it through the enterprise's *existing* systems, and measures the financial impact in real time.
+Good morning, everyone.
 
-And one framing to hold onto: **RewardPe doesn't replace your CRM or marketing automation — it becomes the decision layer that sits above them.**
+Almost every enterprise today has already invested in CRM, marketing automation, loyalty programs, analytics, support tools, and customer data platforms. And yet, despite all of it, one challenge keeps growing — customer retention.
 
-I'll answer three questions today: how a new enterprise gets started, how leadership knows it's creating value, and how the AI can be *trusted* to make customer decisions. Let's start with the first."
+The problem isn't a lack of data. The problem is that all of that data still can't answer one simple question: **which customer needs attention right now, and what is the best action to take?**
 
-> *[Click **Brand Workspace** in the top navigation.]*
+Most platforms tell me what happened yesterday. Very few help me decide what should happen next.
 
----
+> *[Pause.]*
 
-## 1 · Question One — How does a new enterprise get started? *(Brand Workspace, ~2.5 min)*
+That's exactly why we built RewardPe.
 
-### 1.1 What "joining RewardPe" means
+RewardPe is a **Customer Decision Intelligence Platform**. It continuously identifies the customers who need attention, recommends the next best action for each one, executes those interventions through the enterprise's *existing* technology stack, and measures the business impact in real time.
 
-> *[The brand roster grid is on screen. Gesture across it — don't dwell on individual figures.]*
+It doesn't replace Salesforce, Shopify, Segment, or your marketing automation. **RewardPe becomes the decision layer that sits above them.** Those systems keep executing. RewardPe decides what they should do next.
 
-"When a company joins RewardPe, it becomes an **isolated brand** on the platform — its own customers, its own data, its own decision policy, walled off from every other brand. Here we're running several at once: **StyleKart** in fashion, **MedPlus** in pharmacy, with more ready to switch on.
+Over the next few minutes I'll answer four questions: how a new enterprise gets started, how leadership knows RewardPe is creating measurable value, how an enterprise can trust AI to make customer decisions, and finally — what actually happens when the AI makes one.
 
-What matters isn't the card details — it's what onboarding a brand actually *does*. Let me show you, because this is where the platform earns its keep."
+Let's start with how a company joins the platform.
 
-### 1.2 The onboarding sequence
+> *[Navigate to Brand Workspace. Let the page settle.]*
 
-> *[Click **Onboard New Brand** — the onboarding sequence opens on Step 1.]*
+Every organization onboarded onto RewardPe becomes an **independent enterprise tenant** — its own secure environment, with its own customer data, AI models, reward budgets, automation policies, audit history, and governance controls. Many organizations can run on RewardPe at once, and every brand stays completely isolated from every other.
 
-"Onboarding is three steps, and they map exactly to how the platform operates: **bring data in, connect actions out, set the guardrails.**
+> *[Gesture across the brand cards.]*
 
-**Step one — Connect Data In.**
+Here I'm managing several organizations across different industries. Some are already live; others are ready to onboard. The individual numbers on these cards aren't the point — the point is how quickly RewardPe turns a new enterprise into an AI‑driven customer intelligence platform. Let me show you.
 
-> *[Point at the two tabs.]*
+> *[Click **Onboard New Brand**.]*
 
-Pick an enterprise, or add one — and the platform immediately provisions it against the right service tier for its size. No manual setup.
+Onboarding is three deliberate steps, and each one mirrors how RewardPe operates internally.
 
-> *[Advance to Step 2.]*
+**Step one — connect the business.**
 
-**Step two — Connect Actions Out.**
+> *[Step 1.]*
 
-This is the decision‑layer idea made concrete. We orchestrate the tools the enterprise *already* runs — **Shopify** for transactions, **Zendesk** for service signals, **Klaviyo** for engagement, **Segment** for events — through a credential channel that's **SOC 2 Type II** certified. We don't rip anything out; we sit above it and decide.
+I define the organization — industry, customer scale, existing ecosystem, expected retention budget. From those inputs, RewardPe provisions a dedicated workspace and recommends the right service tier automatically.
 
-> *[Advance to Step 3 — the provisioning sequence runs.]*
+**Step two — connect existing systems.**
 
-**Step three — Set Guardrails, and the engine goes to work.**
+> *[Step 2.]*
 
-Right now, live, RewardPe is standing up an isolated data vault, ingesting the transaction and service history, profiling every customer, and scoring each one on our core signal — the **Engagement Loyalty Index**.
+Now RewardPe integrates with what the organization already runs — and this is the important distinction: it doesn't replace those investments, it connects to them. Customer records from Salesforce, orders from Shopify, engagement events from Segment, support interactions from Zendesk, loyalty data from existing reward platforms — all of it brought together into a single customer intelligence layer, over a SOC 2 Type II certified channel.
+
+**Step three — activate intelligence.**
+
+> *[Step 3 — the activation sequence runs.]*
+
+Finally, RewardPe activates its Decision Intelligence Engine. Right now, live, it's ingesting customer profiles into an isolated tenant environment and building a continuously evolving profile for every customer — evaluating behavior, calculating customer health on our **Engagement Loyalty Index**, identifying emerging risk, estimating lifetime value, and beginning to generate recommendations — all inside the enterprise's defined policies and guardrails.
 
 > *[Wait for completion.]*
 
-Done. Every customer profile is scored, isolated, and — the enterprise‑critical part — identities are **hash‑masked inside a strict isolation vault**, so no customer data can cross from one brand to another. That's the guarantee we make to every enterprise on the platform.
+And within moments, the organization is fully operational. Every customer profile analyzed. Every record securely isolated, with identities hash‑masked so nothing can cross between brands. Every model initialized. From here on, RewardPe monitors customer behavior *continuously* — not only when someone opens the app. Every interaction becomes another chance to make a better business decision.
 
-So that's day one. Now — how does leadership know it's working?"
+> *[Close the wizard. Navigate to the Dashboard.]*
 
-> *[Click **Dashboard** in the navigation.]*
-
----
-
-## 2 · Question Two — How does leadership know it's creating value? *(Dashboard, ~3 min)*
-
-### 2.1 The leadership story
-
-> *[The Dashboard loads. Before walking the tiles, point at the "Review Decisions" counter in the header.]*
-
-"Before I even get here — notice this counter in the header. **While I've been talking, the decision engine has been evaluating the live customer base in the background and queuing new intervention recommendations for approval.** That number is live. The platform is working whether or not anyone is watching.
-
-Now, put yourself in the seat of a CMO responsible for four brands. Every morning you ask three questions:
-- **How much revenue is at risk?**
-- **How much have we protected?**
-- **Which brands need attention today?**
-
-This Dashboard answers all three in seconds."
-
-> *[Now gesture across the KPI row, tying each tile to a question.]*
-
-"**Revenue at Risk** — the problem, in rupees. **Revenue Protected** — what we've *proven* we saved. **Reward Efficiency** — rupees protected for every one rupee of intervention budget, as a multiple; that's the number that decides whether this program scales. And the brand ledger tells you *which* brand needs you today."
-
-### 2.2 Drill into one brand
-
-> *[Click the StyleKart row.]*
-
-"And it's interactive — click a brand and every view refocuses onto it: its loyalty health, its at‑risk concentration, and its customer mix across five behavioral cohorts. Leadership goes from portfolio to a single brand and back in one click."
-
-> *[Click again / 'Reset to Portfolio Aggregate'.]*
-
-### 2.3 The proof — holdout measurement *(the part enterprises lean in for)*
-
-> *[Scroll to the intervention history; open a completed one — e.g. StyleKart's "Festive Flash Winback".]*
-
-"And this is where RewardPe separates itself from every campaign tool you've seen. When we intervened here, we didn't send a reward to everyone and claim the credit. We held back a **randomized control group** that received *nothing*, and we compared:
-- The treated group returned at **71%**.
-- The holdout control group returned at just **25%** on its own.
-
-The gap between those two — the **holdout‑proven incremental lift** — is the *only* value we claim. That's causal, board‑grade attribution: not 'we ran a campaign and revenue went up,' but proof that RewardPe's decision *caused* the outcome. Every recommendation on this platform is measured this way.
-
-So leadership doesn't just see activity — it sees **measured business outcomes, continuously.** Which brings us to the last question: can the AI be *trusted* to make these decisions?"
-
-> *[Click **Brand Workspace** → StyleKart **Open Workspace →** → **Settings** tab.]*
+Once an organization is onboarded, the next thing leadership asks is: *is this actually creating measurable value?* Let's look.
 
 ---
 
-## 3 · Question Three — How can AI be trusted to make customer decisions? *(Guardrails · Trust · Access, ~2 min)*
+# PART 2 — Portfolio Intelligence & Business Outcomes *(≈3 min)*
 
-### 3.1 Autonomy is a dial the enterprise controls
+> *[Dashboard loads. Pause 2–3 seconds.]*
 
-> *[On the Settings tab, open the guardrails sub‑tab.]*
+Once RewardPe is running, leadership doesn't want to see campaigns or customer lists. They want three answers: **where are we losing revenue, how much have we protected, and where should we focus next?** This dashboard is built to answer exactly those.
 
-"Trust starts with control. This single setting defines **how autonomous you want the platform to be** — and it's per‑brand:
+Think of it as the executive command center. It isn't measuring marketing activity or campaign performance — it's measuring **business outcomes**, generated from real customer behavior, real AI decisions, and real financial impact.
 
-> *[Point at the three modes as you say them.]*
+> *[Point at the **Review Decisions** counter in the header.]*
 
-- **Recommend** — the engine proposes every decision; a human approves each one.
-- **Assisted** — low‑value decisions execute automatically under a threshold you set; higher‑value ones wait for a human.
-- **Autopilot** — the engine executes autonomously, strictly inside the budget and frequency guardrails.
+Before I even look at the metrics — notice this counter in the header. While I've been talking, RewardPe has kept monitoring customer behavior in the background and has already generated new intervention recommendations. Nobody pressed refresh. Nobody scheduled a report. The platform is always working.
 
-An enterprise can start at Recommend, build confidence in the measured results, and dial up to Autopilot on its own timeline. Autonomy is *earned*, and it's always the customer's choice."
+> *[Point at **Revenue at Risk**.]*
 
-### 3.2 Trust — every decision is policed and explainable
+Start with **Revenue at Risk**. This isn't just a count of customers who might leave — it's the projected *business impact* if we do nothing. So instead of asking "how many customers might churn," leadership can ask "how much revenue is at risk today?"
 
-> *[Open the Trust & Automation sub‑tab; point at the flagged items.]*
+> *[Point at **Revenue Protected**.]*
 
-"Because these decisions move real money, every intervention is scored for abuse by an unsupervised anomaly model — anything above threshold surfaces here for a human, scoped to this one brand. Approve or block, and it's written to that brand's audit trail. Nothing the AI does is unaccountable."
+Right beside it, **Revenue Protected** — the measurable value from completed AI interventions. Every successful decision adds to it, and it grows continuously, so leadership sees real‑time business impact, not campaign activity.
 
-### 3.3 Access — role‑based, enforced live
+> *[Point at **Reward Efficiency**.]*
 
-> *[Point at the persona selector; switch Super Admin → Analyst → Viewer → Brand Manager as you narrate.]*
+And the most important metric on the page — **Reward Efficiency**. Every organization spends money to retain customers. This answers the sharper question: for every one rupee invested in retention, how much revenue did we protect? That lets an enterprise *optimize* its retention spend instead of just increasing budgets.
 
-"And authority is enforced by role. As an **analyst**, I can act on risk but not rewrite policy. As a **viewer**, everything actionable is gated — read‑only. And as a **brand manager**, I see *only my brand*, and super‑admin controls are locked. Same platform, different authority, enforced live.
+> *[Point at **Active Interventions**.]*
 
-Explainable decisions, policed for abuse, governed by role, on top of physical per‑brand isolation — that's what makes autonomous customer decision‑making safe to hand to an enterprise."
+Rather than hand‑building campaigns every week, RewardPe continuously surfaces opportunities where an intervention is expected to create measurable value — each one prioritized by expected business impact and organizational policy.
+
+> *[Move to the **Brand Performance** table.]*
+
+Below that is the portfolio view. Most enterprises don't run a single business — they run multiple brands, units, or regions. From one place, leadership can compare them all: which brands are healthiest, where risk is rising, which interventions return the most, and where attention is needed.
+
+> *[Click the **StyleKart** row.]*
+
+Take StyleKart. The moment I select it, the whole dashboard shifts from a portfolio view to a single‑business view — customer health, customer distribution, risk concentration, and financial performance for this brand alone. Same experience; only the scope changes.
+
+> *[Point at the cohort donut / loyalty‑health gauges.]*
+
+And rather than treating every customer the same, RewardPe continuously sorts them into behavioral cohorts. Customers move between these groups as their behavior changes — a successful intervention improves health, a missed one raises future attention. This intelligence evolves continuously, not once a month.
+
+> *[Scroll to Intervention History and open a completed intervention.]*
+
+Now the capability I'm proudest of — how we measure outcomes. Every intervention RewardPe runs is evaluated against a **randomized holdout group**. One group receives the AI‑recommended intervention; a comparable group receives nothing. Then we compare actual outcomes.
+
+> *[Point at treated vs. holdout figures.]*
+
+In this example, the treated group returned at **71%**. The holdout group returned at **25%** on its own. RewardPe only claims credit for the **difference** between the two. So every recommendation is backed by *causal* measurement — not assumptions, not marketing attribution. That's what gives leadership confidence the value is genuinely created by the platform.
+
+And every completed intervention does more than move today's numbers — it becomes learning for tomorrow. Customer profiles update, health scores shift, and future recommendations get sharper. The platform improves as more decisions are executed.
+
+> *[Navigate to Brand Workspace → open StyleKart → Settings.]*
+
+So we've answered the second question — leadership can clearly see where value is created. The third question matters just as much: **if AI is making customer decisions, how can an enterprise trust them?**
 
 ---
 
-## 4 · Close (~20 sec)
+# PART 3 — Trust, Governance & Autonomous Decision‑Making *(≈3 min)*
+
+> *[On StyleKart → Settings.]*
+
+Every enterprise eventually asks the same thing: *how much control are we giving the AI?* RewardPe was built on a simple principle — **AI should never operate without business guardrails.** The enterprise sets the policy; RewardPe executes within it.
+
+> *[Open the guardrails / autonomy section. Point at the three modes.]*
+
+The first decision an enterprise makes is how autonomous RewardPe should be. There are three modes.
+
+**Recommend** — RewardPe identifies opportunities and recommends the next best action, but a human reviews and approves every one before execution.
+
+**Assisted** — the enterprise sets policy: rewards below a defined threshold execute automatically, while higher‑value decisions still require approval. That automates the repetitive work without giving up financial control.
+
+**Autopilot** — RewardPe executes interventions autonomously. But even here, every decision stays inside enterprise‑defined guardrails: approved budgets, communication frequency, compliance rules, customer consent, and business policy. Autonomy here doesn't mean unlimited freedom — it means **controlled automation**.
+
+> *[Stay in Settings; open Trust & Automation.]*
+
+The second principle is that every decision is **explainable and policed**. Customer incentives involve real money, so RewardPe continuously evaluates activity for unusual patterns. If a customer starts abusing rewards, shows suspicious redemption behavior, or acts outside expected patterns, it's surfaced immediately.
+
+> *[Point at the flagged anomalies.]*
+
+So instead of blindly approving every redemption, the operator receives **prioritized exceptions** — and can approve, investigate, or block. Every one of those actions becomes part of the brand's permanent audit history. And governance doesn't stop at execution: every AI decision leaves a permanent record of what triggered it, which model made it, why, the expected outcome, the actual outcome, and the financial impact. Complete transparency for every decision.
+
+> *[Point at the persona selector and switch personas as you speak.]*
+
+Governance also depends on *who* is using the platform, so RewardPe enforces role‑based access control across every workspace.
+
+> *[Switch to **Super Admin**.]* As a **Super Admin**, I have full visibility across every tenant — I can configure automation, manage budgets, and oversee every organization.
+
+> *[Switch to **Retention Analyst**.]* As a **Retention Analyst**, I can investigate risk and review recommendations — but governance policy is protected. I can't change automation rules or enterprise‑wide settings.
+
+> *[Switch to **Viewer**.]* As a **Viewer**, I get full visibility into performance, but every operational action is disabled — perfect for executive reporting without operational risk.
+
+> *[Switch to **Brand Manager**.]* And as a **Brand Manager**, I see only my own organization. I can manage my brand's decisions, but I can't reach another enterprise, platform‑wide policy, or admin infrastructure. Every organization stays securely isolated.
+
+So we've answered the third question. Enterprises don't just trust RewardPe's decisions — they can understand them, govern them, audit them, and continuously improve them.
+
+But there's one thing left to show — the most important one. What actually *happens* when RewardPe makes a decision?
+
+---
+
+# PART 4 — RewardPe in Action *(≈3 min)*
+
+> *[Click the **Review Decisions** button in the header — this opens the live decision queue for the brand.]*
+
+We've seen how an enterprise joins, how leadership measures value, and how decisions are governed. Now let me show you one complete decision, from detection to outcome.
+
+Unlike a traditional marketing tool, RewardPe doesn't wait for someone to build a campaign. It continuously evaluates behavior in the background — every transaction, every interaction, every support ticket, every engagement signal feeds an updated view of customer health. As behavior changes, RewardPe recalculates risk, opportunity, and expected business impact automatically.
+
+> *[The queue is open.]*
+
+And notice — it doesn't hand me a list of *customers*. It hands me a list of prioritized **business decisions**, each ranked by expected value, urgency, and predicted financial impact, so my team focuses on the decisions most likely to improve customer lifetime value.
+
+> *[Open one recommendation.]*
+
+Let me open one. RewardPe has detected that this customer's engagement has declined over recent weeks — purchase frequency down, digital engagement down, Engagement Loyalty Index weakening. Based on this customer's history and similar customer outcomes, it predicts that a personalized intervention *right now* has the highest probability of preventing churn.
+
+> *[Point at the recommendation detail — the "why", trigger, expected lift, cost, channel.]*
+
+And it doesn't just recommend an action — it **explains itself**. I can see why this customer was selected, the behavioral change that triggered it, the recommended reward, its expected lift, its cost, and the channel it will dispatch through. Nothing operates as a black box — and if I disagree, I can override it and issue a different reward myself.
+
+> *[Optional — point at a NO‑REWARD / suppress decision in the queue.]*
+
+And here's what separates decision *intelligence* from a discount engine: sometimes the best decision is **no reward at all**. For a customer who'll return on their own, RewardPe recommends withholding the incentive to protect the budget; for one who's unresponsive to past offers, it suppresses spend rather than waste it. It decides *when to act and when not to.*
+
+> *[Approve / execute the intervention.]*
+
+Once I approve, RewardPe orchestrates the intervention through the organization's existing stack — a personalized reward, a message, a loyalty incentive — executed automatically, while respecting budget, communication limits, consent, and policy.
 
 > *[Return to the Dashboard.]*
 
-"So — RewardPe moves an enterprise from **reactive customer management to autonomous customer decision‑making.** Every recommendation is **measurable, explainable, financially accountable, and continuously optimized** — and it runs on the systems you already own, as the decision layer above them.
+And the most important part happens *after* execution. The decision is permanently recorded in the audit trail, the customer's profile and health are updated from the outcome, and that outcome sharpens every future recommendation. Every decision changes the system — nothing operates in isolation.
 
-That's the category we're building. Happy to go deeper anywhere, or take questions."
+That's what makes RewardPe fundamentally different. Most platforms help you *send communications*. RewardPe helps you *make better customer decisions* — it senses what's changing, decides the best action, executes it safely, measures the outcome, learns from it, and repeats that cycle across every customer, every day.
 
 ---
 
-## Appendix A · Reference numbers (Q&A backup)
+# CLOSING *(≈30–40 sec)*
 
-These are the live app's seed values, kept here only as backup if a number is asked for. **By design, the narration doesn't quote customer count and revenue together on stage** — the story leads with outcomes, not brand vitals.
+> *[Return to the Overview page.]*
 
-| Brand | Industry | Customers | Annual Revenue | Baseline Churn | Plan |
-|---|---|---|---|---|---|
-| **StyleKart** | Fashion E‑commerce | 132,400 | ₹4.78 Cr | 25.0% | Growth |
-| **MedPlus** | Pharmacy Retail | 78,500 | ₹3.12 Cr | 31.0% | Growth |
-| CrustCo *(available)* | QSR / Pizza | 212,000 | ₹5.94 Cr | 34.0% | Growth |
-| PayNest *(available)* | Fintech Wallet | 164,000 | ₹8.93 Cr | 18.1% | Growth |
+To summarize. Today's enterprises already have systems that store customer data, run campaigns, and produce reports. What they lack is an intelligence layer that continuously decides the **next best action** for every customer.
 
-**The proof‑point to lead with (internally consistent, causal):** StyleKart "Festive Flash Winback" — treated returned **71%** vs holdout control **25%** → **+46% holdout‑proven incremental lift**, ₹3.31 L revenue protected.
+That's the role RewardPe plays. It doesn't replace existing systems — it makes them smarter. By combining customer intelligence, autonomous decision‑making, explainable AI, and causally‑measured outcomes, it moves an organization from reactive customer management to proactive, intelligent customer growth.
 
-## Appendix B · Language & positioning card (rehearse until automatic)
+Every recommendation is measurable. Every decision is explainable. Every outcome is financially accountable. And every customer interaction becomes an opportunity to create more value.
 
-| Weak (avoid) | Strong (say) |
-|---|---|
-| "AI that predicts churn" | "Autonomous Customer Decision Intelligence Platform" |
-| "predicts churn" | "identifies the next best customer action" |
-| "launches campaigns" | "executes AI‑approved customer interventions" |
-| "measures campaign success" | "measures business outcomes and continuously improves future decisions" |
-| "operator console / brain / thinks" | "decision engine / decision layer / policy engine" |
-| "it's loading / spinner" | *(say nothing about implementation)* |
+That's RewardPe. Thank you — I'd be happy to take your questions.
 
-**Differentiator line, deliver it verbatim:** *"RewardPe doesn't replace your CRM or marketing automation — it becomes the decision layer that sits above them."*
+---
 
-**Make the AI feel alive:** at least once, reference the live decision counter — *"while I've been talking, the engine has already queued new recommendations."*
+## Presenter reference
 
-## Appendix C · Where things live (navigation map)
+**Timing:** Part 1 ≈2.5 · Part 2 ≈3 · Part 3 ≈3 · Part 4 ≈3 · transitions/pauses ≈2.5 → **≈14–15 min.**
 
-| Nav item | Business question | Key content |
-|---|---|---|
-| **Brand Workspace** | How does an enterprise get started? | Brand roster + 3‑step onboarding |
-| **Dashboard** | How does leadership know it's creating value? | Revenue‑at‑risk / protected, reward efficiency, holdout proof |
-| ↳ *inside a brand →* **Settings** | How can AI be trusted? | Autonomy modes · Trust & anomaly · per‑brand automation |
-| Overview / How It Works | (marketing / mechanics) | Category story, engine explainer |
+**On‑screen vs. spoken labels (don't read these aloud):**
+- Autonomy control is labelled **"Brain Operating Mode"** on screen → say *"how autonomous you want the platform to be."*
+- The header CTA reads **"Review Decisions"** → use it for the "AI is always working" beat and to open the queue in Part 4.
+- ELI appears as **Engagement Loyalty Index** in‑product (the footer also calls it Emotional Loyalty Index) → say **Engagement Loyalty Index**.
 
-*The former standalone "Platform Console" is gone — Trust, Automation, and Audit now live per‑brand under Brand Workspace → Settings.*
-
-## Appendix D · Personas & permissions (for the trust demo)
-
-| Persona | Sees | Act on risk | Change policy/automation | Admin settings |
-|---|---|---|---|---|
-| **Super Admin** | All brands | ✅ | ✅ | ✅ |
-| **Retention Analyst** | All brands | ✅ | ❌ gated | ❌ gated |
-| **Platform Viewer** | All brands | ❌ gated | ❌ gated | ❌ gated |
-| **Brand Manager** | **Own brand only** | ✅ (own) | ✅ (own) | ❌ gated |
-
-## Appendix E · Presenter notes — spoken language vs. on‑screen labels
-
-A few on‑screen labels still use the older, product‑ish wording; narrate with the enterprise terms above and don't read the label aloud:
-- The autonomy control is labelled **"Brain Operating Mode"** on screen — say *"how autonomous you want the platform to be."*
-- The header CTA reads **"Review Decisions"** — perfect for the "AI is alive" beat; use it.
-- Page headers read **"Brands" / "Dashboard"** — consistent with this script.
-- *(Optional product ask: rename "Brain Operating Mode" → "Autonomy Level" or "Decision Policy" in‑app to match enterprise language.)*
+**Anticipated Q&A — answers ready:**
+- *"Does it just discount everyone?"* → No. Decisions include **reward, no‑reward/nurture, and suppress‑to‑save‑budget.**
+- *"How do you prove ROI?"* → **Randomized holdout** on every intervention; we claim only the treated‑minus‑control lift (StyleKart: 71% vs 25%).
+- *"Do we rip out our CRM?"* → No. RewardPe is the **decision layer above** existing systems (Salesforce, Shopify, Segment, Zendesk).
+- *"Is our data safe across brands?"* → **Per‑brand isolation** with hash‑masked identities and RBAC; no cross‑brand access is possible.
+- *"Can we control the automation?"* → Yes — **Recommend → Assisted → Autopilot**, always within budget, frequency, consent, and compliance guardrails.
