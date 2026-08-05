@@ -39,7 +39,7 @@ export interface Department {
 }
 
 /* ------------------------------------------------------------------ *
- * The company: 7 departments · 33 skills · 137 agents                *
+ * The company: 8 departments · 39 skills · 161 agents                *
  * Departments are ordered to match the radial layout (Operations on  *
  * top, then clockwise) but order here is not important — positions    *
  * are computed in buildGraph().                                       *
@@ -245,6 +245,40 @@ export const DEPARTMENTS: Department[] = [
         replaces: 'Manually posting the same thing to six platforms.',
         desc: 'Schedules, posts and cross-promotes everywhere.',
         agents: ['Scheduler', 'Cross-poster', 'Hashtag optimizer', 'Engagement replier', 'Best-time picker'] }
+    ]
+  },
+  {
+    key: 'ENGINEERING',
+    name: 'Engineering',
+    icon: '💻',
+    color: '#4ade80',
+    tagline: 'product · build · ship',
+    blurb: 'Reads the signals every other department writes to the Brain — bugs, objections, drop-off, feature asks — and turns them into shipped changes to the product. This is where Claude Code lives.',
+    skills: [
+      { name: 'Product Management', icon: '🧩', status: 'dev', autonomy: 'assisted',
+        replaces: 'A backlog where customer pain and gut-feel features compete with no rubric.',
+        desc: 'Turns signals from every department into a ranked, spec’d backlog.',
+        agents: ['Feedback triager', 'Impact scorer', 'Spec writer', 'Roadmap planner'] },
+      { name: 'UX & Design', icon: '🎨', status: 'dev', autonomy: 'assisted',
+        replaces: 'A designer redrawing the same flows from scratch for every request.',
+        desc: 'Turns research and complaints into flows, wireframes and design-system updates.',
+        agents: ['Research synthesizer', 'Flow mapper', 'Wireframe drafter', 'Design-system keeper'] },
+      { name: 'Frontend', icon: '🖥️', status: 'dev', autonomy: 'assisted',
+        replaces: 'A queue of UI tweaks and accessibility fixes waiting on a front-end dev.',
+        desc: 'Builds and fixes the interface the customer actually touches.',
+        agents: ['Component builder', 'UI bug fixer', 'Accessibility auditor', 'State wirer'] },
+      { name: 'Backend & APIs', icon: '🧱', status: 'dev', autonomy: 'assisted',
+        replaces: 'Business logic and integrations that only one engineer understands.',
+        desc: 'Implements endpoints, rules and integrations behind the product.',
+        agents: ['Endpoint builder', 'Business-rule coder', 'Integration wirer', 'Migration writer'] },
+      { name: 'Quality & Testing', icon: '🐛', status: 'dev', autonomy: 'assisted',
+        replaces: 'Shipping a fix that quietly breaks three other things.',
+        desc: 'Writes tests, reproduces bugs and guards every release.',
+        agents: ['Test author', 'Bug reproducer', 'Regression guard', 'Release gatekeeper'] },
+      { name: 'DevOps & Security', icon: '🛠️', status: 'planned', autonomy: 'manual',
+        replaces: 'Manual deploys, mystery outages and finding the PII leak after it is a problem.',
+        desc: 'Ships code safely, keeps the lights on and guards the data.',
+        agents: ['CI/CD runner', 'Deploy manager', 'Uptime monitor', 'Security scanner'] }
     ]
   }
 ];
