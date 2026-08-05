@@ -39,7 +39,7 @@ export interface Department {
 }
 
 /* ------------------------------------------------------------------ *
- * The company: 10 departments · 48 skills · 198 agents               *
+ * The company: 11 departments · 52 skills · 214 agents               *
  * Departments are ordered to match the radial layout (Operations on  *
  * top, then clockwise) but order here is not important — positions    *
  * are computed in buildGraph().                                       *
@@ -335,6 +335,32 @@ export const DEPARTMENTS: Department[] = [
         replaces: 'Finding out about the cash crunch the week it arrives.',
         desc: 'Allocates cash, guards the runway and approves the spend.',
         agents: ['Cash allocator', 'Runway guardian', 'Spend approver', 'Vendor negotiator'] }
+    ]
+  },
+  {
+    key: 'IT',
+    name: 'IT & Infrastructure',
+    icon: '🗄️',
+    color: '#94a3b8',
+    tagline: 'compute · capacity · uptime',
+    blurb: 'The substrate the whole company runs on. Where Engineering’s DevOps ships the app, IT keeps the agent fleet itself alive — answering the question the founder always forgets: can our compute actually run every agent at once?',
+    skills: [
+      { name: 'Capacity Planning', icon: '🧮', status: 'dev', autonomy: 'assisted',
+        replaces: 'Finding out you can’t run all the agents at once when they all fire at 9am.',
+        desc: 'Answers the core question: can our compute run every agent simultaneously?',
+        agents: ['Concurrency modeler', 'Token-budget forecaster', 'Bottleneck finder', 'Headroom planner'] },
+      { name: 'Provisioning & Scaling', icon: '☁️', status: 'dev', autonomy: 'assisted',
+        replaces: 'Servers hand-provisioned and over-bought “just in case.”',
+        desc: 'Spins compute up and down to match the fleet’s real demand.',
+        agents: ['Auto-scaler', 'GPU allocator', 'Queue manager', 'Cold-start reducer'] },
+      { name: 'Reliability & Runtime', icon: '📟', status: 'planned', autonomy: 'manual',
+        replaces: 'Agents silently failing because a rate limit tripped or a node died.',
+        desc: 'Keeps the agent runtime healthy and fails over before anyone notices.',
+        agents: ['Health prober', 'Failover handler', 'Rate-limit guard', 'Runtime pager'] },
+      { name: 'Compute FinOps', icon: '💸', status: 'planned', autonomy: 'manual',
+        replaces: 'A cloud bill that grows faster than revenue with no one watching.',
+        desc: 'Tracks and optimizes what every agent-hour actually costs.',
+        agents: ['Spend tracker', 'Model-cost optimizer', 'Idle-resource reaper', 'Usage attributor'] }
     ]
   }
 ];
