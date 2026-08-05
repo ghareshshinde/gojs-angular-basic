@@ -39,12 +39,38 @@ export interface Department {
 }
 
 /* ------------------------------------------------------------------ *
- * The company: 8 departments · 39 skills · 161 agents                *
+ * The company: 10 departments · 47 skills · 193 agents               *
  * Departments are ordered to match the radial layout (Operations on  *
  * top, then clockwise) but order here is not important — positions    *
  * are computed in buildGraph().                                       *
  * ------------------------------------------------------------------ */
 export const DEPARTMENTS: Department[] = [
+  {
+    key: 'LEADERSHIP',
+    name: 'Leadership',
+    icon: '👑',
+    color: '#e2e8f0',
+    tagline: 'orchestration · strategy · alignment',
+    blurb: 'The layer that makes the company run itself. Orchestrator agents read the Brain, set the priorities, delegate work to the right department, and grade the other agents — a manager of managers.',
+    skills: [
+      { name: 'Chief of Staff', icon: '🎛️', status: 'dev', autonomy: 'assisted',
+        replaces: 'The founder personally being the routing layer for every decision.',
+        desc: 'Turns the Brain’s state into today’s priorities and routes work to the right team.',
+        agents: ['Priority setter', 'Work router', 'Blocker escalator', 'Standup synthesizer'] },
+      { name: 'Orchestration', icon: '🕸️', status: 'dev', autonomy: 'assisted',
+        replaces: 'Hand-coordinating five tools and three people to ship one outcome.',
+        desc: 'Runs cross-department workflows end-to-end, delegating to department agents.',
+        agents: ['Workflow planner', 'Task delegator', 'Result synthesizer', 'Quality arbiter'] },
+      { name: 'Strategy & OKRs', icon: '🧭', status: 'planned', autonomy: 'manual',
+        replaces: 'A strategy deck that’s out of date the day after the offsite.',
+        desc: 'Sets objectives, tracks key results and re-plans when reality moves.',
+        agents: ['OKR setter', 'Progress tracker', 'Scenario planner', 'Pivot advisor'] },
+      { name: 'Agent Performance', icon: '⭐', status: 'planned', autonomy: 'manual',
+        replaces: 'No one checking whether the agents are actually any good.',
+        desc: 'Scores every agent’s output and retires or retrains the weak ones.',
+        agents: ['Agent scorer', 'Drift detector', 'Retraining trigger', 'Cost auditor'] }
+    ]
+  },
   {
     key: 'OPERATIONS',
     name: 'Operations',
@@ -279,6 +305,32 @@ export const DEPARTMENTS: Department[] = [
         replaces: 'Manual deploys, mystery outages and finding the PII leak after it is a problem.',
         desc: 'Ships code safely, keeps the lights on and guards the data.',
         agents: ['CI/CD runner', 'Deploy manager', 'Uptime monitor', 'Security scanner'] }
+    ]
+  },
+  {
+    key: 'FINANCE',
+    name: 'Finance',
+    icon: '🏦',
+    color: '#818cf8',
+    tagline: 'plan · raise · price · fund',
+    blurb: 'The CFO function — forward-looking money. Where Back Office records what happened, Finance decides what happens next: what to spend, what to charge, and when to raise.',
+    skills: [
+      { name: 'FP&A', icon: '📊', status: 'dev', autonomy: 'assisted',
+        replaces: 'A budget in a spreadsheet nobody trusts by week three.',
+        desc: 'Builds the plan, watches the variance and forecasts the road ahead.',
+        agents: ['Budget builder', 'Variance analyzer', 'Forecast modeler', 'Unit-economics tracker'] },
+      { name: 'Fundraising & IR', icon: '💼', status: 'planned', autonomy: 'manual',
+        replaces: 'Rebuilding the data room and the board deck from scratch every round.',
+        desc: 'Keeps the data room, investor updates and board deck always current.',
+        agents: ['Data-room keeper', 'Investor updater', 'Board-deck builder', 'Ask preparer'] },
+      { name: 'Pricing & Packaging', icon: '🏷️', status: 'planned', autonomy: 'manual',
+        replaces: 'Pricing set once by gut feel and never revisited.',
+        desc: 'Models price, guards margin and tests willingness to pay.',
+        agents: ['Price modeler', 'Discount guardrail', 'Willingness-to-pay tester', 'Margin analyzer'] },
+      { name: 'Treasury & Capital', icon: '🏛️', status: 'planned', autonomy: 'manual',
+        replaces: 'Finding out about the cash crunch the week it arrives.',
+        desc: 'Allocates cash, guards the runway and approves the spend.',
+        agents: ['Cash allocator', 'Runway guardian', 'Spend approver', 'Vendor negotiator'] }
     ]
   }
 ];
