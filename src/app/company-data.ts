@@ -39,7 +39,7 @@ export interface Department {
 }
 
 /* ------------------------------------------------------------------ *
- * The company: 10 departments · 47 skills · 193 agents               *
+ * The company: 10 departments · 48 skills · 198 agents               *
  * Departments are ordered to match the radial layout (Operations on  *
  * top, then clockwise) but order here is not important — positions    *
  * are computed in buildGraph().                                       *
@@ -68,7 +68,11 @@ export const DEPARTMENTS: Department[] = [
       { name: 'Agent Performance', icon: '⭐', status: 'planned', autonomy: 'manual',
         replaces: 'No one checking whether the agents are actually any good.',
         desc: 'Scores every agent’s output and retires or retrains the weak ones.',
-        agents: ['Agent scorer', 'Drift detector', 'Retraining trigger', 'Cost auditor'] }
+        agents: ['Agent scorer', 'Drift detector', 'Retraining trigger', 'Cost auditor'] },
+      { name: 'Delivery & Scrum', icon: '🗓️', status: 'dev', autonomy: 'autonomous',
+        replaces: 'A team where half the agents are idle and the other half are the bottleneck.',
+        desc: 'The Scrum Master: continuously keeps every agent loaded, balanced and unblocked.',
+        agents: ['Sprint planner', 'Capacity balancer', 'Idle-agent detector', 'Dependency sequencer', 'Throughput tracker'] }
     ]
   },
   {
