@@ -157,7 +157,9 @@ That's the category we're building. Happy to go deeper anywhere, or take questio
 
 ---
 
-## Appendix A · Reference numbers (Q&A backup) — with a consistency flag
+## Appendix A · Reference numbers (Q&A backup)
+
+These are the live app's seed values, kept here only as backup if a number is asked for. **By design, the narration doesn't quote customer count and revenue together on stage** — the story leads with outcomes, not brand vitals.
 
 | Brand | Industry | Customers | Annual Revenue | Baseline Churn | Plan |
 |---|---|---|---|---|---|
@@ -166,7 +168,7 @@ That's the category we're building. Happy to go deeper anywhere, or take questio
 | CrustCo *(available)* | QSR / Pizza | 212,000 | ₹5.94 Cr | 34.0% | Growth |
 | PayNest *(available)* | Fintech Wallet | 164,000 | ₹8.93 Cr | 18.1% | Growth |
 
-**⚠️ Ratio flag (fix before a scrutinizing panel):** these are the *live app's* seed values, so the narration and the screen must agree. But the implied revenue‑per‑customer is low and inconsistent across brands — e.g. StyleKart ≈ **₹361/customer/yr**, MedPlus ≈ ₹397, PayNest ≈ ₹544, CrustCo ≈ ₹280. A fashion e‑commerce base of 132k would typically imply **₹35–50 Cr+**, not ₹4.78 Cr. **Recommendation:** don't quote customer count and revenue together on stage (this script no longer does), *and* reconcile the seed data in `src/data/initialBrands.ts` so every brand lands in a believable band (e.g. ₹2,500–4,000 rev/customer/yr) before any investor demo. Proven proof‑point that *is* internally consistent: StyleKart "Festive Flash Winback" — treated 71% vs holdout 25% → **+46% incremental lift**, ₹3.31 L protected.
+**The proof‑point to lead with (internally consistent, causal):** StyleKart "Festive Flash Winback" — treated returned **71%** vs holdout control **25%** → **+46% holdout‑proven incremental lift**, ₹3.31 L revenue protected.
 
 ## Appendix B · Language & positioning card (rehearse until automatic)
 
