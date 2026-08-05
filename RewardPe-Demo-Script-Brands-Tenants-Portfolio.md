@@ -1,232 +1,163 @@
-# RewardPe — Live Demo Narration Script
-### Modules: Brand Workspace (Brands & Tenants) · Dashboard (Portfolio Analytics) · Per‑Tenant Guardrails, Trust & Automation
+# RewardPe — Live Demo Narration Script *(Enterprise cut)*
+### Positioned as: an **Autonomous Customer Decision Intelligence Platform**
 
-> **Source build:** `RewardPe-3.1` — refreshed to latest (`b11120e`, 5 Aug 2026).
-> **Format:** Word‑for‑word spoken narration for a live product walkthrough.
-> **How to read this:** Plain text is what you *say*. `[Bracketed italic text]` are *stage directions* — what to click or point at. Approx. total runtime: **10–12 minutes** (trim the optional callouts for a 6‑minute version).
+> **Source build:** `RewardPe-3.1` @ `b11120e` (5 Aug 2026).
+> **Format:** Word‑for‑word spoken narration. `[Bracketed italics]` = stage directions (what to click/point at).
+> **Structure:** three **business questions**, not a UI tour. Runtime ~8–9 min.
+> **Category to own:** *Autonomous Customer Decision Intelligence* — not "churn prediction," not "campaign tool."
 
-> **⚠️ What changed since the last build — read before rehearsing:**
-> - The standalone **"Platform Console"** page is **gone**. Trust & Anomaly, Automation, and Guardrails now live **inside each brand's own workspace → Settings**, scoped per‑tenant. Module 3 is rewritten to reflect this — it's actually a *stronger* multi‑tenant story now.
-> - Navigation is now: **Overview · How It Works · Dashboard · Brand Workspace · Intervention Workspace.**
-> - "Portfolio Analytics" is now labelled **"Dashboard"**; "Brands & Tenants" is now **"Brand Workspace"** (and the page header reads **"Brands"**).
-> - Terminology shifted from "tenant provisioning" to plain‑English **"brand onboarding"**; isolation now reads **"Isolation: per‑brand."**
-> - Brand cards now show a **plan‑cap warning** when a brand's size exceeds its billing tier.
+> **Say‑this / not‑that (keep this in your head the whole time):**
+> - "predicts churn" → **"identifies the next best customer action"**
+> - "launches campaigns" → **"executes AI‑approved customer interventions"**
+> - "measures campaign success" → **"measures business outcomes and continuously improves future decisions"**
+> - Avoid: *operator console, brain, magic, loading, spinner, thinks.* Use: **decision engine, decision intelligence, decision layer, policy engine, AI orchestration, customer intelligence.**
 
 ---
 
-## 0 · Opening (≈45 sec)
+## 0 · Opening (~20 sec)
 
-> *[Start on the Overview / landing page with the RewardPe logo visible.]*
+> *[Start on the Overview / landing page.]*
 
-"Thanks everyone. What you're looking at is **RewardPe** — a multi‑tenant, B2B SaaS platform that uses AI to predict when a customer is about to churn, up to **30 days in advance**, and then automatically delivers a personalized reward to win them back *before* they leave.
+"RewardPe is an **AI‑native Customer Decision Intelligence Platform**. It continuously identifies the customers most at risk, determines the best intervention for each one, executes it through the enterprise's *existing* systems, and measures the financial impact in real time.
 
-The thing I want you to keep in mind through this demo is that RewardPe is not a single dashboard — it's an **operator console that runs many brands at once**, and every brand is fully isolated from the next. So I'll walk you through three things: first, the **Brand Workspace**, where we onboard and manage each brand; then the **Dashboard**, where we roll up the money across all of them; and finally I'll take you *inside* a single brand to show the **guardrails, trust, and automation** that govern it — the layer that makes running many brands at once actually safe.
+And one framing to hold onto: **RewardPe doesn't replace your CRM or marketing automation — it becomes the decision layer that sits above them.**
 
-Let's start with the brands themselves."
+I'll answer three questions today: how a new enterprise gets started, how leadership knows it's creating value, and how the AI can be *trusted* to make customer decisions. Let's start with the first."
 
 > *[Click **Brand Workspace** in the top navigation.]*
 
 ---
 
-## 1 · Module One — Brand Workspace (Brands & Tenants) (≈3 min)
+## 1 · Question One — How does a new enterprise get started? *(Brand Workspace, ~2.5 min)*
 
-### 1.1 The brand roster
+### 1.1 What "joining RewardPe" means
 
-> *[The "Brands" grid is now on screen.]*
+> *[The brand roster grid is on screen. Gesture across it — don't dwell on individual figures.]*
 
-"This is our **brand roster**. Every card here is a completely separate brand running on RewardPe — its own customers, its own data, its own budget, physically isolated from every other brand. You can see the isolation footprint on each card: *Isolation — per‑brand.*
+"When a company joins RewardPe, it becomes an **isolated brand** on the platform — its own customers, its own data, its own decision policy, walled off from every other brand. Here we're running several at once: **StyleKart** in fashion, **MedPlus** in pharmacy, with more ready to switch on.
 
-Right now we have two **live** brands and two that are **available** to onboard.
+What matters isn't the card details — it's what onboarding a brand actually *does*. Let me show you, because this is where the platform earns its keep."
 
-Our first live brand is **StyleKart** — a fashion e‑commerce brand.
+### 1.2 The onboarding sequence
 
-> *[Point at the StyleKart card.]*
+> *[Click **Onboard New Brand** — the onboarding sequence opens on Step 1.]*
 
-Notice what each card tells an operator at a glance:
-- The **industry** — Fashion E‑commerce.
-- The **retention hurdle** — for StyleKart, high cart abandonment on seasonal launches and a drop‑off after the first purchase. This is the actual business problem we're solving for them.
-- Their **SaaS subscription tier** — StyleKart is on our **Growth** plan at ₹1,49,999 a month.
-- Their **baseline churn rate** — 25%. That's the number we're going to attack.
-- And the scale — **132,400 customers** against **₹4.78 crore** in annual revenue.
-
-Below it is **MedPlus**, a pharmacy‑retail brand — 78,500 customers, a **31%** baseline churn, with chronic‑medicine buyers slipping away to local pharmacies. Different industry, different problem, same engine underneath.
-
-Then we have brands ready to be switched on — **CrustCo**, a pizza QSR chain with 34% churn, and **PayNest**, a fintech wallet. For those, the numbers are labelled *pre‑onboarding estimates* — an estimated market size — because we haven't ingested their real data yet."
-
-> *[Optional callout — point at a plan‑cap badge if one is showing.]* "And if a brand's customer base outgrows its billing tier, the card flags it right here — *'exceeds Growth cap — upgrade to Enterprise.'* Billing stays honest automatically."
-
-"Let me show you what onboarding one of these looks like, because this is where the AI actually does its work."
-
-### 1.2 The onboarding wizard
-
-> *[Click **Onboard New Brand** — the "AI‑powered brand onboarding" modal opens on Step 1.]*
-
-"Onboarding is a guided three‑step wizard, and the three steps map exactly to how the platform thinks.
+"Onboarding is three steps, and they map exactly to how the platform operates: **bring data in, connect actions out, set the guardrails.**
 
 **Step one — Connect Data In.**
 
 > *[Point at the two tabs.]*
 
-I can pick a brand from our ready roster, or **add a brand** from scratch — name, industry, customer footprint, annual GMV, and the retention budget. The moment I set the customer count, notice the platform **auto‑assigns the billing tier** — up to fifty thousand customers is Starter, up to two hundred thousand is Growth, above that is Enterprise. Pricing follows automatically.
+Pick an enterprise, or add one — and the platform immediately provisions it against the right service tier for its size. No manual setup.
 
 > *[Advance to Step 2.]*
 
 **Step two — Connect Actions Out.**
 
-This is where we plug into the brand's existing MarTech stack. RewardPe doesn't replace their tools — it orchestrates them. We pull transaction data from **Shopify**, helpdesk signals from **Zendesk**, engagement from **Klaviyo**, and event streams from **Segment**. All of it flows through a credential tunnel that's **SOC 2 Type II certified** — the tokens are encrypted client‑side.
+This is the decision‑layer idea made concrete. We orchestrate the tools the enterprise *already* runs — **Shopify** for transactions, **Zendesk** for service signals, **Klaviyo** for engagement, **Segment** for events — through a credential channel that's **SOC 2 Type II** certified. We don't rip anything out; we sit above it and decide.
 
-> *[Advance to Step 3 — the live sync console with the progress ring starts running.]*
+> *[Advance to Step 3 — the provisioning sequence runs.]*
 
-**Step three — Set Guardrails, and watch it build.**
+**Step three — Set Guardrails, and the engine goes to work.**
 
-This isn't a loading spinner for show. Live, on screen, the engine is spinning up an **isolated brand vault**, ingesting the transaction and helpdesk logs, profiling the seed customer records, and then calculating our core signal — the **Engagement Loyalty Index**, or ELI — for every customer.
+Right now, live, RewardPe is standing up an isolated data vault, ingesting the transaction and service history, profiling every customer, and scoring each one on our core signal — the **Engagement Loyalty Index**.
 
-> *[Wait for it to hit 100% and the success panel.]*
+> *[Wait for completion.]*
 
-And it's done — *'Brand onboarded successfully.'* In seconds we've provisioned a sealed brand: every profile scored with **Gradient Boosting**, isolated on **Google Cloud Spanner**, and — this is the important line — customer identities are **hash‑masked under a strict isolation vault**, so no customer list can *physically* leak from one brand to another. That's the guarantee we sell to enterprise clients.
+Done. Every customer profile is scored, isolated, and — the enterprise‑critical part — identities are **hash‑masked inside a strict isolation vault**, so no customer data can cross from one brand to another. That's the guarantee we make to every enterprise on the platform.
 
-> *[Close the modal, or finalize into the workspace — presenter's choice.]*
-
-So that's how a brand comes onto the platform. Now let's step up a level and look at all of them together — the money view."
+So that's day one. Now — how does leadership know it's working?"
 
 > *[Click **Dashboard** in the navigation.]*
 
 ---
 
-## 2 · Module Two — Dashboard (Portfolio Analytics) (≈4 min)
+## 2 · Question Two — How does leadership know it's creating value? *(Dashboard, ~3 min)*
 
-### 2.1 The financial rollup
+### 2.1 The leadership story
 
-> *[The "Dashboard" view loads. Gesture across the top row of KPI tiles.]*
+> *[The Dashboard loads. Before walking the tiles, point at the "Review Decisions" counter in the header.]*
 
-"This is the **Dashboard** — the cross‑brand financial rollup. If the first screen was for operators, *this* screen is for the person who owns the P&L.
+"Before I even get here — notice this counter in the header. **While I've been talking, the decision engine has been evaluating the live customer base in the background and queuing new intervention recommendations for approval.** That number is live. The platform is working whether or not anyone is watching.
 
-Across the top is the aggregate story for the whole book of business:
-- **Customers under management** — the total base we're monitoring across every active brand.
-- **Revenue at Risk** — the annual revenue projected to walk out the door from churn. This is the problem, in rupees.
-- **Revenue Protected** — the revenue we've *proven* we saved. On average that's a **32% churn reduction**.
-- **Incremental Lift** — and I want to stress *incremental*, because this is holdout‑proven, not self‑reported. I'll come back to that.
-- **Reward Efficiency** — this is the number that closes deals. It's rupees of revenue protected for every **one rupee** of reward budget spent. It's expressed as a multiple.
-- Active interventions running, and the total **SaaS ARR** off the subscription itself."
+Now, put yourself in the seat of a CMO responsible for four brands. Every morning you ask three questions:
+- **How much revenue is at risk?**
+- **How much have we protected?**
+- **Which brands need attention today?**
 
-> *[Optional callout:]* "Notice these are two separate revenue lines — the **software ARR** we bill, and the **customer revenue** we protect. That value‑share story is why the unit economics work."
+This Dashboard answers all three in seconds."
 
-### 2.2 Drill into a single brand
+> *[Now gesture across the KPI row, tying each tile to a question.]*
 
-> *[Point at the "Brand‑wise Performance Ledger" table on the left.]*
+"**Revenue at Risk** — the problem, in rupees. **Revenue Protected** — what we've *proven* we saved. **Reward Efficiency** — rupees protected for every one rupee of intervention budget, as a multiple; that's the number that decides whether this program scales. And the brand ledger tells you *which* brand needs you today."
 
-"Underneath the aggregate is the brand‑by‑brand ledger — customers, churn percent, revenue at risk, revenue protected, and reward efficiency for each brand, side by side. And it's **interactive** —
+### 2.2 Drill into one brand
 
 > *[Click the StyleKart row.]*
 
-— the moment I click StyleKart, every chart on this page **refocuses onto that one brand**. Watch the gauges on the right.
+"And it's interactive — click a brand and every view refocuses onto it: its loyalty health, its at‑risk concentration, and its customer mix across five behavioral cohorts. Leadership goes from portfolio to a single brand and back in one click."
 
-> *[Point at the two gauges.]*
+> *[Click again / 'Reset to Portfolio Aggregate'.]*
 
-On the right we now have StyleKart's **Loyalty Health** — the average ELI score across its customers — and the **Churn Danger Zone**, the share of customers sitting in high‑risk territory. And below that, the **customer cohort donut**: every customer is bucketed into one of five behavioral personas — Champions, Loyal, Potential, Needs Attention, and At Risk. This is how a brand manager instantly sees *who* their customers are and *where* the erosion is coming from.
+### 2.3 The proof — holdout measurement *(the part enterprises lean in for)*
 
-> *[Click the row again, or 'Reset to Portfolio Aggregate'.]*
+> *[Scroll to the intervention history; open a completed one — e.g. StyleKart's "Festive Flash Winback".]*
 
-And I click again to zoom back out to the full portfolio. One click, brand‑level to portfolio‑level and back."
+"And this is where RewardPe separates itself from every campaign tool you've seen. When we intervened here, we didn't send a reward to everyone and claim the credit. We held back a **randomized control group** that received *nothing*, and we compared:
+- The treated group returned at **71%**.
+- The holdout control group returned at just **25%** on its own.
 
-### 2.3 The proof — holdout RCT
+The gap between those two — the **holdout‑proven incremental lift** — is the *only* value we claim. That's causal, board‑grade attribution: not 'we ran a campaign and revenue went up,' but proof that RewardPe's decision *caused* the outcome. Every recommendation on this platform is measured this way.
 
-> *[Scroll down to the "Intervention History & Performance" table.]*
+So leadership doesn't just see activity — it sees **measured business outcomes, continuously.** Which brings us to the last question: can the AI be *trusted* to make these decisions?"
 
-"Now, this is my favorite part, because this is where RewardPe defends its numbers. Every intervention we've run — active, completed, or draft — is logged here with its lift, its saved accounts, and the revenue it protected. Let me open a completed one.
-
-> *[Click a completed campaign row — e.g. StyleKart's "Festive Flash Winback" — to expand the detail panel.]*
-
-Here's the receipt. When we ran this win‑back, we didn't just send everyone a reward and take credit. We held back a **randomized control group** — a holdout — that got *nothing*. And we compare:
-- The **treated group** came back at a **71%** return rate.
-- The **holdout control group** came back at just **25%** on its own.
-
-The difference between those two — the **holdout‑proven incremental lift** — is the *only* number we claim credit for. That's real, defensible, board‑grade attribution. Not 'we emailed people and some came back' — actual causal proof that RewardPe moved the needle.
-
-> *[Scroll to the bottom‑line synthesis card.]*
-
-And it all ladders up to this one‑line synthesis at the bottom: right now the RewardPe engine is monitoring our entire subscriber base across StyleKart and MedPlus, protecting real annual revenue from silent churn, at a proven reward efficiency. Live, and always on.
-
-Now — everything I've shown you so far is the cross‑brand view. Let me take you *inside* a single brand, because that's where the safety and governance live."
-
-> *[Click **Brand Workspace** → on the StyleKart card click **Open Workspace →**. Then click the **Settings** tab.]*
+> *[Click **Brand Workspace** → StyleKart **Open Workspace →** → **Settings** tab.]*
 
 ---
 
-## 3 · Module Three — Inside the Brand: Guardrails, Trust & Automation (≈2.5 min)
+## 3 · Question Three — How can AI be trusted to make customer decisions? *(Guardrails · Trust · Access, ~2 min)*
 
-### 3.1 Per‑brand guardrails
+### 3.1 Autonomy is a dial the enterprise controls
 
-> *[You're now in StyleKart's workspace, on the **Settings** tab. Point at the settings sub‑tabs.]*
+> *[On the Settings tab, open the guardrails sub‑tab.]*
 
-"This is StyleKart's **own workspace**, and I'm on its **Settings**. Everything here is scoped to this one brand — its reward catalog, its scoring pipeline, its guardrails, and its trust and automation. There is no shared 'god view' where one brand's controls bleed into another's; each brand carries its own.
+"Trust starts with control. This single setting defines **how autonomous you want the platform to be** — and it's per‑brand:
 
-> *[Click the **Tenant Settings & Guardrails** sub‑tab.]*
+> *[Point at the three modes as you say them.]*
 
-Start with the **guardrails**. The most important control is the **Brain Operating Mode** — this is how much autonomy the brand grants the AI:
-- **Recommend** — the brain proposes every decision, but a human approves each one in the Review queue.
-- **Assisted** — low‑value rewards auto‑dispatch under a rupee threshold you set; anything above it waits for a human.
-- **Autopilot** — the brain executes everything on its own, strictly within the budget and frequency guardrails.
+- **Recommend** — the engine proposes every decision; a human approves each one.
+- **Assisted** — low‑value decisions execute automatically under a threshold you set; higher‑value ones wait for a human.
+- **Autopilot** — the engine executes autonomously, strictly inside the budget and frequency guardrails.
 
-That's a dial each brand sets for itself. And down here —
+An enterprise can start at Recommend, build confidence in the measured results, and dial up to Autopilot on its own timeline. Autonomy is *earned*, and it's always the customer's choice."
 
-> *[Point at the API credentials block.]*
+### 3.2 Trust — every decision is policed and explainable
 
-— is the isolation proof, in plain sight: this brand's own **secure workspace token**, its own isolated database credentials. That's the physical boundary behind the promise we made on the onboarding screen."
+> *[Open the Trust & Automation sub‑tab; point at the flagged items.]*
 
-### 3.2 Trust & anomaly engine — per brand
+"Because these decisions move real money, every intervention is scored for abuse by an unsupervised anomaly model — anything above threshold surfaces here for a human, scoped to this one brand. Approve or block, and it's written to that brand's audit trail. Nothing the AI does is unaccountable."
 
-> *[Click the **Trust & Automation** sub‑tab. Point at the flagged anomalies.]*
+### 3.3 Access — role‑based, enforced live
 
-"Now the **Trust & Automation** panel. Because we're handing out real money in the form of rewards, people *will* try to abuse it — so an unsupervised **Isolation Forest** model scores every redemption for fraud, and anything above an **80% anomaly score** surfaces here for a human.
+> *[Point at the persona selector; switch Super Admin → Analyst → Viewer → Brand Manager as you narrate.]*
 
-And notice — these are **StyleKart's** anomalies only. A customer who claimed **five vouchers in two minutes** from a single IP: velocity spike, 94% anomaly score. Another with **nine redemptions against a single order**: 81%. As the operator I can **Approve** — clear the flag — or **Block** the profile from claiming, and every one of those actions is written to StyleKart's own audit log.
+"And authority is enforced by role. As an **analyst**, I can act on risk but not rewrite policy. As a **viewer**, everything actionable is gated — read‑only. And as a **brand manager**, I see *only my brand*, and super‑admin controls are locked. Same platform, different authority, enforced live.
 
-### 3.3 Automation — per brand
-
-> *[Scroll to the **Automation & Sync** block.]*
-
-And below that is the automation layer, again configured *per brand*: the **daily 2 a.m. data sync**, **weekly model retraining** so the churn scores stay accurate as behavior drifts, and the **at‑risk instant trigger** that fires a win‑back the second a customer slips into a risk cohort. Each brand keeps its own schedule. The platform largely runs itself."
-
-### 3.4 The RBAC payoff — persona switch
-
-> *[Point at the persona selector in the top‑right header — the person icon.]*
-
-"And here's how it all stays governed. Watch what happens when I stop being an admin.
-
-> *[Switch persona from **SaaS Super Admin** → **SaaS Retention Analyst**.]*
-
-As a **Retention Analyst**, I can still triage fraud — Approve and Block are live — but look at the automation toggles: they're now **gated**. I can act on risk, but I can't rewrite the brand's schedules.
-
-> *[Switch persona → **SaaS Platform Viewer**.]*
-
-Now I'm a read‑only **Viewer.** *Everything* actionable is gone — Approve, Block, and every toggle replaced with *'Gated — your role.'* Same screen, different authority.
-
-> *[Switch persona → **Brand Manager**.]*
-
-And now I'm a **Brand Manager** — a client logging into their *own* brand. They can manage their own trust and automation, but the moment they touch super‑admin territory — budget allocations, database credentials — they hit a wall: *'Super Admin Level Settings Gated.'* And critically, they can only ever see *their* brand. No other brand exists for them.
-
-That role‑based access control, layered on top of physical per‑brand isolation, is what makes RewardPe safe to sell to a dozen competing brands at the same time."
+Explainable decisions, policed for abuse, governed by role, on top of physical per‑brand isolation — that's what makes autonomous customer decision‑making safe to hand to an enterprise."
 
 ---
 
-## 4 · Close (≈45 sec)
+## 4 · Close (~20 sec)
 
-> *[Exit the workspace and return to the Dashboard or Overview.]*
+> *[Return to the Dashboard.]*
 
-"So to bring it together — you've seen the whole platform:
+"So — RewardPe moves an enterprise from **reactive customer management to autonomous customer decision‑making.** Every recommendation is **measurable, explainable, financially accountable, and continuously optimized** — and it runs on the systems you already own, as the decision layer above them.
 
-- The **Brand Workspace** — how any brand is onboarded in seconds, fully isolated, with its data scored and its churn problem defined.
-- The **Dashboard** — how we roll every brand into one financial view, and how we *prove* the revenue we protect with holdout control groups, not guesswork.
-- And **inside each brand** — the guardrails, the trust engine, and the automation, each scoped to that one brand and enforced by role‑based access control.
-
-Predict the churn, deliver the reward, prove the lift — across every brand, each one isolated and governed on its own terms, from one console. That's RewardPe.
-
-Happy to dive into any module in more depth, or take questions."
+That's the category we're building. Happy to go deeper anywhere, or take questions."
 
 ---
 
-## Appendix A · Quick‑reference numbers (for Q&A)
+## Appendix A · Reference numbers (Q&A backup) — with a consistency flag
 
 | Brand | Industry | Customers | Annual Revenue | Baseline Churn | Plan |
 |---|---|---|---|---|---|
@@ -235,37 +166,47 @@ Happy to dive into any module in more depth, or take questions."
 | CrustCo *(available)* | QSR / Pizza | 212,000 | ₹5.94 Cr | 34.0% | Growth |
 | PayNest *(available)* | Fintech Wallet | 164,000 | ₹8.93 Cr | 18.1% | Growth |
 
-**Plan pricing:** Starter ₹49,999/mo (≤50k customers) · Growth ₹1,49,999/mo (≤200k) · Enterprise ₹4,99,999/mo (200k+). Brands whose size exceeds their tier get a *plan‑cap upgrade* flag on the card.
+**⚠️ Ratio flag (fix before a scrutinizing panel):** these are the *live app's* seed values, so the narration and the screen must agree. But the implied revenue‑per‑customer is low and inconsistent across brands — e.g. StyleKart ≈ **₹361/customer/yr**, MedPlus ≈ ₹397, PayNest ≈ ₹544, CrustCo ≈ ₹280. A fashion e‑commerce base of 132k would typically imply **₹35–50 Cr+**, not ₹4.78 Cr. **Recommendation:** don't quote customer count and revenue together on stage (this script no longer does), *and* reconcile the seed data in `src/data/initialBrands.ts` so every brand lands in a believable band (e.g. ₹2,500–4,000 rev/customer/yr) before any investor demo. Proven proof‑point that *is* internally consistent: StyleKart "Festive Flash Winback" — treated 71% vs holdout 25% → **+46% incremental lift**, ₹3.31 L protected.
 
-**Proof point (StyleKart "Festive Flash Winback"):** treated return 71% vs. holdout control 25% → **+46% holdout‑proven incremental lift**, ₹3.31 L revenue protected.
+## Appendix B · Language & positioning card (rehearse until automatic)
 
-## Appendix B · Glossary (say it right)
+| Weak (avoid) | Strong (say) |
+|---|---|
+| "AI that predicts churn" | "Autonomous Customer Decision Intelligence Platform" |
+| "predicts churn" | "identifies the next best customer action" |
+| "launches campaigns" | "executes AI‑approved customer interventions" |
+| "measures campaign success" | "measures business outcomes and continuously improves future decisions" |
+| "operator console / brain / thinks" | "decision engine / decision layer / policy engine" |
+| "it's loading / spinner" | *(say nothing about implementation)* |
 
-- **ELI — Engagement / Emotional Loyalty Index:** a 0–100 health score per customer; the higher it is, the stickier the customer.
-- **Churn model:** in‑house classifier (logistic‑regression / gradient boosting) trained on behavioral signals — runs server‑side in microseconds, no external LLM cost.
-- **Isolation Forest:** unsupervised anomaly model that flags reward/coupon abuse before it reaches the operator.
-- **Holdout / RCT lift:** the difference between a treated group and a randomized control group that got no reward — the *only* lift we claim.
-- **Reward Efficiency:** ₹ of revenue protected per ₹1 of reward budget spent (shown as a multiple, e.g. "8.4x").
-- **Brain Operating Mode:** per‑brand autonomy dial — **Recommend** (human approves all), **Assisted** (auto under a ₹ threshold), **Autopilot** (fully automated within guardrails).
-- **Per‑brand isolation:** each brand's data lives in a strict namespace with hash‑masked identities and its own credentials; no cross‑brand leakage is possible.
+**Differentiator line, deliver it verbatim:** *"RewardPe doesn't replace your CRM or marketing automation — it becomes the decision layer that sits above them."*
 
-## Appendix C · Where things live now (navigation map)
+**Make the AI feel alive:** at least once, reference the live decision counter — *"while I've been talking, the engine has already queued new recommendations."*
 
-| Nav item | What it is | Key content |
+## Appendix C · Where things live (navigation map)
+
+| Nav item | Business question | Key content |
 |---|---|---|
-| **Overview / How It Works** | Marketing + mechanics | Investor cockpit, core‑engine explainer |
-| **Dashboard** | Portfolio Analytics | Cross‑brand KPIs, brand ledger, gauges, cohort donut, RCT proof |
-| **Brand Workspace** | Brands roster + onboarding | Brand cards, 3‑step onboarding wizard |
-| ↳ *inside a brand →* **Settings** | Per‑brand governance | Reward Catalog · **Tenant Settings & Guardrails** · Cognitive Scoring Pipeline · **Trust & Automation** |
-| **Intervention Workspace** | Active retention console | Decision feed & plays for the open brand |
+| **Brand Workspace** | How does an enterprise get started? | Brand roster + 3‑step onboarding |
+| **Dashboard** | How does leadership know it's creating value? | Revenue‑at‑risk / protected, reward efficiency, holdout proof |
+| ↳ *inside a brand →* **Settings** | How can AI be trusted? | Autonomy modes · Trust & anomaly · per‑brand automation |
+| Overview / How It Works | (marketing / mechanics) | Category story, engine explainer |
 
-*The old standalone "Platform Console" no longer exists — its Trust, Automation, and Audit functions now live per‑brand under each Brand Workspace → Settings.*
+*The former standalone "Platform Console" is gone — Trust, Automation, and Audit now live per‑brand under Brand Workspace → Settings.*
 
-## Appendix D · Personas & permissions (for the RBAC demo)
+## Appendix D · Personas & permissions (for the trust demo)
 
-| Persona | Sees | Trust (Approve/Block) | Automation toggles | Admin settings (budget/credentials) |
+| Persona | Sees | Act on risk | Change policy/automation | Admin settings |
 |---|---|---|---|---|
-| **SaaS Super Admin** | All brands | ✅ | ✅ | ✅ |
-| **SaaS Retention Analyst** | All brands | ✅ | ❌ gated | ❌ gated |
-| **SaaS Platform Viewer** | All brands | ❌ gated | ❌ gated | ❌ gated |
-| **Brand Manager (Client)** | **Own brand only** | ✅ (own brand) | ✅ (own brand) | ❌ "Super Admin Level Settings Gated" |
+| **Super Admin** | All brands | ✅ | ✅ | ✅ |
+| **Retention Analyst** | All brands | ✅ | ❌ gated | ❌ gated |
+| **Platform Viewer** | All brands | ❌ gated | ❌ gated | ❌ gated |
+| **Brand Manager** | **Own brand only** | ✅ (own) | ✅ (own) | ❌ gated |
+
+## Appendix E · Presenter notes — spoken language vs. on‑screen labels
+
+A few on‑screen labels still use the older, product‑ish wording; narrate with the enterprise terms above and don't read the label aloud:
+- The autonomy control is labelled **"Brain Operating Mode"** on screen — say *"how autonomous you want the platform to be."*
+- The header CTA reads **"Review Decisions"** — perfect for the "AI is alive" beat; use it.
+- Page headers read **"Brands" / "Dashboard"** — consistent with this script.
+- *(Optional product ask: rename "Brain Operating Mode" → "Autonomy Level" or "Decision Policy" in‑app to match enterprise language.)*
