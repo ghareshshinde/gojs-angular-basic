@@ -6,6 +6,56 @@
 
 ---
 
+## 0 · The KPIs as a story — one customer, one decision, one loop
+
+*Read top‑to‑bottom, the KPIs trace the platform's continuous loop: **sense → score → classify → decide → guardrail → act → measure → roll up → learn.** Each stage inherits the numbers from the stage before it.*
+
+**① SENSE — a customer behaves.**
+Raw signals accrue: days since last purchase, app opens, email opens, order frequency, cart abandonment, support tickets. *(Inputs, not KPIs yet — but every KPI below is built from them.)*
+
+**② SCORE — the platform reads the customer.**
+→ **ELI (Engagement Loyalty Index)** — how healthy is this relationship? (0–100)
+→ **Churn Probability** — how likely are they to leave? (0–100%)
+→ **Responsiveness** — if we act, will they respond? (0–100)
+→ **Churn Drivers** — *why* did they score this way? (ranked feature contributions)
+
+**③ CLASSIFY — turn scores into meaning.**
+→ **Segment** — Champion, Loyal, Potential, Needs Attention, or At Risk?
+→ **Lifecycle Stage** — New, Repeat, Advocate, At‑Risk, Churned?
+*(Now the customer is no longer a row of data — they're a situation.)*
+
+**④ DECIDE — choose the next best action.**
+→ **Recommended Reward** + **Reward Cost** — the best‑fit incentive and its ₹ price.
+→ **Expected Lift** — how much uplift this action should create.
+→ **Decision Type** — and crucially, sometimes the answer is *don't spend*: `REWARD_RECOMMENDED` vs `NO_REWARD_NURTURE` vs `SUPPRESS_SAVE_BUDGET`.
+
+**⑤ GUARDRAIL — is it safe and affordable?**
+→ **Anomaly Score** — is this customer abusing rewards? (flag > 80%)
+→ **Assisted Threshold** — is the reward small enough to auto‑approve, or does a human decide?
+→ **Available / Reserved Budget** & **Cap Used %** — is there money left in the pool?
+
+**⑥ ACT — execute through the existing stack.**
+→ **Treated Count** — who received the reward.
+→ **Control (Holdout) Count** — a comparable group that got *nothing* (the proof mechanism).
+→ **Redemption Rate** — did they take it up?
+
+**⑦ MEASURE — prove it caused something.**
+→ **Treated Return Rate** vs **Control Return Rate** — did treated come back more than the holdout?
+→ **Incremental Lift (RCT)** — the gap between them; *the only value we claim.*
+→ **Saved Accounts** and **Revenue Protected (₹)** — the causal result in customers and rupees.
+
+**⑧ ROLL UP — what leadership sees.**
+→ **Revenue at Risk** (the problem) → **Revenue Protected** (the result) → **Reward Efficiency ×** (the efficiency) → **Average ELI** & **At‑Risk %** (the health) → **ARR/MRR** (the platform's own revenue).
+
+**⑨ LEARN — the loop tightens.**
+→ Outcomes update customer profiles → ELI and churn are **re‑scored** → **Accuracy / AUC** track that the model is still sharp → the next decision is better than the last.
+
+> **In one line:** *ELI and Churn say who needs help → Segment says how → Expected Lift and Decision Type say what to do → Anomaly Score and Budget say whether it's safe → Treated‑vs‑Control and Incremental Lift prove it worked → Revenue Protected and Reward Efficiency put it in the boardroom → and every outcome re‑scores the next decision.*
+
+The tables below are the same KPIs as a **lookup reference**, grouped by system layer.
+
+---
+
 ## 1 · Customer‑Level Intelligence KPIs
 *Computed per customer by the scoring pipeline (`runPipeline`) at onboarding and on every re‑score.*
 
