@@ -6,53 +6,52 @@
 
 ---
 
-## 0 · The KPIs as a story — one customer, one decision, one loop
+## 0 · The KPI Story — every metric in lifecycle order, with formulas
 
-*Read top‑to‑bottom, the KPIs trace the platform's continuous loop: **sense → score → classify → decide → guardrail → act → measure → roll up → learn.** Each stage inherits the numbers from the stage before it.*
+*One table, read top‑to‑bottom = the platform's continuous loop: **sense → score → classify → decide → guardrail → act → measure → roll up → learn.** Each stage feeds the next. (Sections 1–6 below repeat these grouped by system layer for lookup.)*
 
-**① SENSE — a customer behaves.**
-Raw signals accrue: days since last purchase, app opens, email opens, order frequency, cart abandonment, support tickets. *(Inputs, not KPIs yet — but every KPI below is built from them.)*
+| # | Stage | KPI | What it measures | Formula | Unit |
+|---|---|---|---|---|---|
+| 1 | ② Score | **ELI (Engagement Loyalty Index)** | Customer health / loyalty | `min(100, 0.35·(purchase_freq_yr/12·100) + 0.25·engagement_score + 0.20·sentiment_score + 0.20·brand_interaction)` | 0–100 |
+| 2 | ② Score | **Churn Probability** | Likelihood of leaving | `round(100 · Σ wᵢ·featureᵢ)` over 9 features (Σw = 1.0) | 0–100 % |
+| 3 | ② Score | **Churn Probability (ML)** | Same, trained classifier | `sigmoid(w·x + b)` — logistic regression, gradient‑descent trained | 0–1 |
+| 4 | ② Score | **Responsiveness** | Will they respond if we act? | `min(100, 0.40·email_open_rate + 0.35·reward_redemption_rate + 0.25·(app_sessions_monthly/30·100))` | 0–100 |
+| 5 | ② Score | **Churn Drivers** | *Why* they scored so | per‑feature `wᵢ·xᵢ`, ranked; top 2 surfaced | relative |
+| 6 | ③ Classify | **Segment** | Behavioral cohort | Rules: `churn≥50→At Risk`; `ELI≥70 & churn<25→Champion`; `ELI≥55 & churn<35→Loyal`; `ELI≥40 & churn<50→Potential`; else `Needs Attention` | 5 cohorts |
+| 7 | ③ Classify | **Lifecycle Stage** | Journey position | Rules on churn / tenure / purchase frequency | 7 stages |
+| 8 | ④ Decide | **Recommended Reward** | Next best incentive | Best‑fit from brand catalog, matched to segment/value | reward |
+| 9 | ④ Decide | **Reward Cost** | ₹ price of that reward | catalog cost of recommended reward (blended below face value after redemption) | ₹ |
+| 10 | ④ Decide | **Expected Lift** | Predicted uplift of the action | model estimate per decision | % |
+| 11 | ④ Decide | **Decision Type** | Act, nurture, or hold spend | `REWARD_RECOMMENDED` · `NO_REWARD_NURTURE` · `SUPPRESS_SAVE_BUDGET` | enum |
+| 12 | ⑤ Guardrail | **Anomaly Score** | Reward‑abuse likelihood | Isolation Forest outlier score; flagged when `> 80` | 0–100 % |
+| 13 | ⑤ Guardrail | **Assisted Threshold** | Auto‑approve ceiling | reward `≤ brand.assistedThreshold` auto‑dispatch; above → human review | ₹ |
+| 14 | ⑤ Guardrail | **Available Budget** | Spendable balance | `= brand.budget` (current ledger balance) | ₹ |
+| 15 | ⑤ Guardrail | **Reserved Budget** | Committed to live campaigns | `Σ active campaigns' budgetAllocated` | ₹ |
+| 16 | ⑤ Guardrail | **Cap Used %** | Committed vs. pool | `(budgetUtilized + reservedBudget) / totalBudgetPool · 100` | % |
+| 17 | ⑥ Act | **Treated Count** | Customers given the reward | `outcomes.treatedCount` (fallback `budgetAllocated / costPerReward`) | count |
+| 18 | ⑥ Act | **Control (Holdout) Count** | Comparable customers given nothing | `outcomes.controlCount` (fallback `≈ 0.15 · treatedCount`) | count |
+| 19 | ⑥ Act | **Redemption Rate** | Reward take‑up | `redeemedCount / treatedCount · 100` | % |
+| 20 | ⑦ Measure | **Treated Return Rate** | % of treated who returned | `treatedReturnedCount / treatedCount · 100` | % |
+| 21 | ⑦ Measure | **Control Return Rate** | % of holdout who returned unaided | `controlReturnedCount / controlCount · 100` | % |
+| 22 | ⑦ Measure | **Incremental Lift (RCT)** | Causal effect — *only value claimed* | `treatedReturnRate − controlReturnRate` | pts |
+| 23 | ⑦ Measure | **Saved Accounts** | Customers retained | `= treatedReturnedCount` | count |
+| 24 | ⑦ Measure | **Revenue Protected (campaign)** | ₹ of incremental saves | `incrementalReturns · AOV`, where `incrementalReturns = treatedReturnedCount − treatedCount·(controlReturnRate/100)` | ₹ |
+| 25 | ⑧ Roll up | **Revenue at Risk** | Annual revenue exposed to churn | `annualRevenue · (churnRate/100)` | ₹/yr |
+| 26 | ⑧ Roll up | **Revenue Protected (brand)** | Proven revenue saved | `Σ completed campaigns' outcomes.revenueProtected` (fallback `revenueAtRisk · 0.24`) | ₹ |
+| 27 | ⑧ Roll up | **Incremental Revenue** | Holdout‑proven portion | `revenueProtected · 0.92` | ₹ |
+| 28 | ⑧ Roll up | **Reward Efficiency (ROI)** | ₹ protected per ₹1 spent | `revenueProtected / budgetUtilized` | × |
+| 29 | ⑧ Roll up | **Blended Efficiency** | Portfolio‑wide efficiency | `Σ revenueProtected / Σ budgetUtilized` (active brands) | × |
+| 30 | ⑧ Roll up | **Average ELI (Loyalty Health)** | Mean loyalty for the scope | `mean(customer.eli)` (proxy `100 − churnRate·4`) | 0–100 |
+| 31 | ⑧ Roll up | **At‑Risk % (Churn Danger Zone)** | Share in high‑risk zone | `count(churn ≥ 50) / customers · 100` (proxy `churnRate·1.5`) | % |
+| 32 | ⑧ Roll up | **Customers Under Management** | Addressable base in scope | `Σ brand.customerCount` (active) | count |
+| 33 | ⑧ Roll up | **Active Interventions** | Live win‑back plays | `count(campaigns where status = active)` | count |
+| 34 | ⑧ Roll up | **MRR (subscription)** | Monthly software revenue | `getPlanPrice(plan)` → ₹49,999 / ₹1,49,999 / ₹4,99,999 | ₹/mo |
+| 35 | ⑧ Roll up | **ARR (subscription)** | Annual software revenue | `MRR · 12` | ₹/yr |
+| 36 | ⑨ Learn | **Model Accuracy** | Correct churn predictions | `correct / samples` on held‑out set | 0–1 |
+| 37 | ⑨ Learn | **AUC** | Classifier ranking quality | area under ROC on held‑out set | 0–1 |
+| 38 | ⑨ Learn | **Re‑score loop** | Outcomes sharpen next decision | outcome → update profile → recompute ELI + Churn (rows 1–2) | — |
 
-**② SCORE — the platform reads the customer.**
-→ **ELI (Engagement Loyalty Index)** — how healthy is this relationship? (0–100)
-→ **Churn Probability** — how likely are they to leave? (0–100%)
-→ **Responsiveness** — if we act, will they respond? (0–100)
-→ **Churn Drivers** — *why* did they score this way? (ranked feature contributions)
-
-**③ CLASSIFY — turn scores into meaning.**
-→ **Segment** — Champion, Loyal, Potential, Needs Attention, or At Risk?
-→ **Lifecycle Stage** — New, Repeat, Advocate, At‑Risk, Churned?
-*(Now the customer is no longer a row of data — they're a situation.)*
-
-**④ DECIDE — choose the next best action.**
-→ **Recommended Reward** + **Reward Cost** — the best‑fit incentive and its ₹ price.
-→ **Expected Lift** — how much uplift this action should create.
-→ **Decision Type** — and crucially, sometimes the answer is *don't spend*: `REWARD_RECOMMENDED` vs `NO_REWARD_NURTURE` vs `SUPPRESS_SAVE_BUDGET`.
-
-**⑤ GUARDRAIL — is it safe and affordable?**
-→ **Anomaly Score** — is this customer abusing rewards? (flag > 80%)
-→ **Assisted Threshold** — is the reward small enough to auto‑approve, or does a human decide?
-→ **Available / Reserved Budget** & **Cap Used %** — is there money left in the pool?
-
-**⑥ ACT — execute through the existing stack.**
-→ **Treated Count** — who received the reward.
-→ **Control (Holdout) Count** — a comparable group that got *nothing* (the proof mechanism).
-→ **Redemption Rate** — did they take it up?
-
-**⑦ MEASURE — prove it caused something.**
-→ **Treated Return Rate** vs **Control Return Rate** — did treated come back more than the holdout?
-→ **Incremental Lift (RCT)** — the gap between them; *the only value we claim.*
-→ **Saved Accounts** and **Revenue Protected (₹)** — the causal result in customers and rupees.
-
-**⑧ ROLL UP — what leadership sees.**
-→ **Revenue at Risk** (the problem) → **Revenue Protected** (the result) → **Reward Efficiency ×** (the efficiency) → **Average ELI** & **At‑Risk %** (the health) → **ARR/MRR** (the platform's own revenue).
-
-**⑨ LEARN — the loop tightens.**
-→ Outcomes update customer profiles → ELI and churn are **re‑scored** → **Accuracy / AUC** track that the model is still sharp → the next decision is better than the last.
-
-> **In one line:** *ELI and Churn say who needs help → Segment says how → Expected Lift and Decision Type say what to do → Anomaly Score and Budget say whether it's safe → Treated‑vs‑Control and Incremental Lift prove it worked → Revenue Protected and Reward Efficiency put it in the boardroom → and every outcome re‑scores the next decision.*
-
-The tables below are the same KPIs as a **lookup reference**, grouped by system layer.
+> **One line:** ELI + Churn say *who* → Segment says *how* → Expected Lift + Decision Type say *what* → Anomaly Score + Budget say *is it safe* → Treated‑vs‑Control + Incremental Lift *prove it* → Revenue Protected + Reward Efficiency put it *in the boardroom* → outcomes *re‑score the next decision.*
 
 ---
 
