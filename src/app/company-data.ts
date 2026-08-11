@@ -39,7 +39,7 @@ export interface Department {
 }
 
 /* ------------------------------------------------------------------ *
- * The company: 11 departments · 52 skills · 214 agents               *
+ * Saarthi: 14 departments · 64 skills · 262 agents                    *
  * Departments are ordered to match the radial layout (Operations on  *
  * top, then clockwise) but order here is not important — positions    *
  * are computed in buildGraph().                                       *
@@ -81,7 +81,7 @@ export const DEPARTMENTS: Department[] = [
     icon: '⚙️',
     color: '#2dd4bf',
     tagline: 'onboarding · builds · client ops',
-    blurb: 'Turns a signed client into a running account and keeps the machine healthy.',
+    blurb: 'Turns a signed insurer, TPA or hospital into a running, integrated account and keeps the machine healthy.',
     skills: [
       { name: 'Client Onboarding', icon: '🚀', status: 'live', autonomy: 'assisted',
         replaces: 'A week of kickoff calls, spreadsheets and copy-pasted welcome emails.',
@@ -111,7 +111,7 @@ export const DEPARTMENTS: Department[] = [
     icon: '🔭',
     color: '#f472b6',
     tagline: 'companies · people · markets',
-    blurb: 'The always-on research desk — knows the market before the meeting starts.',
+    blurb: 'The always-on research desk — tracks insurers, regulators and the market before the meeting starts.',
     skills: [
       { name: 'Company Research', icon: '🔎', status: 'live', autonomy: 'autonomous',
         replaces: 'An analyst spending an afternoon assembling a one-page brief.',
@@ -137,7 +137,7 @@ export const DEPARTMENTS: Department[] = [
     icon: '💬',
     color: '#38bdf8',
     tagline: 'support · success · community',
-    blurb: 'Keeps every customer answered, healthy and heard.',
+    blurb: 'Keeps every policyholder, agent and hospital answered, healthy and heard.',
     skills: [
       { name: 'Support Deflection', icon: '🛟', status: 'live', autonomy: 'autonomous',
         replaces: 'A queue of tickets that are all the same five questions.',
@@ -283,7 +283,7 @@ export const DEPARTMENTS: Department[] = [
     icon: '💻',
     color: '#4ade80',
     tagline: 'product · build · ship',
-    blurb: 'Reads the signals every other department writes to the Brain — bugs, objections, drop-off, feature asks — and turns them into shipped changes to the product. This is where Claude Code lives.',
+    blurb: 'Reads the signals every other department writes to the Brain — bugs, objections, drop-off, feature asks — and turns them into shipped changes to Saarthi: the policy engine, claims flow and member app. This is where Claude Code lives.',
     skills: [
       { name: 'Product Management', icon: '🧩', status: 'dev', autonomy: 'assisted',
         replaces: 'A backlog where customer pain and gut-feel features compete with no rubric.',
@@ -362,6 +362,84 @@ export const DEPARTMENTS: Department[] = [
         desc: 'Tracks and optimizes what every agent-hour actually costs.',
         agents: ['Spend tracker', 'Model-cost optimizer', 'Idle-resource reaper', 'Usage attributor'] }
     ]
+  },
+  {
+    key: 'LEGAL',
+    name: 'Legal & Compliance',
+    icon: '⚖️',
+    color: '#fb7185',
+    tagline: 'regulation · privacy · risk',
+    blurb: 'In insurance and health this is the moat, not the paperwork. Keeps Saarthi on the right side of IRDAI, data-privacy law and every policy word — before it becomes a problem, not after.',
+    skills: [
+      { name: 'Regulatory Compliance', icon: '📜', status: 'dev', autonomy: 'assisted',
+        replaces: 'A compliance officer hand-mapping every feature to an IRDAI circular.',
+        desc: 'Checks Saarthi against IRDAI rules, filings and circulars as they change.',
+        agents: ['Circular watcher', 'Filing preparer', 'Rule mapper', 'Audit-trail keeper'] },
+      { name: 'Data Privacy', icon: '🔒', status: 'dev', autonomy: 'assisted',
+        replaces: 'Discovering a consent or PII gap during a breach or an audit.',
+        desc: 'Guards policyholder and health data under the DPDP Act and consent rules.',
+        agents: ['Consent tracker', 'PII mapper', 'Retention enforcer', 'Breach responder'] },
+      { name: 'Policy & Contract Wording', icon: '✍️', status: 'planned', autonomy: 'manual',
+        replaces: 'Legal reviewing every policy document and endorsement by hand.',
+        desc: 'Drafts and reviews policy wordings, endorsements and customer contracts.',
+        agents: ['Wording drafter', 'Clause checker', 'Endorsement reviewer', 'Plain-language rewriter'] },
+      { name: 'Risk & Fraud', icon: '🕵️', status: 'planned', autonomy: 'manual',
+        replaces: 'Catching fraud and model risk only after the payout is made.',
+        desc: 'Flags fraud signals and governs underwriting and model risk.',
+        agents: ['Fraud flagger', 'Risk scorer', 'Model-governance checker', 'Escalation router'] }
+    ]
+  },
+  {
+    key: 'PROSERV',
+    name: 'Professional Services',
+    icon: '🧰',
+    color: '#22d3ee',
+    tagline: 'implement · integrate · adopt',
+    blurb: 'How Saarthi actually lands inside an insurer, hospital or TPA. Turns a signed contract into a live, integrated deployment — and makes sure it gets used.',
+    skills: [
+      { name: 'Implementation', icon: '🚀', status: 'dev', autonomy: 'assisted',
+        replaces: 'A months-long manual rollout for every new insurer or hospital.',
+        desc: 'Stands up Saarthi inside each client’s environment, end to end.',
+        agents: ['Rollout planner', 'Config builder', 'Data migrator', 'Go-live checker'] },
+      { name: 'Integrations & Interop', icon: '🔌', status: 'dev', autonomy: 'assisted',
+        replaces: 'Hand-wiring each insurer core, TPA and hospital system every time.',
+        desc: 'Connects Saarthi to insurer cores, TPAs and hospitals over FHIR / HL7 / APIs.',
+        agents: ['Core-system connector', 'TPA integrator', 'FHIR / HL7 mapper', 'Sync validator'] },
+      { name: 'Solution Engineering', icon: '🧑‍🔧', status: 'planned', autonomy: 'manual',
+        replaces: 'Sales promising things the product cannot do yet.',
+        desc: 'Scopes what each client needs and designs the fit before the deal closes.',
+        agents: ['Needs scoper', 'Solution designer', 'Demo builder', 'Feasibility checker'] },
+      { name: 'Adoption & Value', icon: '📈', status: 'planned', autonomy: 'manual',
+        replaces: 'A client who bought Saarthi but never fully rolled it out.',
+        desc: 'Drives adoption and proves value after go-live so clients expand and renew.',
+        agents: ['Adoption tracker', 'Value reporter', 'Expansion spotter', 'QBR builder'] }
+    ]
+  },
+  {
+    key: 'EDUCATION',
+    name: 'Customer Education',
+    icon: '🎓',
+    color: '#a3e635',
+    tagline: 'docs · training · localization',
+    blurb: 'Makes a complex insurance platform learnable — in every language your users actually speak. (SAP runs a 280-person lab for exactly this.)',
+    skills: [
+      { name: 'Documentation', icon: '📚', status: 'dev', autonomy: 'assisted',
+        replaces: 'Docs that are always three releases out of date.',
+        desc: 'Keeps product docs, API references and release notes current automatically.',
+        agents: ['Doc writer', 'API-ref generator', 'Release-note compiler', 'Screenshot updater'] },
+      { name: 'Training & Enablement', icon: '🧑‍🏫', status: 'dev', autonomy: 'assisted',
+        replaces: 'Flying a trainer to every insurer branch to explain the same screens.',
+        desc: 'Turns features into courses, guides and walkthroughs for agents and staff.',
+        agents: ['Course builder', 'Walkthrough author', 'Quiz generator', 'Certification tracker'] },
+      { name: 'Localization', icon: '🌐', status: 'planned', autonomy: 'manual',
+        replaces: 'Shipping English-only into a ten-language market.',
+        desc: 'Translates and adapts Saarthi for Indian languages and regional norms.',
+        agents: ['String translator', 'Regional adapter', 'Terminology keeper', 'Locale QA'] },
+      { name: 'In-Product Guidance', icon: '💡', status: 'planned', autonomy: 'manual',
+        replaces: 'Users stuck on a screen with nowhere to turn but support.',
+        desc: 'Builds tooltips, empty states and nudges that teach inside the app.',
+        agents: ['Tooltip writer', 'Empty-state designer', 'Nudge planner', 'Help-search tuner'] }
+    ]
   }
 ];
 
@@ -370,13 +448,14 @@ export const DEPARTMENTS: Department[] = [
  * ------------------------------------------------------------------ */
 export const BRAIN = {
   key: 'BRAIN',
-  name: 'Company Brain',
+  name: 'Saarthi Brain',
   tag: 'BEFORE EVERYTHING',
-  blurb: 'The single place every agent reads from and writes to.',
-  body: 'Not software you buy — plain files with a strict convention: who the company is, ' +
-        'what it sells, how it speaks, what is true right now. An agent with this context ' +
-        'writes like a colleague. An agent without it writes like a stranger.',
-  files: ['company.md', 'offer.md', 'voice.md', 'clients/', 'meetings/', 'playbooks/', 'STATE.md'],
+  blurb: 'The single place every Saarthi agent reads from and writes to.',
+  body: 'Not software you buy — plain files with a strict convention: what Saarthi is, ' +
+        'the insurance & health product it ships, the regulations it lives under, and what ' +
+        'is true right now. An agent with this context works like a teammate who has been ' +
+        'here for years. An agent without it works like a stranger.',
+  files: ['saarthi.md', 'product-spec.md', 'irdai-compliance.md', 'insurers/', 'claims-playbooks/', 'voice.md', 'STATE.md'],
   replaces: 'Re-briefing every tool, agency, hire and AI session from scratch, forever.',
   ladder: [
     { level: 'Human-led', text: "Context lives in the founder's head and a thousand chat threads." },
