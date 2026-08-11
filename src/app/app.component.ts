@@ -3,8 +3,8 @@ import * as go from 'gojs';
 import { DataSyncService, DiagramComponent } from 'gojs-angular';
 
 import {
-  BRAIN, DEPARTMENTS, buildGraph, computeStats, findDept, findSkill,
-  Department, Skill, Stats
+  BRAIN, layerDepartments, buildGraph, computeStats, findDept, findSkill,
+  Department, Skill, Stats, Layer
 } from './company-data';
 
 type Tab = 'map' | 'dashboards' | 'chart';
@@ -22,8 +22,9 @@ export class AppComponent {
 
   /* ----- exposed to the template ----- */
   public brain = BRAIN;
-  public departments = DEPARTMENTS;
-  public stats: Stats = computeStats();
+  public activeLayer: Layer = 'company';
+  public departments: Department[] = layerDepartments(this.activeLayer);
+  public stats: Stats = computeStats(this.departments);
   public activeTab: Tab = 'map';
 
   /* the autonomy ladder shown on every skill detail panel */
@@ -39,8 +40,8 @@ export class AppComponent {
   public selectedSkill: Skill | null = null;
   public selectedAgent: { name: string, dept: Department, skill: Skill } | null = null;
 
-  /* ----- GoJS model, built from the company tree ----- */
-  private graph = buildGraph();
+  /* ----- GoJS model, built from the active layer ----- */
+  private graph = buildGraph(this.departments);
   public diagramNodeData: Array<go.ObjectData> = this.graph.nodeDataArray;
   public diagramLinkData: Array<go.ObjectData> = this.graph.linkDataArray;
   public diagramDivClassName = 'company-map';
@@ -93,7 +94,7 @@ export class AppComponent {
           fill: $(go.Brush, 'Radial', { 0: 'rgba(255,255,255,0.30)', 0.4: 'rgba(190,180,255,0.12)', 1: 'rgba(10,8,30,0)' }) }),
         $(go.Shape, 'Circle', { name: 'CORE', desiredSize: new go.Size(20, 20), strokeWidth: 0,
           fill: $(go.Brush, 'Radial', { 0: '#ffffff', 1: '#b7a6ff' }) }),
-        $(go.TextBlock, 'COMPANY BRAIN',
+        $(go.TextBlock, 'SAARTHI BRAIN',
           { alignment: new go.Spot(0.5, 0.5, 0, 78), stroke: 'rgba(233,229,255,0.92)',
             font: '600 12px Inter, system-ui, sans-serif', textAlign: 'center' })
       )
@@ -256,13 +257,13 @@ export class AppComponent {
       case 'deptlabel': {
         const key = data.ref || data.key;
         this.selectedKind = 'dept';
-        this.selectedDept = findDept(key);
+        this.selectedDept = findDept(this.departments, key);
         this.focusDepartment(key);
         break;
       }
 
       case 'skill': {
-        const res = findSkill(data.dept, data.skillIndex);
+        const res = findSkill(this.departments, data.dept, data.skillIndex);
         this.selectedKind = 'skill';
         this.selectedDept = res ? res.dept : null;
         this.selectedSkill = res ? res.skill : null;
@@ -271,7 +272,7 @@ export class AppComponent {
       }
 
       case 'agent': {
-        const res = findSkill(data.dept, data.skillIndex);
+        const res = findSkill(this.departments, data.dept, data.skillIndex);
         if (res) {
           this.selectedKind = 'agent';
           this.selectedDept = res.dept;
@@ -362,6 +363,28 @@ export class AppComponent {
   public resetView() {
     this.resetSelection();
     if (this.diagram) { this.diagram.zoomToFit(); }
+  }
+
+  /** Switch between the Company (Layer A) and Family (Layer B) agent org. */
+  public setLayer(layer: Layer) {
+    if (layer === this.activeLayer) { return; }
+    this.activeLayer = layer;
+    this.departments = layerDepartments(layer);
+    this.stats = computeStats(this.departments);
+
+    const g = buildGraph(this.departments);
+    this.diagramNodeData = g.nodeDataArray;
+    this.diagramLinkData = g.linkDataArray;
+
+    if (this.diagram) {
+      const model = new go.GraphLinksModel(g.nodeDataArray, g.linkDataArray);
+      model.linkKeyProperty = 'key';
+      this.diagram.model = model;   // templates live on the diagram, so they persist
+    }
+    this.focusedDept = null;
+    this.resetSelection();
+    this.onSelect({ category: 'brain', key: 'BRAIN' });
+    setTimeout(() => { if (this.diagram) { this.diagram.zoomToFit(); } }, 50);
   }
 
   /* ============================================================= *

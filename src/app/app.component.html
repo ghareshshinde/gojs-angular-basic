@@ -5,10 +5,15 @@
     <div class="brand">
       <span class="brand-mark">◇</span>
       <div class="brand-text">
-        <span class="brand-title">AGENT MAP</span>
-        <span class="brand-sub">an AI company, mapped</span>
+        <span class="brand-title">FOUNDERS · AGENTIC TEAM</span>
+        <span class="brand-sub">Saarthi · family financial intelligence, mapped</span>
       </div>
     </div>
+
+    <nav class="layer-toggle" title="Two agent layers: the company that builds Saarthi, and the family agents Saarthi runs for the customer">
+      <button [class.active]="activeLayer==='company'" (click)="setLayer('company')">🏢 COMPANY</button>
+      <button [class.active]="activeLayer==='family'"  (click)="setLayer('family')">👨‍👩‍👧 FAMILY</button>
+    </nav>
 
     <nav class="tabs">
       <button [class.active]="activeTab==='map'"        (click)="setTab('map')">MAP</button>

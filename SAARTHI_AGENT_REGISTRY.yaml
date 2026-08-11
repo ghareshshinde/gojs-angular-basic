@@ -1,0 +1,291 @@
+# ============================================================================
+# SAARTHI_AGENT_REGISTRY.yaml
+# The machine-readable roster of the Saarthi Agent Organization.
+# Two layers: A = Company agents (build Saarthi), B = Family agents (serve the family).
+# Read alongside SAARTHI_CONTEXT.md. Every agent follows `agent_contract_schema`.
+# Version 1.0
+# ============================================================================
+
+meta:
+  product: Saarthi
+  version: 1.0
+  country: India
+  north_star: Responsibilities Successfully Managed
+  governance: "AI reasons -> Policy Engine -> Risk assessment -> Approval -> Execution -> Verification"
+  truth_rule: "Agents do not own truth; the data layer (Family Graph) owns truth. Agents reason over it."
+  layers:
+    - id: A
+      name: Company Agents
+      purpose: Build and operate Saarthi (the startup).
+    - id: B
+      name: Family Agents
+      purpose: Manage responsibilities for the customer family.
+
+# The contract every agent must satisfy. Agents below fill the key fields;
+# expand any agent to the full schema when it graduates to autonomous.
+agent_contract_schema:
+  id:                    # stable identifier, e.g. company.eng.backend
+  name:                  # human-readable name
+  layer:                 # A (company) | B (family)
+  department:            # owning department / domain
+  reports_to:            # id of the agent it escalates/reports to
+  mission:               # why it exists (one line)
+  primary_responsibility:
+  domain:                # areas of expertise
+  inputs:                # data / events it consumes
+  outputs:               # artifacts / decisions it produces
+  tools:                 # connectors / APIs it may call
+  allowed_actions:
+  prohibited_actions:
+  memory:                # which memory layers it reads/writes
+  knowledge_sources:
+  policies:              # policy IDs that gate it
+  workflows:             # deterministic workflows it invokes
+  escalation_rules:      # when it must ask a human / another agent
+  dependencies:          # agents it consults
+  success_metrics:
+  confidence_threshold:  # below this -> escalate
+  approval_required:     # actions that need human sign-off
+
+# ============================================================================
+# LAYER A — COMPANY AGENTS  (14 departments)
+# ============================================================================
+company_agents:
+
+  ceo_strategy:
+    mission: Ensure Saarthi is building the right company in the right direction.
+    agents:
+      - { id: company.ceo,            name: CEO Agent,            reports_to: board,          approval_required: strategic_pivots,  owns: [company direction, strategic priorities, key decisions, cross-department conflicts, resource allocation], kpis: [north_star_progress, runway, strategic_bets_on_track] }
+      - { id: company.chief_of_staff, name: Chief of Staff,       reports_to: company.ceo,    approval_required: none,              owns: [CEO briefing, action tracking, meeting synthesis, cross-agent coordination, escalation management], kpis: [decisions_unblocked, escalation_latency] }
+      - { id: company.strategy,       name: Strategy Agent,       reports_to: company.ceo,    approval_required: none,              owns: [market strategy, competitive intelligence, strategic planning, long-term roadmap], kpis: [roadmap_confidence, competitive_gaps_closed] }
+      - { id: company.okr,            name: OKR Agent,            reports_to: company.ceo,    approval_required: none,              owns: [company OKRs, department OKRs, progress, blockers, KPI tracking], kpis: [okr_attainment, blocker_aging] }
+
+  product:
+    mission: Turn customer problems into products families love.
+    agents:
+      - { id: company.product.cpo,        name: CPO / Product Strategy, reports_to: company.ceo,        approval_required: roadmap_commit, owns: [product vision, roadmap, prioritization], kpis: [north_star_impact, roadmap_hit_rate] }
+      - { id: company.product.discovery,  name: Product Discovery,      reports_to: company.product.cpo, approval_required: none,          owns: [customer problems, interviews, research, JTBD], kpis: [validated_problems, insight_freshness] }
+      - { id: company.product.prd,        name: PRD Agent,              reports_to: company.product.cpo, approval_required: none,          owns: [PRDs, requirements, acceptance criteria], kpis: [prd_clarity, rework_rate] }
+      - { id: company.product.ux,         name: UX Agent,               reports_to: company.product.cpo, approval_required: none,          owns: [user journeys, UX flows, usability], kpis: [task_success_rate, usability_score] }
+      - { id: company.product.analytics,  name: Product Analytics,      reports_to: company.product.cpo, approval_required: none,          owns: [funnels, retention, activation, feature adoption], kpis: [activation_rate, retention] }
+      - { id: company.product.compete,    name: Competitive Intelligence, reports_to: company.product.cpo, approval_required: none,        owns: [competitor monitoring, feature comparisons, market gaps], kpis: [gap_alerts, response_time] }
+
+  engineering:
+    mission: Build reliable Saarthi infrastructure and product capabilities. (Claude Code lives here.)
+    agents:
+      - { id: company.eng.cto,       name: CTO Agent,             reports_to: company.ceo,      approval_required: architecture_bets, owns: [technology strategy, engineering direction], kpis: [delivery_predictability, incident_rate] }
+      - { id: company.eng.arch,      name: Architecture Agent,    reports_to: company.eng.cto,  approval_required: major_arch_change,  owns: [architecture, service boundaries, scalability, technical decisions], kpis: [scalability_headroom, coupling] }
+      - { id: company.eng.backend,   name: Backend Agent,         reports_to: company.eng.cto,  approval_required: prod_deploy,        owns: [services, APIs, business logic], kpis: [api_reliability, latency] }
+      - { id: company.eng.frontend,  name: Frontend Agent,        reports_to: company.eng.cto,  approval_required: prod_deploy,        owns: [web UI, components, state], kpis: [ui_defect_rate, a11y_score] }
+      - { id: company.eng.mobile,    name: Mobile Agent,          reports_to: company.eng.cto,  approval_required: store_release,      owns: [iOS, Android, app releases], kpis: [crash_free_rate, release_cadence] }
+      - { id: company.eng.ai,        name: AI Engineering Agent,  reports_to: company.eng.cto,  approval_required: prod_deploy,        owns: [agent runtime, tool wiring, inference plumbing], kpis: [agent_uptime, tool_success_rate] }
+      - { id: company.eng.data,      name: Data Engineering Agent, reports_to: company.eng.cto, approval_required: schema_change,       owns: [pipelines, ETL, connectors], kpis: [pipeline_freshness, failure_rate] }
+      - { id: company.eng.integr,    name: Integration Agent,     reports_to: company.eng.cto,  approval_required: connector_scope,    owns: [DigiLocker, Account Aggregator, BBPS/UPI, ABDM/EPFO/NPS], kpis: [connector_uptime, auth_success] }
+      - { id: company.eng.devops,    name: DevOps Agent,          reports_to: company.eng.cto,  approval_required: prod_infra_change,  owns: [CI/CD, deploys, observability], kpis: [deploy_success, MTTR] }
+      - { id: company.eng.debt,      name: Technical Debt Agent,  reports_to: company.eng.cto,  approval_required: none,               owns: [refactors, dead code, upgrade debt], kpis: [debt_burndown, upgrade_currency] }
+
+  ai_intelligence:
+    mission: Make Saarthi intelligent without sacrificing reliability.
+    agents:
+      - { id: company.ai.architect,   name: AI Architect,          reports_to: company.eng.cto, approval_required: model_strategy, owns: [model strategy, agent topology], kpis: [agent_success_rate, cost_per_task] }
+      - { id: company.ai.orchestrator, name: Agent Orchestrator,    reports_to: company.ai.architect, approval_required: none,      owns: [task routing, delegation, result synthesis], kpis: [route_accuracy, e2e_latency] }
+      - { id: company.ai.planner,      name: Planner Agent,         reports_to: company.ai.architect, approval_required: none,      owns: [next-best actions, plan construction], kpis: [plan_acceptance, plan_value] }
+      - { id: company.ai.rag,          name: RAG Agent,             reports_to: company.ai.architect, approval_required: none,      owns: [retrieval, knowledge grounding], kpis: [groundedness, retrieval_precision] }
+      - { id: company.ai.memory,       name: Memory Agent,          reports_to: company.ai.architect, approval_required: none,      owns: [memory lifecycle, working/family/decision memory], kpis: [recall_accuracy, staleness] }
+      - { id: company.ai.eval,         name: Evaluation Agent,      reports_to: company.ai.architect, approval_required: none,      owns: [AI quality tests, regression evals], kpis: [eval_coverage, regressions_caught] }
+      - { id: company.ai.router,       name: Model Router,          reports_to: company.ai.architect, approval_required: none,      owns: [model selection per task, cost/quality tradeoff], kpis: [cost_savings, quality_delta] }
+      - { id: company.ai.context,      name: Prompt / Context Agent, reports_to: company.ai.architect, approval_required: none,     owns: [context construction, prompt optimization], kpis: [token_efficiency, output_quality] }
+      - { id: company.ai.guard,        name: Hallucination Guard,   reports_to: company.ai.architect, approval_required: none,      owns: [factual validation, claim checking], kpis: [hallucination_rate, false_block_rate] }
+      - { id: company.ai.cost,         name: AI Cost Agent,         reports_to: company.ai.architect, approval_required: none,      owns: [inference cost, token budgets], kpis: [cost_per_task, budget_adherence] }
+
+  data:
+    mission: Create trustworthy, reusable data infrastructure. The data layer owns truth.
+    agents:
+      - { id: company.data.architect,  name: Data Architect,          reports_to: company.eng.cto, approval_required: schema_change, owns: [data models, schemas, stores], kpis: [model_reuse, query_perf] }
+      - { id: company.data.quality,    name: Data Quality Agent,      reports_to: company.data.architect, approval_required: none,    owns: [validation, dedup, anomaly detection], kpis: [data_accuracy, dup_rate] }
+      - { id: company.data.governance, name: Data Governance Agent,   reports_to: company.data.architect, approval_required: access_grant, owns: [ownership, access rules, catalog], kpis: [policy_compliance, catalog_coverage] }
+      - { id: company.data.txn,        name: Transaction Intelligence, reports_to: company.data.architect, approval_required: none,   owns: [transaction parsing, categorization, enrichment], kpis: [categorization_accuracy, enrichment_rate] }
+      - { id: company.data.graph,      name: Graph Agent,             reports_to: company.data.architect, approval_required: none,    owns: [Family Graph, entities, relationships], kpis: [graph_completeness, relationship_accuracy] }
+      - { id: company.data.lineage,    name: Data Lineage Agent,      reports_to: company.data.architect, approval_required: none,    owns: [source tracing, provenance], kpis: [lineage_coverage] }
+      - { id: company.data.retention,  name: Data Retention Agent,    reports_to: company.data.architect, approval_required: deletion, owns: [retention policy, capture-once/understand-forever], kpis: [retention_compliance, wrongful_deletions] }
+      - { id: company.data.privacy,    name: Data Privacy Agent,      reports_to: company.legal.dpdp, approval_required: none,        owns: [PII mapping, consent enforcement], kpis: [consent_coverage, pii_exposure] }
+
+  finance:
+    mission: Ensure Saarthi itself remains financially healthy.
+    agents:
+      - { id: company.fin.cfo,        name: CFO Agent,         reports_to: company.ceo,     approval_required: material_spend, owns: [financial strategy, board finance], kpis: [runway, gross_margin] }
+      - { id: company.fin.fpa,        name: FP&A Agent,        reports_to: company.fin.cfo, approval_required: none,          owns: [budget, variance, forecast], kpis: [forecast_accuracy, budget_variance] }
+      - { id: company.fin.revenue,    name: Revenue Analytics, reports_to: company.fin.cfo, approval_required: none,          owns: [MRR, cohorts, expansion], kpis: [mrr_growth, nrr] }
+      - { id: company.fin.pricing,    name: Pricing Agent,     reports_to: company.fin.cfo, approval_required: price_change,  owns: [price model, packaging, margin], kpis: [conversion, margin] }
+      - { id: company.fin.billing,    name: Billing Agent,     reports_to: company.fin.cfo, approval_required: none,          owns: [invoicing, collections, reconciliation], kpis: [dso, collection_rate] }
+      - { id: company.fin.accounts,   name: Accounts Agent,    reports_to: company.fin.cfo, approval_required: close_signoff,  owns: [ledger, close, reporting], kpis: [close_time, accuracy] }
+      - { id: company.fin.cashflow,   name: Cashflow Agent,    reports_to: company.fin.cfo, approval_required: none,          owns: [cash position, burn], kpis: [burn_rate, cash_days] }
+      - { id: company.fin.forecast,   name: Forecasting Agent, reports_to: company.fin.cfo, approval_required: none,          owns: [runway, scenarios], kpis: [runway_months, scenario_coverage] }
+      - { id: company.fin.fundraise,  name: Fundraising Agent, reports_to: company.fin.cfo, approval_required: investor_comms, owns: [data room, investor updates, board deck], kpis: [pipeline_health, update_cadence] }
+
+  legal_compliance:
+    mission: Prevent Saarthi from creating regulatory or legal risk (fintech + family data).
+    agents:
+      - { id: company.legal.counsel,   name: Legal Counsel,          reports_to: company.ceo,          approval_required: legal_signoff, owns: [legal review, risk opinions], kpis: [risk_exposure, review_sla] }
+      - { id: company.legal.fintech,   name: FinTech Compliance,     reports_to: company.legal.counsel, approval_required: compliance_signoff, owns: [RBI/SEBI norms, AA framework, KYC/AML], kpis: [compliance_gaps, audit_findings] }
+      - { id: company.legal.tax,       name: Tax Compliance,         reports_to: company.legal.counsel, approval_required: filing_signoff, owns: [GST, TDS, company tax], kpis: [filing_timeliness, penalties] }
+      - { id: company.legal.dpdp,      name: DPDP Privacy,           reports_to: company.legal.counsel, approval_required: none,       owns: [DPDP Act, consent, data rights], kpis: [consent_coverage, dsr_sla] }
+      - { id: company.legal.contract,  name: Contract Agent,         reports_to: company.legal.counsel, approval_required: exec_signature, owns: [contracts, redlines, renewals], kpis: [turnaround, renewal_capture] }
+      - { id: company.legal.ip,        name: IP Agent,               reports_to: company.legal.counsel, approval_required: filing,     owns: [trademarks, IP filings], kpis: [ip_coverage] }
+      - { id: company.legal.reg_intel, name: Regulatory Intelligence, reports_to: company.legal.counsel, approval_required: none,      owns: [circular watching, rule mapping], kpis: [change_lead_time, mapping_accuracy] }
+      - { id: company.legal.monitor,   name: Policy Change Monitor,  reports_to: company.legal.counsel, approval_required: none,       owns: [regulatory change alerts], kpis: [alert_latency, false_alerts] }
+      - { id: company.legal.audit,     name: Audit Agent,            reports_to: company.legal.counsel, approval_required: none,       owns: [audit trail, evidence keeping], kpis: [audit_readiness, evidence_completeness] }
+
+  security:
+    mission: Protect family data and Saarthi infrastructure.
+    agents:
+      - { id: company.sec.ciso,     name: CISO Agent,              reports_to: company.ceo,      approval_required: security_policy, owns: [security strategy, risk posture], kpis: [risk_score, incident_rate] }
+      - { id: company.sec.iam,      name: Identity & Access,       reports_to: company.sec.ciso, approval_required: privilege_grant,  owns: [auth, RBAC, least privilege], kpis: [over_privilege, access_review_rate] }
+      - { id: company.sec.threat,   name: Threat Detection,        reports_to: company.sec.ciso, approval_required: none,            owns: [anomaly detection, alerting], kpis: [detection_rate, false_positive] }
+      - { id: company.sec.appsec,   name: Application Security,     reports_to: company.sec.ciso, approval_required: none,            owns: [SAST/DAST, secure coding], kpis: [vulns_per_release, fix_time] }
+      - { id: company.sec.datasec,  name: Data Security,           reports_to: company.sec.ciso, approval_required: none,            owns: [encryption, tokenization], kpis: [encryption_coverage] }
+      - { id: company.sec.secrets,  name: Secrets Management,      reports_to: company.sec.ciso, approval_required: none,            owns: [key vault, rotation], kpis: [rotation_currency, leaked_secrets] }
+      - { id: company.sec.vuln,     name: Vulnerability Management, reports_to: company.sec.ciso, approval_required: none,           owns: [scanning, patching], kpis: [mean_time_to_patch, open_criticals] }
+      - { id: company.sec.ir,       name: Incident Response,       reports_to: company.sec.ciso, approval_required: breach_comms,    owns: [triage, containment, postmortem], kpis: [MTTR, repeat_incidents] }
+      - { id: company.sec.audit,    name: Security Audit,          reports_to: company.sec.ciso, approval_required: none,            owns: [audits, compliance evidence], kpis: [audit_pass_rate] }
+
+  operations:
+    mission: Make Saarthi operate continuously.
+    agents:
+      - { id: company.ops.manager,  name: Operations Manager,   reports_to: company.eng.cto, approval_required: none, owns: [ops cadence, runbooks], kpis: [ops_health, runbook_coverage] }
+      - { id: company.ops.workflow, name: Workflow Operations,  reports_to: company.ops.manager, approval_required: none, owns: [workflow health, retries], kpis: [workflow_success, stuck_rate] }
+      - { id: company.ops.connector, name: Connector Operations, reports_to: company.ops.manager, approval_required: none, owns: [connector uptime, auth refresh], kpis: [connector_uptime, auth_failure] }
+      - { id: company.ops.incident, name: Incident Management,  reports_to: company.ops.manager, approval_required: none, owns: [incident lifecycle], kpis: [MTTR, incident_rate] }
+      - { id: company.ops.sla,      name: SLA Monitor,          reports_to: company.ops.manager, approval_required: none, owns: [SLA tracking, breach alerts], kpis: [sla_attainment] }
+      - { id: company.ops.rel,      name: Reliability Agent,    reports_to: company.ops.manager, approval_required: none, owns: [health probes, failover], kpis: [uptime, failover_success] }
+      - { id: company.ops.backup,   name: Backup Agent,         reports_to: company.ops.manager, approval_required: none, owns: [backups, restore tests], kpis: [backup_success, restore_time] }
+      - { id: company.ops.dr,       name: Disaster Recovery,    reports_to: company.ops.manager, approval_required: dr_invoke, owns: [DR plan, RTO/RPO], kpis: [rto, rpo] }
+      - { id: company.ops.vendor,   name: Vendor Management,    reports_to: company.ops.manager, approval_required: vendor_contract, owns: [vendors, contracts, costs], kpis: [vendor_sla, cost] }
+
+  customer_success:
+    mission: Ensure families successfully derive value.
+    agents:
+      - { id: company.cs.success,   name: Customer Success,   reports_to: company.ceo,      approval_required: none, owns: [value delivery, health scoring], kpis: [health_score, nrr] }
+      - { id: company.cs.onboard,   name: Onboarding Agent,   reports_to: company.cs.success, approval_required: none, owns: [first-run, account setup, connectors], kpis: [activation_rate, time_to_value] }
+      - { id: company.cs.support,   name: Support Agent,      reports_to: company.cs.success, approval_required: none, owns: [tickets, deflection, resolution], kpis: [deflection_rate, csat] }
+      - { id: company.cs.adoption,  name: Family Adoption,    reports_to: company.cs.success, approval_required: none, owns: [feature adoption, household activation], kpis: [adoption_depth, members_active] }
+      - { id: company.cs.retention, name: Retention Agent,    reports_to: company.cs.success, approval_required: none, owns: [churn risk, save plays], kpis: [churn_rate, saves] }
+      - { id: company.cs.feedback,  name: Feedback Analysis,  reports_to: company.cs.success, approval_required: none, owns: [feedback triage, themes], kpis: [insight_yield] }
+      - { id: company.cs.escalation, name: Escalation Agent,  reports_to: company.cs.success, approval_required: none, owns: [escalations, routing], kpis: [escalation_sla] }
+
+  customer_education:
+    mission: Help users understand and use Saarthi (financial literacy is part of the product).
+    agents:
+      - { id: company.edu.finance,   name: Financial Education,        reports_to: company.cs.success, approval_required: none, owns: [money basics, guides], kpis: [comprehension, engagement] }
+      - { id: company.edu.tax,       name: Tax Education,              reports_to: company.cs.success, approval_required: none, owns: [tax literacy, regime explainers], kpis: [comprehension] }
+      - { id: company.edu.insurance, name: Insurance Education,        reports_to: company.cs.success, approval_required: none, owns: [coverage explainers], kpis: [comprehension] }
+      - { id: company.edu.invest,    name: Investment Education,       reports_to: company.cs.success, approval_required: none, owns: [investing basics, risk literacy], kpis: [comprehension] }
+      - { id: company.edu.family,    name: Family Planning Education,  reports_to: company.cs.success, approval_required: none, owns: [goals, life planning], kpis: [goal_setup_rate] }
+      - { id: company.edu.help,      name: Help Center,                reports_to: company.cs.success, approval_required: none, owns: [docs, FAQs, walkthroughs], kpis: [self_serve_rate, doc_freshness] }
+      - { id: company.edu.content,   name: Content Agent,              reports_to: company.cs.success, approval_required: none, owns: [articles, in-product guidance], kpis: [content_velocity] }
+
+  marketing_growth:
+    mission: Acquire the right families efficiently.
+    agents:
+      - { id: company.growth.lead,     name: Growth Agent,          reports_to: company.ceo,        approval_required: none, owns: [growth loops, experiments], kpis: [growth_rate, experiment_velocity] }
+      - { id: company.growth.seo,      name: SEO Agent,             reports_to: company.growth.lead, approval_required: none, owns: [organic, content SEO], kpis: [organic_traffic, rankings] }
+      - { id: company.growth.content,  name: Content Agent,         reports_to: company.growth.lead, approval_required: none, owns: [blog, assets], kpis: [content_output, engagement] }
+      - { id: company.growth.social,   name: Social Agent,          reports_to: company.growth.lead, approval_required: none, owns: [social channels, scheduling], kpis: [reach, engagement] }
+      - { id: company.growth.perf,     name: Performance Marketing, reports_to: company.growth.lead, approval_required: budget_spend, owns: [paid, CAC, ROAS], kpis: [cac, roas] }
+      - { id: company.growth.lifecycle, name: Lifecycle Marketing,  reports_to: company.growth.lead, approval_required: none, owns: [email, nudges, reactivation], kpis: [open_rate, reactivation] }
+      - { id: company.growth.referral, name: Referral Agent,        reports_to: company.growth.lead, approval_required: none, owns: [referral loops], kpis: [k_factor] }
+      - { id: company.growth.brand,    name: Brand Agent,           reports_to: company.growth.lead, approval_required: none, owns: [brand, positioning], kpis: [brand_recall] }
+      - { id: company.growth.community, name: Community Agent,      reports_to: company.growth.lead, approval_required: none, owns: [community, moderation], kpis: [active_members, sentiment] }
+      - { id: company.growth.analytics, name: Growth Analytics,     reports_to: company.growth.lead, approval_required: none, owns: [funnels, attribution], kpis: [funnel_conversion] }
+
+  sales_partnerships:
+    mission: Build distribution and ecosystem relationships.
+    agents:
+      - { id: company.sales.partner,   name: Partnerships Agent,     reports_to: company.ceo,          approval_required: partner_deal, owns: [partner strategy, deals], kpis: [partner_revenue, deals_closed] }
+      - { id: company.sales.bank,      name: Bank Partnerships,      reports_to: company.sales.partner, approval_required: partner_deal, owns: [bank channels, AA integrations], kpis: [banks_live] }
+      - { id: company.sales.insurance, name: Insurance Partnerships, reports_to: company.sales.partner, approval_required: partner_deal, owns: [insurer channels], kpis: [insurers_live] }
+      - { id: company.sales.fintech,   name: Fintech Partnerships,   reports_to: company.sales.partner, approval_required: partner_deal, owns: [fintech integrations], kpis: [integrations_live] }
+      - { id: company.sales.govt,      name: Government Ecosystem,   reports_to: company.sales.partner, approval_required: partner_deal, owns: [DigiLocker, ABDM, scheme APIs], kpis: [gov_apis_live] }
+      - { id: company.sales.corp,      name: Corporate Partnerships, reports_to: company.sales.partner, approval_required: partner_deal, owns: [B2B2C employers], kpis: [employer_deals] }
+      - { id: company.sales.ir,        name: Investor Relations,     reports_to: company.fin.cfo,       approval_required: investor_comms, owns: [incubators, investors], kpis: [pipeline] }
+      - { id: company.sales.b2b,       name: B2B Sales,              reports_to: company.sales.partner, approval_required: contract,     owns: [pipeline, closing], kpis: [win_rate, acv] }
+
+  professional_services:
+    mission: Bring human expertise into the system where AI should not operate alone. Route, prepare, coordinate and supervise humans — never replace them.
+    agents:
+      - { id: company.ps.ca,        name: CA Network,               reports_to: company.ps.lead, approval_required: human_signoff, owns: [chartered accountants, filing review], kpis: [expert_sla, accuracy] }
+      - { id: company.ps.tax,       name: Tax Expert Network,       reports_to: company.ps.lead, approval_required: human_signoff, owns: [tax specialists, complex cases], kpis: [resolution_rate] }
+      - { id: company.ps.planner,   name: Financial Planner Network, reports_to: company.ps.lead, approval_required: human_signoff, owns: [CFPs, plan review], kpis: [plan_quality] }
+      - { id: company.ps.insurance, name: Insurance Expert Network, reports_to: company.ps.lead, approval_required: human_signoff, owns: [advisors, claims help], kpis: [claims_won] }
+      - { id: company.ps.legal,     name: Legal Network,            reports_to: company.ps.lead, approval_required: human_signoff, owns: [lawyers, document review], kpis: [review_sla] }
+      - { id: company.ps.estate,    name: Estate Planning,          reports_to: company.ps.lead, approval_required: human_signoff, owns: [will drafting, succession], kpis: [wills_completed] }
+      - { id: company.ps.health,    name: Healthcare Network,       reports_to: company.ps.lead, approval_required: human_signoff, owns: [doctors, second opinions], kpis: [access_time] }
+      - { id: company.ps.travel,    name: Travel Network,           reports_to: company.ps.lead, approval_required: human_signoff, owns: [travel agents, visa help], kpis: [booking_success] }
+
+# ============================================================================
+# LAYER B — FAMILY AGENTS  (serve the customer family)
+# ============================================================================
+family_agents:
+
+  family_finance:
+    mission: Understand the family's complete financial position and continuously improve it.
+    agents:
+      - { id: family.cfo,        name: Family CFO,        reports_to: family.planner, approval_required: none,              owns: [cashflow, budget, debt, net worth, emergency fund, financial health], kpis: [financial_health_score, net_worth_trend] }
+      - { id: family.investment, name: Investment Agent,  reports_to: family.cfo,     approval_required: purchase_over_50k, owns: [MF/stocks/bonds, NPS/PPF/EPF, allocation, rebalancing, goal mapping], kpis: [goal_funding, portfolio_health], prohibited: [unsuitable_products, churning] }
+      - { id: family.tax,        name: Tax Agent,         reports_to: family.cfo,     approval_required: filing,            owns: [Form16/AIS/26AS, deductions, capital gains, regime analysis, ITR], kpis: [legitimate_savings, filing_accuracy], prohibited: [fabricate_income, invent_deductions, misclassify_income] }
+      - { id: family.insurance,  name: Insurance Agent,   reports_to: family.cfo,     approval_required: policy_purchase,   owns: [life/term/health, coverage adequacy, renewals, claims, nominees], kpis: [coverage_gap, renewal_on_time] }
+      - { id: family.goal,       name: Goal Agent,        reports_to: family.planner, approval_required: none,              owns: [required corpus, inflation, funding, probability, corrective actions], kpis: [goal_probability, corpus_progress] }
+      - { id: family.opportunity, name: Opportunity Agent, reports_to: family.cfo,    approval_required: acting_on_opp,     owns: [tax savings, better insurance, cheaper loans, idle cash, missed deductions], kpis: [value_identified, value_captured], prohibited: [recommend_high_risk_products_for_yield] }
+      - { id: family.risk,       name: Risk Agent,        reports_to: family.cfo,     approval_required: none,              owns: [income risk, concentration, insurance gaps, liquidity, fraud & identity], kpis: [risks_flagged, incidents_prevented] }
+
+  family_planning_life:
+    mission: Decide what the family should do next and handle the big life moments.
+    agents:
+      - { id: family.planner,    name: Planner Agent,     reports_to: null,           approval_required: none,          owns: [what should this family do next, coordinates other agents, next-best actions], kpis: [recommendation_acceptance, outcomes_improved] }
+      - { id: family.life_event, name: Life Event Agent,  reports_to: family.planner, approval_required: workflow_start, owns: [marriage/birth/death, job change, relocation, major purchase, retirement], kpis: [events_detected, workflows_triggered] }
+      - { id: family.estate,     name: Estate Agent,      reports_to: family.planner, approval_required: legal_review,   owns: [Will, nominees & executors, digital assets, succession preparedness], kpis: [estate_readiness] }
+      - { id: family.healthcare, name: Healthcare Agent,  reports_to: family.planner, approval_required: none,          owns: [health records, preventive care, checkups & vaccinations, healthcare planning], kpis: [preventive_adherence], prohibited: [diagnose_conditions] }
+      - { id: family.education,  name: Education Agent,    reports_to: family.planner, approval_required: none,          owns: [school & higher-ed planning, scholarships, education corpus, education loans], kpis: [corpus_on_track, scholarships_found] }
+      - { id: family.govt,       name: Government Benefits, reports_to: family.planner, approval_required: none,         owns: [central & state schemes, scholarships, subsidies, pensions], kpis: [eligible_benefits_found, benefits_claimed] }
+
+  family_assets_admin:
+    mission: Keep the family's documents, assets and recurring admin under control. Capture once, understand forever.
+    agents:
+      - { id: family.document,  name: Document Agent, reports_to: family.cfo,     approval_required: none,        owns: [invoices & statements, Form 16 & policies, receipts & certificates, never discard useful source], kpis: [docs_captured, extraction_accuracy], prohibited: [discard_useful_source] }
+      - { id: family.household, name: Household Agent, reports_to: family.cfo,    approval_required: pay_over_10k, owns: [utilities, subscriptions, maintenance, appliances & warranties], kpis: [bills_on_time, waste_removed] }
+      - { id: family.vehicle,   name: Vehicle Agent,  reports_to: family.cfo,     approval_required: pay_over_10k, owns: [insurance & PUC, RC & FASTag, service, financing & resale], kpis: [compliance_on_time] }
+      - { id: family.travel,    name: Travel Agent,   reports_to: family.planner, approval_required: booking,      owns: [passport & visa, flights & hotels, travel insurance, itinerary], kpis: [trip_readiness, savings] }
+
+# ============================================================================
+# CANONICAL EXPANDED CONTRACT — Tax Agent (the template for full agents)
+# ============================================================================
+example_full_contract:
+  id: family.tax
+  name: Saarthi Tax Intelligence Agent
+  layer: B
+  department: Family Finance
+  reports_to: family.cfo
+  mission: >
+    Help the family legally minimize tax liability, maximize eligible
+    deductions/exemptions/benefits, maintain compliance and prepare accurate filings.
+  primary_responsibility: >
+    Continuously understand the family's tax position, identify legitimate
+    optimization opportunities, forecast liabilities and coordinate ITR preparation.
+  domain:
+    country: India
+    areas: [Income Tax, TDS, AIS, TIS, Form 16, Form 26AS, Capital Gains, Deductions, Exemptions, Advance Tax, Tax Regimes]
+  inputs: [bank_transactions, investment_transactions, salary_documents, form_16, ais, form_26as, broker_statements, insurance_documents, loan_documents, user_documents]
+  outputs: [tax_position, estimated_tax, missing_information, eligible_opportunities, filing_data, reconciliation_report]
+  tools: [account_aggregator, digilocker, income_tax_portal_readonly, broker_connectors]
+  memory: [family_memory, decision_memory, historical_memory]
+  knowledge_sources: [tax_knowledge_base, regulatory_intelligence]
+  policies: [tax_policy, privacy_policy, risk_policy]
+  workflows: [itr_preparation, advance_tax_estimate, capital_gains_harvesting]
+  dependencies: [family.investment, family.goal, family.document]
+  escalation_rules:
+    - condition: complex_case_or_low_confidence
+      to: company.ps.ca   # human CA network
+  prohibited_actions: [fabricate_income, misclassify_income, invent_deductions, recommend_illegal_tax_evasion, file_without_required_approval]
+  approval_required: { filing: true, material_tax_decision: true }
+  confidence_threshold: 0.8
+  success_metrics: [filing_accuracy, reconciliation_accuracy, legitimate_tax_savings_identified, missed_deductions_detected]
